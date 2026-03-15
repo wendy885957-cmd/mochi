@@ -1385,7 +1385,7 @@ body.loaded .anim-reveal {
 
 @media (max-width: 768px) {
     .nav-links {
-        display: none;
+        display: none !important;
         position: fixed;
         top: 0;
         left: 0;
@@ -1394,26 +1394,33 @@ body.loaded .anim-reveal {
         background: rgba(8, 8, 8, 0.98);
         -webkit-backdrop-filter: blur(20px);
         backdrop-filter: blur(20px);
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 28px;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 24px !important;
         z-index: 999;
+        padding: 0;
     }
 
     .nav-links.active {
-        display: flex;
+        display: flex !important;
     }
 
     .nav-links a {
         font-size: 1.3rem;
         font-weight: 500;
-        color: var(--text-primary);
-        padding: 8px 16px;
+        color: var(--text-primary) !important;
+        letter-spacing: 1px;
+        padding: 10px 20px;
+        text-align: center;
     }
 
     .nav-links .nav-cta {
-        margin-top: 12px;
+        margin-top: 16px;
+        background: var(--accent);
+        color: var(--bg-primary) !important;
+        padding: 12px 32px;
+        border-radius: 50px;
     }
 
     .nav-toggle {
