@@ -638,8 +638,7 @@ body.loaded .anim-reveal {
 }
 
 .portfolio-thumb video,
-.portfolio-thumb > iframe,
-.portfolio-thumb img {
+.portfolio-thumb > iframe {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -647,9 +646,21 @@ body.loaded .anim-reveal {
     border-radius: var(--radius);
 }
 
-.portfolio-link {
+a.portfolio-link {
     display: block;
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
+.portfolio-thumb img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius);
 }
 
 .portfolio-play {
