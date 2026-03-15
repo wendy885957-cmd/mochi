@@ -1,3 +1,9 @@
+// 重新整理時回到頂部
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
 // Opening animation
 window.addEventListener('load', () => {
     setTimeout(() => {
