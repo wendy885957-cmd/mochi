@@ -1304,6 +1304,94 @@ img {
     }
 }
 
+/* ===== COLLABORATION ===== */
+.collab {
+    background: var(--bg-secondary);
+}
+
+.collab-grid {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 48px;
+}
+
+.collab-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    min-width: 280px;
+    transition: var(--transition);
+}
+
+.collab-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.collab-photo {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid var(--accent);
+}
+
+.collab-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.collab-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.collab-info h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.collab-info p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.collab-type {
+    font-size: 0.75rem;
+    color: var(--accent);
+    background: rgba(200, 169, 126, 0.1);
+    padding: 4px 12px;
+    border-radius: 50px;
+}
+
+@media (max-width: 768px) {
+    .collab-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .collab-card {
+        width: 100%;
+        max-width: 360px;
+    }
+}
+
 /* ===== TESTIMONIALS ===== */
 .testimonials {
     background: var(--bg-primary);
