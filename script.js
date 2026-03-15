@@ -43,16 +43,22 @@ window.addEventListener('scroll', () => {
 const navToggle = document.getElementById('navToggle');
 const navLinks = document.querySelector('.nav-links');
 
-navToggle.addEventListener('click', () => {
+navToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
     navLinks.classList.toggle('active');
-    document.body.classList.toggle('nav-open');
 });
 
 navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
         navLinks.classList.remove('active');
-        document.body.classList.remove('nav-open');
     });
+});
+
+// Close menu when tapping outside
+document.addEventListener('click', (e) => {
+    if (!navLinks.contains(e.target) && !navToggle.contains(e.target)) {
+        navLinks.classList.remove('active');
+    }
 });
 
 // Portfolio filter

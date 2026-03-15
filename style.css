@@ -52,9 +52,6 @@ body::after {
     background-size: 200px;
 }
 
-body.nav-open {
-    overflow: hidden;
-}
 
 a {
     text-decoration: none;
@@ -100,6 +97,7 @@ img {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 
 .nav-logo {
@@ -1386,20 +1384,24 @@ body.loaded .anim-reveal {
 @media (max-width: 768px) {
     .nav-links {
         display: none !important;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(8, 8, 8, 0.98);
+        position: absolute;
+        top: 100%;
+        right: 16px;
+        left: auto;
+        bottom: auto;
+        width: 200px;
+        background: rgba(18, 18, 18, 0.98);
         -webkit-backdrop-filter: blur(20px);
         backdrop-filter: blur(20px);
+        border: 1px solid var(--border);
+        border-radius: 12px;
         flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 24px !important;
+        align-items: stretch !important;
+        justify-content: flex-start !important;
+        gap: 0 !important;
         z-index: 999;
-        padding: 0;
+        padding: 8px 0;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
     }
 
     .nav-links.active {
@@ -1407,20 +1409,34 @@ body.loaded .anim-reveal {
     }
 
     .nav-links a {
-        font-size: 1.3rem;
-        font-weight: 500;
+        font-size: 0.92rem;
+        font-weight: 400;
+        color: var(--text-secondary) !important;
+        letter-spacing: 0;
+        padding: 12px 20px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .nav-links a:last-child {
+        border-bottom: none;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:active {
         color: var(--text-primary) !important;
-        letter-spacing: 1px;
-        padding: 10px 20px;
-        text-align: center;
+        background: rgba(200, 169, 126, 0.08);
     }
 
     .nav-links .nav-cta {
-        margin-top: 16px;
+        margin: 8px 12px;
         background: var(--accent);
         color: var(--bg-primary) !important;
-        padding: 12px 32px;
+        padding: 10px 20px;
         border-radius: 50px;
+        text-align: center;
+        border-bottom: none;
+        font-weight: 500;
     }
 
     .nav-toggle {
