@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mochi Film | 影像創作者</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">MOCHI FILM</a>
+            <div class="nav-links">
+                <a href="#services">服務項目</a>
+                <a href="#portfolio">作品</a>
+                <a href="#pricing">方案價格</a>
+                <a href="#process">合作流程</a>
+                <a href="#contact" class="nav-cta">聯繫我</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-tag">VIDEO CREATOR & EDITOR</p>
+            <h1 class="hero-title">
+                你負責發光<br>
+                <span class="gradient-text">我負責拍下來</span>
+            </h1>
+            <p class="hero-desc">
+                拍攝・剪輯・腳本，我一個人就能幫你搞定<br>
+                短影音可以一次出 10 支，不用再自己慢慢磨
+            </p>
+            <div class="hero-actions">
+                <a href="#pricing" class="btn btn-primary">查看方案價格</a>
+                <a href="#portfolio" class="btn btn-outline">瀏覽作品</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">3+</span>
+                    <span class="stat-label">年經驗</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">影片產出</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-number">10+</span>
+                    <span class="stat-label">支/次交付</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>SCROLL</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section services" id="services">
+        <div class="container">
+            <p class="section-tag">SERVICES</p>
+            <h2 class="section-title">我可以幫你什麼</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3>短影音剪輯</h3>
+                    <p>你把素材丟給我，我幫你剪成可以直接發的 Reels、TikTok、Shorts，一次可以出很多支</p>
+                    <ul class="service-features">
+                        <li>幫你想腳本</li>
+                        <li>卡節奏、配音效</li>
+                        <li>上字幕</li>
+                        <li>各平台尺寸都幫你弄好</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                            <circle cx="12" cy="13" r="3"/>
+                        </svg>
+                    </div>
+                    <h3>業配跟拍</h3>
+                    <p>接了業配但沒人拍沒人剪？我來幫你搞定。跟拍 + 剪輯一次到位，你只需要專心當主角就好</p>
+                    <ul class="service-features">
+                        <li>業配 / 合作內容跟拍</li>
+                        <li>引導肢體與表達</li>
+                        <li>現場收音</li>
+                        <li>拍完直接幫你剪好</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                        </svg>
+                    </div>
+                    <h3>腳本企劃</h3>
+                    <p>不知道要拍什麼？我幫你想。從內容方向到分鏡腳本，到現場直接告訴你怎麼演</p>
+                    <ul class="service-features">
+                        <li>幫你想內容方向</li>
+                        <li>寫好腳本跟分鏡</li>
+                        <li>研究現在什麼題材會紅</li>
+                        <li>怎麼拍比較容易被推</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="section portfolio" id="portfolio">
+        <div class="container">
+            <p class="section-tag">PORTFOLIO</p>
+            <h2 class="section-title">做過的東西</h2>
+            <div class="portfolio-filters">
+                <button class="filter-btn active" data-filter="all">全部</button>
+                <button class="filter-btn" data-filter="short">短影音</button>
+                <button class="filter-btn" data-filter="commercial">商業廣告</button>
+                <button class="filter-btn" data-filter="brand">品牌形象</button>
+            </div>
+            <div class="portfolio-grid">
+
+                <!--
+                =============================================
+                  放作品的方法（3 種方式）：
+
+                  1. 放影片檔案：把 .mp4 檔丟到這個資料夾，然後用：
+                     <video src="你的檔名.mp4" muted loop playsinline></video>
+
+                  2. 嵌入 YouTube / IG Reels：用 iframe，例如：
+                     <iframe src="https://www.youtube.com/embed/影片ID" allowfullscreen></iframe>
+
+                  3. 放縮圖：把截圖丟到資料夾，用：
+                     <img src="截圖檔名.jpg" alt="作品名稱">
+
+                  每一個 portfolio-item 就是一格作品。
+                  data-category 改成 short / commercial / brand 來對應上面的篩選按鈕。
+                  下面的文字改成你自己的作品描述。
+                =============================================
+                -->
+
+                <!-- 作品 1：影片檔案範例 -->
+                <div class="portfolio-item" data-category="commercial">
+                    <div class="portfolio-thumb">
+                        <div class="portfolio-placeholder">
+                            <!-- 把下面這段換成你的影片：
+                            <video src="作品1.mp4" muted loop playsinline></video>
+                            -->
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                            <span>放你的影片</span>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-category">商業廣告</span>
+                            <h4>改成你的作品名稱</h4>
+                            <p>客戶名稱 ・ 幾秒</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 作品 2 -->
+                <div class="portfolio-item" data-category="short">
+                    <div class="portfolio-thumb">
+                        <div class="portfolio-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                            <span>放你的影片</span>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-category">短影音</span>
+                            <h4>改成你的作品名稱</h4>
+                            <p>客戶名稱 ・ 幾秒</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 作品 3 -->
+                <div class="portfolio-item" data-category="short">
+                    <div class="portfolio-thumb">
+                        <div class="portfolio-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                            <span>放你的影片</span>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-category">短影音</span>
+                            <h4>改成你的作品名稱</h4>
+                            <p>客戶名稱 ・ 幾秒</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 作品 4 -->
+                <div class="portfolio-item" data-category="brand">
+                    <div class="portfolio-thumb">
+                        <div class="portfolio-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                            <span>放你的影片</span>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-category">品牌形象</span>
+                            <h4>改成你的作品名稱</h4>
+                            <p>客戶名稱 ・ 幾秒</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 作品 5 -->
+                <div class="portfolio-item" data-category="commercial">
+                    <div class="portfolio-thumb">
+                        <div class="portfolio-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                            <span>放你的影片</span>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-category">商業廣告</span>
+                            <h4>改成你的作品名稱</h4>
+                            <p>客戶名稱 ・ 幾秒</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 作品 6 -->
+                <div class="portfolio-item" data-category="short">
+                    <div class="portfolio-thumb">
+                        <div class="portfolio-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                            <span>放你的影片</span>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-category">短影音</span>
+                            <h4>改成你的作品名稱</h4>
+                            <p>客戶名稱 ・ 幾秒</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 要加更多作品？複製上面任一個 portfolio-item 區塊，貼在這裡就好 -->
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Pain Points Section -->
+    <section class="section painpoints" id="painpoints">
+        <div class="container">
+            <p class="section-tag">PROBLEMS</p>
+            <h2 class="section-title">你是不是也遇到這些問題？</h2>
+            <p class="section-desc">如果你也有這些困擾，那我們可以聊聊。</p>
+
+            <div class="pain-tabs">
+                <button class="pain-tab active" data-target="creator">網紅 / 創作者</button>
+                <button class="pain-tab" data-target="brand">電商 / 品牌</button>
+            </div>
+
+            <div class="pain-group active" id="pain-creator">
+                <div class="pain-grid">
+                    <div class="pain-card">
+                        <div class="pain-icon">😩</div>
+                        <div class="pain-content">
+                            <h4>接了業配但沒人幫忙拍</h4>
+                            <p class="pain-problem">自己架腳架、自己喬角度，拍出來的畫面就是不對勁...</p>
+                            <div class="pain-solution">
+                                <span class="solution-label">我的解法</span>
+                                <p>我到場幫你跟拍＋引導肢體動作，你只需要專心當主角就好。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon">⏰</div>
+                        <div class="pain-content">
+                            <h4>剪片太花時間</h4>
+                            <p class="pain-problem">一支短影音搞一整天，時間都花在剪輯上，根本沒空創作新內容。</p>
+                            <div class="pain-solution">
+                                <span class="solution-label">我的解法</span>
+                                <p>素材丟給我，最快 3 個工作天交付成品，你專心產內容就好。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon">📉</div>
+                        <div class="pain-content">
+                            <h4>想做大量短影音但做不完</h4>
+                            <p class="pain-problem">演算法要求高頻率發片，但一個人根本產量跟不上。</p>
+                            <div class="pain-solution">
+                                <span class="solution-label">我的解法</span>
+                                <p>批量製作一次出 5-10 支，讓你的發片頻率不再掉鏈子。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon">💡</div>
+                        <div class="pain-content">
+                            <h4>沒靈感、不知道拍什麼</h4>
+                            <p class="pain-problem">對著鏡頭腦袋一片空白，不知道怎麼把產品拍得有趣。</p>
+                            <div class="pain-solution">
+                                <span class="solution-label">我的解法</span>
+                                <p>我幫你寫腳本、企劃內容方向，到現場直接告訴你怎麼演。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon">💸</div>
+                        <div class="pain-content">
+                            <h4>預算不多，請不起團隊</h4>
+                            <p class="pain-problem">找影像公司報價都好幾萬，小創作者根本負擔不起。</p>
+                            <div class="pain-solution">
+                                <span class="solution-label">我的解法</span>
+                                <p>我一個人搞定企劃、拍攝、剪輯全流程，費用只要團隊的零頭。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon">🤔</div>
+                        <div class="pain-content">
+                            <h4>剪出來怪怪的但說不出哪裡不對</h4>
+                            <p class="pain-problem">自己剪完總覺得少了什麼，節奏不對、轉場突兀。</p>
+                            <div class="pain-solution">
+                                <span class="solution-label">我的解法</span>
+                                <p>3 年商業剪輯經驗，我懂節奏感和畫面語言，幫你剪出專業質感。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pain-group" id="pain-brand">
+                <div class="pain-grid">
+                    <div class="pain-card">
+                        <div class="pain-icon">📱</div>
+                        <div class="pain-content">
+                            <h4>產品拍出來沒質感</h4>
+                            <p class="pain-problem">隨手拍的產品照看起來像路邊攤，放上去也沒人想買。</p>
+                            <div class="pain-solution">
+                                <span class="solution-label">我的解法</span>
+                                <p>3 年家具產業拍攝經驗，擅長把產品拍出氛圍感和生活感。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon">🔄</div>
+                        <div class="pain-content">
+                            <h4>廣告素材產量跟不上</h4>
+                            <p class="pain-problem">投廣告需要大量素材測試，但內部根本來不及做。</p>
+                            <div class="pain-solution">
+                                <span class="solution-label">我的解法</span>
+                                <p>批量製作，一次交付多支廣告素材，讓你的廣告帳戶不缺彈藥。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon">🧍</div>
+                        <div class="pain-content">
+                            <h4>模特兒拍起來很僵</h4>
+                            <p class="pain-problem">請了攝影師但不會引導，模特站在那不知道手要放哪。</p>
+                            <div class="pain-solution">
+                                <span class="solution-label">我的解法</span>
+                                <p>引導演員是我的專長，讓畫面自然有溫度，不再像尷尬的擺拍。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon">📐</div>
+                        <div class="pain-content">
+                            <h4>每個平台要不同尺寸</h4>
+                            <p class="pain-problem">IG 要方的、Reels 要直的、YouTube 要橫的，一支影片要做三版。</p>
+                            <div class="pain-solution">
+                                <span class="solution-label">我的解法</span>
+                                <p>一次幫你輸出所有平台需要的尺寸，不用再自己裁來裁去。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pain-cta">
+                <p>看到你的狀況了嗎？</p>
+                <a href="#pricing" class="btn btn-primary">看看方案價格</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section pricing" id="pricing">
+        <div class="container">
+            <p class="section-tag">PRICING</p>
+            <h2 class="section-title">方案價格</h2>
+            <p class="section-desc">價格都是大概的範圍，實際上會看你的需求來報，先聊聊最準。</p>
+            <div class="pricing-grid">
+                <!-- Plan 1 -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>純剪輯</h3>
+                        <p class="pricing-subtitle">你提供素材，我來剪輯</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="currency">NT$</span>
+                        <span class="amount">800 - 2,000</span>
+                        <span class="period">/ 支</span>
+                    </div>
+                    <p class="pricing-note">依影片長度與複雜度報價</p>
+                    <ul class="pricing-features">
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            短影音 / Reels / Shorts 剪輯
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            字幕 + 基礎音效
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            含 2 次修改
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            約 3 個工作天交付
+                        </li>
+                    </ul>
+                    <a href="#contact" class="btn btn-outline btn-full">聊聊需求</a>
+                </div>
+
+                <!-- Plan 2 - Popular -->
+                <div class="pricing-card popular">
+                    <div class="popular-badge">最受歡迎</div>
+                    <div class="pricing-header">
+                        <h3>短影音套餐</h3>
+                        <p class="pricing-subtitle">批量製作更划算，數量可彈性調整</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="currency">NT$</span>
+                        <span class="amount">6,000 - 15,000</span>
+                        <span class="period">/ 5-10 支</span>
+                    </div>
+                    <p class="pricing-note">量越多單價越優惠，可依預算討論</p>
+                    <ul class="pricing-features">
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            批量短影音剪輯
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            可含腳本企劃協助
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            字幕 + 音效 + 轉場
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            適配各平台尺寸
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            每支含 2 次修改
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            長期合作另有優惠
+                        </li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary btn-full">聊聊需求</a>
+                </div>
+
+                <!-- Plan 3 -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>全包方案</h3>
+                        <p class="pricing-subtitle">企劃 + 拍攝 + 剪輯一條龍</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="currency">NT$</span>
+                        <span class="amount">5,000 起</span>
+                        <span class="period">/ 專案</span>
+                    </div>
+                    <p class="pricing-note">依拍攝天數、影片數量與複雜度報價</p>
+                    <ul class="pricing-features">
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            腳本企劃與內容策略
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            現場拍攝（含演員引導）
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            後製剪輯 + 調色
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            可交付多支成品影片
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            原始素材可一併交付
+                        </li>
+                    </ul>
+                    <a href="#contact" class="btn btn-outline btn-full">聊聊需求</a>
+                </div>
+            </div>
+
+            <!-- Pricing Note -->
+            <div class="pricing-bottom-note">
+                <p>每個案子狀況不一樣，以上只是讓你有個概念。<br>直接跟我說你想做什麼、預算大概多少，我來幫你配最適合的方式。</p>
+            </div>
+
+            <!-- Add-ons -->
+            <div class="addons">
+                <h3>可加購 / 客製項目</h3>
+                <div class="addons-grid">
+                    <div class="addon-item">
+                        <span class="addon-name">額外修改</span>
+                        <span class="addon-price">依次數報價</span>
+                    </div>
+                    <div class="addon-item">
+                        <span class="addon-name">腳本企劃（單獨委託）</span>
+                        <span class="addon-price">NT$2,000 起</span>
+                    </div>
+                    <div class="addon-item">
+                        <span class="addon-name">急件加價</span>
+                        <span class="addon-price">依時程討論</span>
+                    </div>
+                    <div class="addon-item">
+                        <span class="addon-name">多平台尺寸輸出</span>
+                        <span class="addon-price">依數量報價</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="section process" id="process">
+        <div class="container">
+            <p class="section-tag">PROCESS</p>
+            <h2 class="section-title">合作流程</h2>
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>先聊聊</h3>
+                        <p>跟我說你想做什麼、大概什麼時候要，我會盡快回你。</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>確認內容跟價格</h3>
+                        <p>我會根據你的需求報價，講清楚做什麼、多少錢、什麼時候交。OK 的話先付一半訂金就開工。</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>開始做</h3>
+                        <p>寫腳本、拍攝、剪輯，過程中會跟你確認方向，不會做到最後才發現不是你要的。</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h3>交片</h3>
+                        <p>先給你看初版，可以改 2 次。滿意了就交檔案、付尾款，搞定。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image">
+                        <img src="profile.jpg" alt="Mochi" class="about-photo">
+                </div>
+                <div class="about-content">
+                    <p class="section-tag">ABOUT ME</p>
+                    <h2 class="section-title left">關於我</h2>
+                    <p>嗨，我是 Mochi。</p>
+                    <p>做影片這件事我已經做了 3 年，從想腳本、到現場拍、到後面剪輯，整個流程我自己一個人就可以完成。</p>
+                    <p>之前在家具品牌工作，拍了很多產品廣告，也常常要引導模特兒怎麼動、怎麼演，所以我很擅長讓畫面看起來自然不僵硬。</p>
+                    <p>我覺得拍片不一定要很貴的器材，<strong>重點是你會不會拍、會不會想</strong>。</p>
+                    <div class="about-tags">
+                        <span class="tag">商業廣告</span>
+                        <span class="tag">短影音</span>
+                        <span class="tag">腳本企劃</span>
+                        <span class="tag">產品拍攝</span>
+                        <span class="tag">演員引導</span>
+                        <span class="tag">剪映 CapCut</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <p class="section-tag">CONTACT</p>
+            <h2 class="section-title">找我聊聊</h2>
+            <p class="section-desc">有想法就直接丟訊息給我，不用想太多，聊了再說。</p>
+            <div class="contact-grid">
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">你的名字</label>
+                            <input type="text" id="name" name="name" placeholder="請輸入名字" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">需要什麼服務？</label>
+                        <select id="service" name="service">
+                            <option value="">請選擇</option>
+                            <option value="single">純剪輯（提供素材）</option>
+                            <option value="package">短影音套餐（批量製作）</option>
+                            <option value="fullservice">全包方案（企劃+拍攝+剪輯）</option>
+                            <option value="other">其他需求 / 先聊聊</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">專案描述</label>
+                        <textarea id="message" name="message" rows="5" placeholder="請描述你的需求，例如：影片用途、風格參考、預計數量、希望交付時間等..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">送出需求</button>
+                </form>
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <h4>其他聯繫方式</h4>
+                        <div class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            <span>hello@mochifilm.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span>台灣｜可遠端合作</span>
+                        </div>
+                        <div class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                            </svg>
+                            <span>@mochifilm</span>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <h4>常見問題</h4>
+                        <div class="faq-item">
+                            <strong>大概多久可以拿到？</strong>
+                            <p>看內容複雜度，通常 3-7 個工作天。很急的話可以討論。</p>
+                        </div>
+                        <div class="faq-item">
+                            <strong>要先付全額嗎？</strong>
+                            <p>不用，先付一半訂金就開工，滿意再付尾款。</p>
+                        </div>
+                        <div class="faq-item">
+                            <strong>素材要我自己拍嗎？</strong>
+                            <p>如果你選純剪輯就要提供素材；選全包的話我來拍。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <span class="footer-logo">MOCHI FILM</span>
+                <p>&copy; 2026 Mochi Film. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
