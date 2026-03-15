@@ -2,11 +2,20 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0a0a0a">
     <title>Mochi Film | 影像創作者</title>
+    <meta name="description" content="Mochi Film — 短影音剪輯、業配跟拍、腳本企劃。3 年商業影片經驗，一次可出 10 支短影音。">
+    <meta property="og:title" content="Mochi Film | 影像創作者">
+    <meta property="og:description" content="短影音剪輯、業配跟拍、腳本企劃。一個人幫你搞定拍攝到剪輯。">
+    <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,7 +29,7 @@
                 <a href="#portfolio">作品</a>
                 <a href="#pricing">方案價格</a>
                 <a href="#process">合作流程</a>
-                <a href="#contact" class="nav-cta">聯繫我</a>
+                <a href="#contact" class="nav-cta">私訊我</a>
             </div>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
                 <span></span>
@@ -43,6 +52,23 @@
                 拍攝・剪輯・腳本，我一個人就能幫你搞定<br>
                 短影音可以一次出 10 支，不用再自己慢慢磨
             </p>
+            <!-- Demo Reel：把下面的 src 換成你的精華集錦影片 -->
+            <div class="demo-reel">
+                <div class="demo-reel-placeholder" id="demoReelPlaceholder">
+                    <!--
+                    放你的 Demo Reel：
+                    <video src="demo-reel.mp4" muted loop playsinline webkit-playsinline></video>
+                    或嵌入 YouTube：
+                    <iframe src="https://www.youtube.com/embed/影片ID" allowfullscreen></iframe>
+                    -->
+                    <div class="demo-reel-empty">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <polygon points="5 3 19 12 5 21 5 3"/>
+                        </svg>
+                        <span>放你的 Demo Reel 精華集錦</span>
+                    </div>
+                </div>
+            </div>
             <div class="hero-actions">
                 <a href="#pricing" class="btn btn-primary">查看方案價格</a>
                 <a href="#portfolio" class="btn btn-outline">瀏覽作品</a>
@@ -284,68 +310,62 @@
             <div class="pain-group active" id="pain-creator">
                 <div class="pain-grid">
                     <div class="pain-card">
-                        <div class="pain-icon">😩</div>
                         <div class="pain-content">
-                            <h4>接了業配但沒人幫忙拍</h4>
-                            <p class="pain-problem">自己架腳架、自己喬角度，拍出來的畫面就是不對勁...</p>
+                            <h4>接了業配，但沒人幫拍</h4>
+                            <p class="pain-problem">自己架腳架拍，角度跟構圖怎麼調都不太對。</p>
                             <div class="pain-solution">
-                                <span class="solution-label">我的解法</span>
-                                <p>我到場幫你跟拍＋引導肢體動作，你只需要專心當主角就好。</p>
+                                <span class="solution-label">我可以</span>
+                                <p>到現場幫你跟拍，引導你的動作跟表情，你只要專心表現就好。</p>
                             </div>
                         </div>
                     </div>
                     <div class="pain-card">
-                        <div class="pain-icon">⏰</div>
                         <div class="pain-content">
-                            <h4>剪片太花時間</h4>
-                            <p class="pain-problem">一支短影音搞一整天，時間都花在剪輯上，根本沒空創作新內容。</p>
+                            <h4>剪片佔掉太多時間</h4>
+                            <p class="pain-problem">一支短影音剪一整天，時間都耗在後製，沒辦法專心做內容。</p>
                             <div class="pain-solution">
-                                <span class="solution-label">我的解法</span>
-                                <p>素材丟給我，最快 3 個工作天交付成品，你專心產內容就好。</p>
+                                <span class="solution-label">我可以</span>
+                                <p>素材給我就好，大約 3 個工作天交件，你的時間留給創作。</p>
                             </div>
                         </div>
                     </div>
                     <div class="pain-card">
-                        <div class="pain-icon">📉</div>
                         <div class="pain-content">
-                            <h4>想做大量短影音但做不完</h4>
-                            <p class="pain-problem">演算法要求高頻率發片，但一個人根本產量跟不上。</p>
+                            <h4>發片量跟不上</h4>
+                            <p class="pain-problem">平台要你常常發，但一個人產量就是有限。</p>
                             <div class="pain-solution">
-                                <span class="solution-label">我的解法</span>
-                                <p>批量製作一次出 5-10 支，讓你的發片頻率不再掉鏈子。</p>
+                                <span class="solution-label">我可以</span>
+                                <p>一次幫你做 5-10 支，批量交付，發片節奏不用斷。</p>
                             </div>
                         </div>
                     </div>
                     <div class="pain-card">
-                        <div class="pain-icon">💡</div>
                         <div class="pain-content">
-                            <h4>沒靈感、不知道拍什麼</h4>
-                            <p class="pain-problem">對著鏡頭腦袋一片空白，不知道怎麼把產品拍得有趣。</p>
+                            <h4>不知道要拍什麼</h4>
+                            <p class="pain-problem">看著鏡頭不知道要說什麼、怎麼開場，產品拿在手上也不知道怎麼呈現。</p>
                             <div class="pain-solution">
-                                <span class="solution-label">我的解法</span>
-                                <p>我幫你寫腳本、企劃內容方向，到現場直接告訴你怎麼演。</p>
+                                <span class="solution-label">我可以</span>
+                                <p>幫你寫好腳本、規劃拍攝內容，到現場直接帶你走流程。</p>
                             </div>
                         </div>
                     </div>
                     <div class="pain-card">
-                        <div class="pain-icon">💸</div>
                         <div class="pain-content">
-                            <h4>預算不多，請不起團隊</h4>
-                            <p class="pain-problem">找影像公司報價都好幾萬，小創作者根本負擔不起。</p>
+                            <h4>預算有限，請不起團隊</h4>
+                            <p class="pain-problem">影像公司隨便報都好幾萬，剛起步的創作者很難負擔。</p>
                             <div class="pain-solution">
-                                <span class="solution-label">我的解法</span>
-                                <p>我一個人搞定企劃、拍攝、剪輯全流程，費用只要團隊的零頭。</p>
+                                <span class="solution-label">我可以</span>
+                                <p>企劃到剪輯我一個人就能完成，省下團隊的溝通成本和費用。</p>
                             </div>
                         </div>
                     </div>
                     <div class="pain-card">
-                        <div class="pain-icon">🤔</div>
                         <div class="pain-content">
-                            <h4>剪出來怪怪的但說不出哪裡不對</h4>
-                            <p class="pain-problem">自己剪完總覺得少了什麼，節奏不對、轉場突兀。</p>
+                            <h4>自己剪的總覺得差一點</h4>
+                            <p class="pain-problem">看別人的影片很流暢，自己剪的就是少了那個感覺，但又說不上來。</p>
                             <div class="pain-solution">
-                                <span class="solution-label">我的解法</span>
-                                <p>3 年商業剪輯經驗，我懂節奏感和畫面語言，幫你剪出專業質感。</p>
+                                <span class="solution-label">我可以</span>
+                                <p>做了 3 年商業剪輯，對節奏跟轉場比較有經驗，幫你把質感拉上來。</p>
                             </div>
                         </div>
                     </div>
@@ -355,46 +375,42 @@
             <div class="pain-group" id="pain-brand">
                 <div class="pain-grid">
                     <div class="pain-card">
-                        <div class="pain-icon">📱</div>
                         <div class="pain-content">
-                            <h4>產品拍出來沒質感</h4>
-                            <p class="pain-problem">隨手拍的產品照看起來像路邊攤，放上去也沒人想買。</p>
+                            <h4>產品影片拍不出質感</h4>
+                            <p class="pain-problem">自己拍的素材放上去，看起來就是不夠有吸引力。</p>
                             <div class="pain-solution">
-                                <span class="solution-label">我的解法</span>
-                                <p>3 年家具產業拍攝經驗，擅長把產品拍出氛圍感和生活感。</p>
+                                <span class="solution-label">我可以</span>
+                                <p>之前在家具品牌做了 3 年，對產品怎麼拍才好看蠻有心得的。</p>
                             </div>
                         </div>
                     </div>
                     <div class="pain-card">
-                        <div class="pain-icon">🔄</div>
                         <div class="pain-content">
-                            <h4>廣告素材產量跟不上</h4>
-                            <p class="pain-problem">投廣告需要大量素材測試，但內部根本來不及做。</p>
+                            <h4>廣告素材來不及做</h4>
+                            <p class="pain-problem">投廣告需要不同版本的素材去測，但內部人力做不了那麼多。</p>
                             <div class="pain-solution">
-                                <span class="solution-label">我的解法</span>
-                                <p>批量製作，一次交付多支廣告素材，讓你的廣告帳戶不缺彈藥。</p>
+                                <span class="solution-label">我可以</span>
+                                <p>批量幫你做，一次交多支不同版本，讓你有足夠的素材可以測。</p>
                             </div>
                         </div>
                     </div>
                     <div class="pain-card">
-                        <div class="pain-icon">🧍</div>
                         <div class="pain-content">
-                            <h4>模特兒拍起來很僵</h4>
-                            <p class="pain-problem">請了攝影師但不會引導，模特站在那不知道手要放哪。</p>
+                            <h4>模特兒拍起來很不自然</h4>
+                            <p class="pain-problem">找了人來拍，但畫面看起來很僵，表情動作都很不自在。</p>
                             <div class="pain-solution">
-                                <span class="solution-label">我的解法</span>
-                                <p>引導演員是我的專長，讓畫面自然有溫度，不再像尷尬的擺拍。</p>
+                                <span class="solution-label">我可以</span>
+                                <p>引導演員是我比較擅長的部分，可以讓畫面看起來更自然。</p>
                             </div>
                         </div>
                     </div>
                     <div class="pain-card">
-                        <div class="pain-icon">📐</div>
                         <div class="pain-content">
-                            <h4>每個平台要不同尺寸</h4>
-                            <p class="pain-problem">IG 要方的、Reels 要直的、YouTube 要橫的，一支影片要做三版。</p>
+                            <h4>不同平台要不同尺寸</h4>
+                            <p class="pain-problem">IG 要方的、Reels 要直的、YouTube 要橫的，同一支片要改好幾版。</p>
                             <div class="pain-solution">
-                                <span class="solution-label">我的解法</span>
-                                <p>一次幫你輸出所有平台需要的尺寸，不用再自己裁來裁去。</p>
+                                <span class="solution-label">我可以</span>
+                                <p>一次幫你輸出各平台需要的格式，不用自己一個一個調。</p>
                             </div>
                         </div>
                     </div>
@@ -623,77 +639,98 @@
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section class="section testimonials" id="testimonials">
+        <div class="container">
+            <p class="section-tag">FEEDBACK</p>
+            <h2 class="section-title">合作過的人怎麼說</h2>
+            <div class="testimonials-grid">
+                <!--
+                  把下面的內容換成你真實的客戶回饋。
+                  如果目前還沒有，可以先放同事或朋友的評價，
+                  之後接到案子再慢慢換成真的客戶。
+                -->
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"效率很高，溝通也很順，給了素材沒幾天就收到成品，而且品質比我預期的好很多。"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">A</div>
+                        <div>
+                            <span class="testimonial-name">客戶名稱</span>
+                            <span class="testimonial-role">身份 / 品牌名</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"拍攝當天很會帶動作，本來以為自己會很尷尬，結果拍出來很自然，完全不像第一次合作。"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">B</div>
+                        <div>
+                            <span class="testimonial-name">客戶名稱</span>
+                            <span class="testimonial-role">身份 / 品牌名</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"一次給了 10 支短影音，每支都可以直接發，省了我超多時間。之後一定會再合作。"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">C</div>
+                        <div>
+                            <span class="testimonial-name">客戶名稱</span>
+                            <span class="testimonial-role">身份 / 品牌名</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section class="section contact" id="contact">
         <div class="container">
             <p class="section-tag">CONTACT</p>
-            <h2 class="section-title">找我聊聊</h2>
+            <h2 class="section-title">直接私訊我</h2>
             <p class="section-desc">有想法就直接丟訊息給我，不用想太多，聊了再說。</p>
-            <div class="contact-grid">
-                <form class="contact-form" id="contactForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="name">你的名字</label>
-                            <input type="text" id="name" name="name" placeholder="請輸入名字" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
-                        </div>
+            <div class="contact-buttons">
+                <a href="https://www.instagram.com/mochi_flm/" target="_blank" rel="noopener" class="contact-btn ig-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                    </svg>
+                    <div class="contact-btn-text">
+                        <span class="contact-btn-label">Instagram 私訊</span>
+                        <span class="contact-btn-id">@mochi_flm</span>
                     </div>
-                    <div class="form-group">
-                        <label for="service">需要什麼服務？</label>
-                        <select id="service" name="service">
-                            <option value="">請選擇</option>
-                            <option value="single">純剪輯（提供素材）</option>
-                            <option value="package">短影音套餐（批量製作）</option>
-                            <option value="fullservice">全包方案（企劃+拍攝+剪輯）</option>
-                            <option value="other">其他需求 / 先聊聊</option>
-                        </select>
+                </a>
+                <a href="https://line.me/ti/p/6ggHrSV_ZE" target="_blank" rel="noopener" class="contact-btn line-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+                    </svg>
+                    <div class="contact-btn-text">
+                        <span class="contact-btn-label">LINE 加好友</span>
+                        <span class="contact-btn-id">點擊直接加</span>
                     </div>
-                    <div class="form-group">
-                        <label for="message">專案描述</label>
-                        <textarea id="message" name="message" rows="5" placeholder="請描述你的需求，例如：影片用途、風格參考、預計數量、希望交付時間等..."></textarea>
+                </a>
+            </div>
+            <div class="contact-faq">
+                <h3>常見問題</h3>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <strong>大概多久可以拿到？</strong>
+                        <p>看內容複雜度，通常 3-7 個工作天。很急的話可以討論。</p>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-full">送出需求</button>
-                </form>
-                <div class="contact-info">
-                    <div class="contact-card">
-                        <h4>其他聯繫方式</h4>
-                        <div class="contact-item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                            </svg>
-                            <span>hello@mochifilm.com</span>
-                        </div>
-                        <div class="contact-item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                            <span>台灣｜可遠端合作</span>
-                        </div>
-                        <div class="contact-item">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                            </svg>
-                            <span>@mochifilm</span>
-                        </div>
+                    <div class="faq-item">
+                        <strong>要先付全額嗎？</strong>
+                        <p>不用，先付一半訂金就開工，滿意再付尾款。</p>
                     </div>
-                    <div class="contact-card">
-                        <h4>常見問題</h4>
-                        <div class="faq-item">
-                            <strong>大概多久可以拿到？</strong>
-                            <p>看內容複雜度，通常 3-7 個工作天。很急的話可以討論。</p>
-                        </div>
-                        <div class="faq-item">
-                            <strong>要先付全額嗎？</strong>
-                            <p>不用，先付一半訂金就開工，滿意再付尾款。</p>
-                        </div>
-                        <div class="faq-item">
-                            <strong>素材要我自己拍嗎？</strong>
-                            <p>如果你選純剪輯就要提供素材；選全包的話我來拍。</p>
-                        </div>
+                    <div class="faq-item">
+                        <strong>素材要我自己拍嗎？</strong>
+                        <p>如果你選純剪輯就要提供素材；選全包的話我來拍。</p>
+                    </div>
+                    <div class="faq-item">
+                        <strong>可以遠端合作嗎？</strong>
+                        <p>可以，純剪輯的話不管你在哪都能合作。需要拍攝的話再討論地點。</p>
                     </div>
                 </div>
             </div>
@@ -709,6 +746,28 @@
             </div>
         </div>
     </footer>
+
+    <!-- Floating Mobile CTA -->
+    <div class="mobile-cta">
+        <a href="https://www.instagram.com/mochi_flm/" target="_blank" rel="noopener" class="mobile-cta-btn ig">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            </svg>
+            IG 私訊
+        </a>
+        <a href="https://line.me/ti/p/6ggHrSV_ZE" target="_blank" rel="noopener" class="mobile-cta-btn line">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                <path d="M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+            </svg>
+            LINE
+        </a>
+    </div>
+
+    <!-- Video Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&#10005;</button>
+        <div class="lightbox-content" id="lightboxContent"></div>
+    </div>
 
     <script src="script.js"></script>
 </body>
