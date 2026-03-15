@@ -1645,6 +1645,15 @@ body.loaded .anim-reveal {
     margin-bottom: 8px;
 }
 
+.collab-info p a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.collab-info p a:hover {
+    text-decoration: underline;
+}
+
 .collab-type {
     font-size: 0.75rem;
     color: var(--accent);
