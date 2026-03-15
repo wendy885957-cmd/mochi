@@ -78,15 +78,17 @@ img {
     right: 0;
     z-index: 1000;
     padding: 20px 0;
+    padding-top: max(20px, env(safe-area-inset-top));
     transition: var(--transition);
     background: transparent;
 }
 
 .navbar.scrolled {
-    background: rgba(10, 10, 10, 0.9);
+    background: rgba(10, 10, 10, 0.92);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     padding: 14px 0;
+    padding-top: max(14px, env(safe-area-inset-top));
     border-bottom: 1px solid var(--border);
 }
 
@@ -1795,13 +1797,23 @@ body.loaded .anim-reveal {
 }
 
 .mobile-cta-btn.ig {
-    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
-    color: white;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+}
+
+.mobile-cta-btn.ig svg {
+    color: #E4405F;
 }
 
 .mobile-cta-btn.line {
-    background: #06C755;
-    color: white;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+}
+
+.mobile-cta-btn.line svg {
+    color: #06C755;
 }
 
 @media (max-width: 768px) {
