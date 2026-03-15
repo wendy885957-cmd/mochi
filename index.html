@@ -39,58 +39,65 @@
         </div>
     </nav>
 
+    <!-- Opening Curtain -->
+    <div class="curtain" id="curtain">
+        <div class="curtain-logo">MOCHI FILM</div>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero" id="hero">
         <div class="hero-bg-overlay"></div>
+
+        <!-- Demo Reel 背景影片：換成你的影片就會變成全螢幕背景播放 -->
+        <div class="hero-video-bg">
+            <!--
+            <video src="demo-reel.mp4" muted loop autoplay playsinline webkit-playsinline></video>
+            -->
+        </div>
+
         <div class="hero-content">
-            <p class="hero-tag">VIDEO CREATOR & EDITOR</p>
+            <div class="hero-line anim-reveal" style="--delay: 0.8s">
+                <p class="hero-tag">VIDEO CREATOR & EDITOR</p>
+            </div>
             <h1 class="hero-title">
-                你負責發光<br>
-                <span class="gradient-text">我負責拍下來</span>
+                <div class="hero-line anim-reveal" style="--delay: 1.0s">
+                    <span>你負責發光</span>
+                </div>
+                <div class="hero-line anim-reveal" style="--delay: 1.2s">
+                    <span class="gradient-text">我負責拍下來</span>
+                </div>
             </h1>
-            <p class="hero-desc">
-                拍攝・剪輯・腳本，我一個人就能幫你搞定<br>
-                短影音可以一次出 10 支，不用再自己慢慢磨
-            </p>
-            <!-- Demo Reel：把下面的 src 換成你的精華集錦影片 -->
-            <div class="demo-reel">
-                <div class="demo-reel-placeholder" id="demoReelPlaceholder">
-                    <!--
-                    放你的 Demo Reel：
-                    <video src="demo-reel.mp4" muted loop playsinline webkit-playsinline></video>
-                    或嵌入 YouTube：
-                    <iframe src="https://www.youtube.com/embed/影片ID" allowfullscreen></iframe>
-                    -->
-                    <div class="demo-reel-empty">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <polygon points="5 3 19 12 5 21 5 3"/>
-                        </svg>
-                        <span>放你的 Demo Reel 精華集錦</span>
+            <div class="hero-line anim-reveal" style="--delay: 1.5s">
+                <p class="hero-desc">
+                    拍攝・剪輯・腳本，一個人幫你全部搞定
+                </p>
+            </div>
+            <div class="hero-line anim-reveal" style="--delay: 1.7s">
+                <div class="hero-actions">
+                    <a href="#portfolio" class="btn btn-primary">看我的作品</a>
+                    <a href="#contact" class="btn btn-outline">找我合作</a>
+                </div>
+            </div>
+            <div class="hero-line anim-reveal" style="--delay: 2.0s">
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">3+</span>
+                        <span class="stat-label">年經驗</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">影片產出</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">支/次交付</span>
                     </div>
                 </div>
             </div>
-            <div class="hero-actions">
-                <a href="#pricing" class="btn btn-primary">查看方案價格</a>
-                <a href="#portfolio" class="btn btn-outline">瀏覽作品</a>
-            </div>
-            <div class="hero-stats">
-                <div class="stat">
-                    <span class="stat-number">3+</span>
-                    <span class="stat-label">年經驗</span>
-                </div>
-                <div class="stat-divider"></div>
-                <div class="stat">
-                    <span class="stat-number">500+</span>
-                    <span class="stat-label">影片產出</span>
-                </div>
-                <div class="stat-divider"></div>
-                <div class="stat">
-                    <span class="stat-number">10+</span>
-                    <span class="stat-label">支/次交付</span>
-                </div>
-            </div>
         </div>
-        <div class="scroll-indicator">
+        <div class="scroll-indicator anim-reveal" style="--delay: 2.3s">
             <span>SCROLL</span>
             <div class="scroll-line"></div>
         </div>

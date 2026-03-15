@@ -1,3 +1,16 @@
+// Opening animation
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        document.body.classList.add('loaded');
+    }, 200);
+
+    // Remove curtain from DOM after animation
+    const curtain = document.getElementById('curtain');
+    if (curtain) {
+        setTimeout(() => curtain.remove(), 1800);
+    }
+});
+
 // Navbar scroll effect
 const navbar = document.getElementById('navbar');
 let lastScroll = 0;
@@ -26,11 +39,13 @@ const navLinks = document.querySelector('.nav-links');
 
 navToggle.addEventListener('click', () => {
     navLinks.classList.toggle('active');
+    document.body.classList.toggle('nav-open');
 });
 
 navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
         navLinks.classList.remove('active');
+        document.body.classList.remove('nav-open');
     });
 });
 
