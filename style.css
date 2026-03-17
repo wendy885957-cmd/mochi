@@ -1698,6 +1698,21 @@ a.portfolio-link {
     text-decoration: underline;
 }
 
+a.collab-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+a.collab-link .collab-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+a.collab-link .collab-type {
+    white-space: nowrap;
+}
+
 .collab-type {
     font-size: 0.75rem;
     color: var(--accent);
