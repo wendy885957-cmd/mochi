@@ -1666,13 +1666,15 @@ a.portfolio-link {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 20px;
+    padding: 24px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    gap: 12px;
+    gap: 16px;
     transition: var(--transition);
+    min-height: 140px;
 }
 
 .collab-card:hover {
@@ -1682,43 +1684,48 @@ a.portfolio-link {
 }
 
 .collab-logo {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
+    width: 100%;
+    max-width: 120px;
+    height: 48px;
     overflow: hidden;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(200, 169, 126, 0.1);
-    border: 2px solid var(--accent);
     font-family: 'Inter', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 800;
     color: var(--accent);
+    letter-spacing: 2px;
 }
 
 .collab-logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: grayscale(100%) brightness(1.8);
+    transition: var(--transition);
+}
+
+.collab-card:hover .collab-logo img {
+    filter: grayscale(0%) brightness(1);
 }
 
 .collab-info {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
 }
 
 .collab-info h4 {
-    font-size: 0.92rem;
+    font-size: 0.88rem;
     font-weight: 600;
     margin: 0;
 }
 
 .collab-info p {
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     color: var(--text-muted);
     margin: 0;
 }
@@ -1738,9 +1745,9 @@ a.collab-link {
 }
 
 .collab-type {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     color: var(--accent);
-    background: rgba(200, 169, 126, 0.1);
+    background: rgba(200, 169, 126, 0.08);
     padding: 3px 10px;
     border-radius: 50px;
     white-space: nowrap;
@@ -1757,6 +1764,11 @@ a.collab-link {
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
     }
+
+    .collab-card {
+        min-height: 120px;
+        padding: 20px 16px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1767,16 +1779,16 @@ a.collab-link {
 
     .collab-card {
         padding: 16px 12px;
+        min-height: 110px;
     }
 
     .collab-logo {
-        width: 44px;
-        height: 44px;
-        font-size: 1rem;
+        height: 36px;
+        font-size: 1.2rem;
     }
 
     .collab-info h4 {
-        font-size: 0.82rem;
+        font-size: 0.8rem;
     }
 }
 
