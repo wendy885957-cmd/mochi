@@ -26,10 +26,10 @@
         <div class="nav-container">
             <a href="#" class="nav-logo">MOCHI FILM</a>
             <div class="nav-links">
-                <a href="#services">服務項目</a>
                 <a href="#portfolio">作品</a>
-                <a href="#pricing">方案價格</a>
-                <a href="#process">合作流程</a>
+                <a href="#collab">合作經歷</a>
+                <a href="#services">服務</a>
+                <a href="#pricing">價格</a>
                 <a href="#contact" class="nav-cta">私訊我</a>
             </div>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
@@ -46,117 +46,25 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="hero" id="hero">
+    <section class="hero hero-minimal" id="hero">
         <div class="hero-bg-overlay"></div>
-
-        <!-- Demo Reel 背景影片：換成你的影片就會變成全螢幕背景播放 -->
-        <div class="hero-video-bg">
-            <!--
-            <video src="demo-reel.mp4" muted loop autoplay playsinline webkit-playsinline></video>
-            -->
-        </div>
-
         <div class="hero-content">
             <div class="hero-line anim-reveal" style="--delay: 0.8s">
-                <p class="hero-tag">VIDEO CREATOR & EDITOR</p>
+                <h1 class="hero-title"><span class="gradient-text">MOCHI FILM</span></h1>
             </div>
-            <h1 class="hero-title">
-                <div class="hero-line anim-reveal" style="--delay: 1.0s">
-                    <span>你負責發光</span>
-                </div>
-                <div class="hero-line anim-reveal" style="--delay: 1.2s">
-                    <span class="gradient-text">我負責拍下來</span>
-                </div>
-            </h1>
-            <div class="hero-line anim-reveal" style="--delay: 1.5s">
-                <p class="hero-desc">
-                    拍攝・剪輯・腳本，一個人幫你全部搞定
-                </p>
+            <div class="hero-line anim-reveal" style="--delay: 1.1s">
+                <p class="hero-desc">剪輯 ・ 拍攝 ・ 腳本</p>
             </div>
-            <div class="hero-line anim-reveal" style="--delay: 1.7s">
+            <div class="hero-line anim-reveal" style="--delay: 1.4s">
                 <div class="hero-actions">
                     <a href="#portfolio" class="btn btn-primary">看我的作品</a>
                     <a href="#contact" class="btn btn-outline">找我合作</a>
                 </div>
             </div>
-            <div class="hero-line anim-reveal" style="--delay: 2.0s">
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">3+</span>
-                        <span class="stat-label">年經驗</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat">
-                        <span class="stat-number">500+</span>
-                        <span class="stat-label">影片產出</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat">
-                        <span class="stat-number">10+</span>
-                        <span class="stat-label">支/次交付</span>
-                    </div>
-                </div>
-            </div>
         </div>
-        <div class="scroll-indicator anim-reveal" style="--delay: 2.3s">
+        <div class="scroll-indicator anim-reveal" style="--delay: 1.7s">
             <span>SCROLL</span>
             <div class="scroll-line"></div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="section services" id="services">
-        <div class="container">
-            <p class="section-tag">SERVICES</p>
-            <h2 class="section-title">我可以幫你什麼</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                        </svg>
-                    </div>
-                    <h3>短影音剪輯</h3>
-                    <p>你把素材丟給我，我幫你剪成可以直接發的 Reels、TikTok、Shorts，一次可以出很多支</p>
-                    <ul class="service-features">
-                        <li>幫你想腳本</li>
-                        <li>卡節奏、配音效</li>
-                        <li>上字幕</li>
-                        <li>各平台尺寸都幫你弄好</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
-                            <circle cx="12" cy="13" r="3"/>
-                        </svg>
-                    </div>
-                    <h3>業配跟拍</h3>
-                    <p>接了業配但沒人拍沒人剪？我來幫你搞定。跟拍 + 剪輯一次到位，你只需要專心當主角就好</p>
-                    <ul class="service-features">
-                        <li>業配 / 合作內容跟拍</li>
-                        <li>引導肢體與表達</li>
-                        <li>現場收音</li>
-                        <li>拍完直接幫你剪好</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                        </svg>
-                    </div>
-                    <h3>腳本企劃</h3>
-                    <p>不知道要拍什麼？我幫你想。從內容方向到分鏡腳本，到現場直接告訴你怎麼演</p>
-                    <ul class="service-features">
-                        <li>幫你想內容方向</li>
-                        <li>寫好腳本跟分鏡</li>
-                        <li>研究現在什麼題材會紅</li>
-                        <li>怎麼拍比較容易被推</li>
-                    </ul>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -262,6 +170,167 @@
 
                 <!-- 要加更多作品？複製上面任一個 portfolio-item 區塊就好 -->
 
+            </div>
+        </div>
+    </section>
+
+    <!-- Collaboration Section -->
+    <section class="section collab" id="collab">
+        <div class="container">
+            <p class="section-tag">COLLABORATION</p>
+            <h2 class="section-title">合作經歷</h2>
+            <p class="section-desc">曾參與以下藝人、網紅的影片拍攝與製作</p>
+            <div class="collab-grid">
+
+                <!-- 放合照：把 collab-photo-placeholder 換成 <img src="合照.jpg" alt="與王中平合作"> -->
+                <div class="collab-card">
+                    <div class="collab-photo">
+                        <div class="collab-photo-placeholder">照片</div>
+                    </div>
+                    <div class="collab-info">
+                        <h4>王中平</h4>
+                        <p>知名藝人</p>
+                        <span class="collab-type">商業廣告拍攝</span>
+                    </div>
+                </div>
+
+                <div class="collab-card">
+                    <div class="collab-photo">
+                        <div class="collab-photo-placeholder">照片</div>
+                    </div>
+                    <div class="collab-info">
+                        <h4>張媛</h4>
+                        <p><a href="https://www.instagram.com/cyuan.tw/" target="_blank" rel="noopener">@cyuan.tw</a></p>
+                        <span class="collab-type">短影音剪輯 ・ 長期合作</span>
+                    </div>
+                </div>
+
+                <a href="https://www.facebook.com/bedclub.tw/" target="_blank" rel="noopener" class="collab-card collab-link">
+                    <div class="collab-info">
+                        <h4>床聚點</h4>
+                        <span class="collab-type">商業影片製作</span>
+                    </div>
+                </a>
+
+                <a href="https://www.facebook.com/osmansofatw" target="_blank" rel="noopener" class="collab-card collab-link">
+                    <div class="collab-info">
+                        <h4>奧斯曼沙發</h4>
+                        <span class="collab-type">商業影片製作</span>
+                    </div>
+                </a>
+
+                <a href="https://www.facebook.com/odshouse/" target="_blank" rel="noopener" class="collab-card collab-link">
+                    <div class="collab-info">
+                        <h4>歐德斯國際家具</h4>
+                        <span class="collab-type">商業影片製作</span>
+                    </div>
+                </a>
+
+                <a href="https://www.facebook.com/profile.php?id=61574407101944" target="_blank" rel="noopener" class="collab-card collab-link">
+                    <div class="collab-info">
+                        <h4>暖嶼家居 NuanYu</h4>
+                        <span class="collab-type">商業影片製作</span>
+                    </div>
+                </a>
+
+                <a href="https://www.facebook.com/sgtsofa" target="_blank" rel="noopener" class="collab-card collab-link">
+                    <div class="collab-info">
+                        <h4>舒格登電動沙發</h4>
+                        <span class="collab-type">商業影片製作</span>
+                    </div>
+                </a>
+
+                <a href="https://www.facebook.com/profile.php?id=61559098576833" target="_blank" rel="noopener" class="collab-card collab-link">
+                    <div class="collab-info">
+                        <h4>布可思椅</h4>
+                        <span class="collab-type">商業影片製作</span>
+                    </div>
+                </a>
+
+                <a href="https://www.facebook.com/ikhouse/" target="_blank" rel="noopener" class="collab-card collab-link">
+                    <div class="collab-info">
+                        <h4>IKhouse 功能家具</h4>
+                        <span class="collab-type">商業影片製作</span>
+                    </div>
+                </a>
+
+                <a href="https://www.facebook.com/mrwoodwork.tw" target="_blank" rel="noopener" class="collab-card collab-link">
+                    <div class="collab-info">
+                        <h4>木匠先生</h4>
+                        <span class="collab-type">商業影片製作</span>
+                    </div>
+                </a>
+
+                <a href="https://www.facebook.com/bedhere.tw" target="_blank" rel="noopener" class="collab-card collab-link">
+                    <div class="collab-info">
+                        <h4>床在這裡</h4>
+                        <span class="collab-type">商業影片製作</span>
+                    </div>
+                </a>
+
+                <a href="https://www.facebook.com/p/Heim%E6%B5%B7%E5%A7%86%E5%90%8D%E5%BA%8A-61565671727152/" target="_blank" rel="noopener" class="collab-card collab-link">
+                    <div class="collab-info">
+                        <h4>Heim 海姆名床</h4>
+                        <span class="collab-type">商業影片製作</span>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section services" id="services">
+        <div class="container">
+            <p class="section-tag">SERVICES</p>
+            <h2 class="section-title">我可以幫你什麼</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3>短影音剪輯</h3>
+                    <p>你把素材丟給我，我幫你剪成可以直接發的 Reels、TikTok、Shorts，一次可以出很多支</p>
+                    <ul class="service-features">
+                        <li>幫你想腳本</li>
+                        <li>卡節奏、配音效</li>
+                        <li>上字幕</li>
+                        <li>各平台尺寸都幫你弄好</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                            <circle cx="12" cy="13" r="3"/>
+                        </svg>
+                    </div>
+                    <h3>業配跟拍</h3>
+                    <p>接了業配但沒人拍沒人剪？我來幫你搞定。跟拍 + 剪輯一次到位，你只需要專心當主角就好</p>
+                    <ul class="service-features">
+                        <li>業配 / 合作內容跟拍</li>
+                        <li>引導肢體與表達</li>
+                        <li>現場收音</li>
+                        <li>拍完直接幫你剪好</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                        </svg>
+                    </div>
+                    <h3>腳本企劃</h3>
+                    <p>不知道要拍什麼？我幫你想。從內容方向到分鏡腳本，到現場直接告訴你怎麼演</p>
+                    <ul class="service-features">
+                        <li>幫你想內容方向</li>
+                        <li>寫好腳本跟分鏡</li>
+                        <li>研究現在什麼題材會紅</li>
+                        <li>怎麼拍比較容易被推</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -391,6 +460,47 @@
             <div class="pain-cta">
                 <p>看到你的狀況了嗎？</p>
                 <a href="#pricing" class="btn btn-primary">看看方案價格</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image">
+                        <img src="profile.jpg" alt="Mochi" class="about-photo">
+                </div>
+                <div class="about-content">
+                    <p class="section-tag">ABOUT ME</p>
+                    <h2 class="section-title left">關於我</h2>
+                    <p>嗨，我是 Mochi。</p>
+                    <p>做影片這件事我已經做了 3 年，從想腳本、到現場拍、到後面剪輯，整個流程我自己一個人就可以完成。</p>
+                    <p>之前在家具品牌工作，拍了很多產品廣告，也常常要引導模特兒怎麼動、怎麼演，所以我很擅長讓畫面看起來自然不僵硬。</p>
+                    <p>我覺得拍片不一定要很貴的器材，<strong>重點是你會不會拍、會不會想</strong>。</p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <span class="stat-number">3+</span>
+                            <span class="stat-label">年經驗</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">影片產出</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">10+</span>
+                            <span class="stat-label">支/次交付</span>
+                        </div>
+                    </div>
+                    <div class="about-tags">
+                        <span class="tag">商業廣告</span>
+                        <span class="tag">短影音</span>
+                        <span class="tag">腳本企劃</span>
+                        <span class="tag">產品拍攝</span>
+                        <span class="tag">演員引導</span>
+                        <span class="tag">剪映 CapCut</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -579,138 +689,6 @@
                         <p>先給你看初版，可以改 2 次。滿意了就交檔案、付尾款，搞定。</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="section about" id="about">
-        <div class="container">
-            <div class="about-grid">
-                <div class="about-image">
-                        <img src="profile.jpg" alt="Mochi" class="about-photo">
-                </div>
-                <div class="about-content">
-                    <p class="section-tag">ABOUT ME</p>
-                    <h2 class="section-title left">關於我</h2>
-                    <p>嗨，我是 Mochi。</p>
-                    <p>做影片這件事我已經做了 3 年，從想腳本、到現場拍、到後面剪輯，整個流程我自己一個人就可以完成。</p>
-                    <p>之前在家具品牌工作，拍了很多產品廣告，也常常要引導模特兒怎麼動、怎麼演，所以我很擅長讓畫面看起來自然不僵硬。</p>
-                    <p>我覺得拍片不一定要很貴的器材，<strong>重點是你會不會拍、會不會想</strong>。</p>
-                    <div class="about-tags">
-                        <span class="tag">商業廣告</span>
-                        <span class="tag">短影音</span>
-                        <span class="tag">腳本企劃</span>
-                        <span class="tag">產品拍攝</span>
-                        <span class="tag">演員引導</span>
-                        <span class="tag">剪映 CapCut</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Collaboration Section -->
-    <section class="section collab" id="collab">
-        <div class="container">
-            <p class="section-tag">COLLABORATION</p>
-            <h2 class="section-title">合作經歷</h2>
-            <p class="section-desc">曾參與以下藝人、網紅的影片拍攝與製作</p>
-            <div class="collab-grid">
-
-                <!-- 放合照：把 collab-photo-placeholder 換成 <img src="合照.jpg" alt="與王中平合作"> -->
-                <div class="collab-card">
-                    <div class="collab-photo">
-                        <div class="collab-photo-placeholder">照片</div>
-                    </div>
-                    <div class="collab-info">
-                        <h4>王中平</h4>
-                        <p>知名藝人</p>
-                        <span class="collab-type">商業廣告拍攝</span>
-                    </div>
-                </div>
-
-                <div class="collab-card">
-                    <div class="collab-photo">
-                        <div class="collab-photo-placeholder">照片</div>
-                    </div>
-                    <div class="collab-info">
-                        <h4>張媛</h4>
-                        <p><a href="https://www.instagram.com/cyuan.tw/" target="_blank" rel="noopener">@cyuan.tw</a></p>
-                        <span class="collab-type">短影音剪輯 ・ 長期合作</span>
-                    </div>
-                </div>
-
-                <a href="https://www.facebook.com/bedclub.tw/" target="_blank" rel="noopener" class="collab-card collab-link">
-                    <div class="collab-info">
-                        <h4>床聚點</h4>
-                        <span class="collab-type">商業影片製作</span>
-                    </div>
-                </a>
-
-                <a href="https://www.facebook.com/osmansofatw" target="_blank" rel="noopener" class="collab-card collab-link">
-                    <div class="collab-info">
-                        <h4>奧斯曼沙發</h4>
-                        <span class="collab-type">商業影片製作</span>
-                    </div>
-                </a>
-
-                <a href="https://www.facebook.com/odshouse/" target="_blank" rel="noopener" class="collab-card collab-link">
-                    <div class="collab-info">
-                        <h4>歐德斯國際家具</h4>
-                        <span class="collab-type">商業影片製作</span>
-                    </div>
-                </a>
-
-                <a href="https://www.facebook.com/profile.php?id=61574407101944" target="_blank" rel="noopener" class="collab-card collab-link">
-                    <div class="collab-info">
-                        <h4>暖嶼家居 NuanYu</h4>
-                        <span class="collab-type">商業影片製作</span>
-                    </div>
-                </a>
-
-                <a href="https://www.facebook.com/sgtsofa" target="_blank" rel="noopener" class="collab-card collab-link">
-                    <div class="collab-info">
-                        <h4>舒格登電動沙發</h4>
-                        <span class="collab-type">商業影片製作</span>
-                    </div>
-                </a>
-
-                <a href="https://www.facebook.com/profile.php?id=61559098576833" target="_blank" rel="noopener" class="collab-card collab-link">
-                    <div class="collab-info">
-                        <h4>布可思椅</h4>
-                        <span class="collab-type">商業影片製作</span>
-                    </div>
-                </a>
-
-                <a href="https://www.facebook.com/ikhouse/" target="_blank" rel="noopener" class="collab-card collab-link">
-                    <div class="collab-info">
-                        <h4>IKhouse 功能家具</h4>
-                        <span class="collab-type">商業影片製作</span>
-                    </div>
-                </a>
-
-                <a href="https://www.facebook.com/mrwoodwork.tw" target="_blank" rel="noopener" class="collab-card collab-link">
-                    <div class="collab-info">
-                        <h4>木匠先生</h4>
-                        <span class="collab-type">商業影片製作</span>
-                    </div>
-                </a>
-
-                <a href="https://www.facebook.com/bedhere.tw" target="_blank" rel="noopener" class="collab-card collab-link">
-                    <div class="collab-info">
-                        <h4>床在這裡</h4>
-                        <span class="collab-type">商業影片製作</span>
-                    </div>
-                </a>
-
-                <a href="https://www.facebook.com/p/Heim%E6%B5%B7%E5%A7%86%E5%90%8D%E5%BA%8A-61565671727152/" target="_blank" rel="noopener" class="collab-card collab-link">
-                    <div class="collab-info">
-                        <h4>Heim 海姆名床</h4>
-                        <span class="collab-type">商業影片製作</span>
-                    </div>
-                </a>
-
             </div>
         </div>
     </section>

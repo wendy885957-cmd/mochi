@@ -213,6 +213,15 @@ img {
 }
 
 
+.hero-minimal {
+    min-height: 80vh;
+}
+
+.hero-minimal .hero-title {
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    margin-bottom: 16px;
+}
+
 .hero-content {
     position: relative;
     text-align: center;
@@ -1193,6 +1202,26 @@ a.portfolio-link {
 
 .about-content strong {
     color: var(--accent);
+}
+
+.about-stats {
+    display: flex;
+    gap: 32px;
+    margin: 24px 0;
+}
+
+.about-stats .stat-number {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+}
+
+.about-stats .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
 }
 
 .about-tags {
