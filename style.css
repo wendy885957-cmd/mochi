@@ -1655,88 +1655,93 @@ a.portfolio-link {
     pointer-events: none;
 }
 
-.collab-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
+.collab-wall {
+    background: #f5f2ed;
+    border-radius: var(--radius);
+    padding: 40px 32px;
     margin-top: 48px;
 }
 
+.collab-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+}
+
 .collab-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px 20px;
+    padding: 24px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    gap: 16px;
+    gap: 10px;
     transition: var(--transition);
-    min-height: 140px;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.collab-card:nth-child(4n) {
+    border-right: none;
+}
+
+.collab-card:nth-last-child(-n+4) {
+    border-bottom: none;
 }
 
 .collab-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.03);
 }
 
 .collab-logo {
     width: 100%;
-    max-width: 120px;
-    height: 48px;
+    max-width: 140px;
+    height: 50px;
     overflow: hidden;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Inter', sans-serif;
-    font-size: 1.5rem;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 1.3rem;
     font-weight: 800;
-    color: var(--accent);
-    letter-spacing: 2px;
+    color: #333;
+    letter-spacing: 1px;
 }
 
 .collab-logo img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    filter: grayscale(100%) brightness(1.8);
-    transition: var(--transition);
-}
-
-.collab-card:hover .collab-logo img {
-    filter: grayscale(0%) brightness(1);
 }
 
 .collab-info {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
 }
 
 .collab-info h4 {
-    font-size: 0.88rem;
-    font-weight: 600;
+    font-size: 0.82rem;
+    font-weight: 500;
     margin: 0;
+    color: #555;
 }
 
 .collab-info p {
-    font-size: 0.75rem;
-    color: var(--text-muted);
+    font-size: 0.72rem;
+    color: #888;
     margin: 0;
 }
 
 .collab-info p a {
-    color: var(--accent);
+    color: #888;
     text-decoration: none;
 }
 
 .collab-info p a:hover {
-    text-decoration: underline;
+    color: #333;
 }
 
 a.collab-link {
@@ -1745,50 +1750,63 @@ a.collab-link {
 }
 
 .collab-type {
-    font-size: 0.68rem;
-    color: var(--accent);
-    background: rgba(200, 169, 126, 0.08);
-    padding: 3px 10px;
-    border-radius: 50px;
-    white-space: nowrap;
+    display: none;
 }
 
 @media (max-width: 968px) {
     .collab-grid {
         grid-template-columns: repeat(3, 1fr);
     }
+
+    .collab-card:nth-child(4n) {
+        border-right: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .collab-card:nth-child(3n) {
+        border-right: none;
+    }
+
+    .collab-card:nth-last-child(-n+4) {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .collab-card:nth-last-child(-n+3) {
+        border-bottom: none;
+    }
 }
 
 @media (max-width: 768px) {
+    .collab-wall {
+        padding: 24px 16px;
+    }
+
     .collab-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+    }
+
+    .collab-card:nth-child(3n) {
+        border-right: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .collab-card:nth-child(2n) {
+        border-right: none;
+    }
+
+    .collab-card:nth-last-child(-n+3) {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .collab-card:nth-last-child(-n+2) {
+        border-bottom: none;
     }
 
     .collab-card {
-        min-height: 120px;
-        padding: 20px 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    .collab-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-    }
-
-    .collab-card {
-        padding: 16px 12px;
-        min-height: 110px;
+        padding: 20px 12px;
     }
 
     .collab-logo {
-        height: 36px;
-        font-size: 1.2rem;
-    }
-
-    .collab-info h4 {
-        font-size: 0.8rem;
+        height: 40px;
+        font-size: 1.1rem;
     }
 }
 
