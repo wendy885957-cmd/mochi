@@ -1655,87 +1655,35 @@ a.portfolio-link {
     pointer-events: none;
 }
 
-/* Collab: selected clients style */
-.collab-wall {
-    margin-top: 48px;
-}
-
-.collab-grid {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-}
-
-.collab-card {
-    padding: 16px 24px;
-    transition: var(--transition);
-}
-
-.collab-card:hover {
-    opacity: 0.6;
-}
-
-.collab-logo {
-    display: none;
-}
-
-.collab-info {
-    display: block;
+/* Selected Clients */
+.clients-title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-weight: 800;
+    font-style: italic;
     text-align: center;
-}
-
-.collab-info h4 {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    margin: 0;
-    white-space: nowrap;
-}
-
-.collab-info p {
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    margin: 2px 0 0;
-}
-
-.collab-info p a {
     color: var(--accent);
-    text-decoration: none;
+    letter-spacing: 3px;
+    margin-bottom: 40px;
 }
 
-a.collab-link {
-    text-decoration: none;
-    color: inherit;
+.clients-list {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.collab-type {
-    display: none;
-}
-
-/* Divider dots between names */
-.collab-card + .collab-card {
-    position: relative;
-}
-
-.collab-card + .collab-card::before {
-    content: '·';
-    position: absolute;
-    left: -2px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-muted);
-    font-size: 1.2rem;
+.clients-list p {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 2.4;
+    letter-spacing: 1px;
 }
 
 @media (max-width: 768px) {
-    .collab-card {
-        padding: 10px 16px;
-    }
-
-    .collab-info h4 {
-        font-size: 0.85rem;
+    .clients-list p {
+        line-height: 2.2;
     }
 }
 
