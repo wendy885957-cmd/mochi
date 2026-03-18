@@ -1658,8 +1658,8 @@ a.portfolio-link {
 /* Celebrity / Influencer Grid */
 .celeb-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
     margin-bottom: 60px;
 }
 
@@ -1672,49 +1672,87 @@ a.portfolio-link {
     transform: translateY(-4px);
 }
 
-.celeb-card img {
+.celeb-img-wrap {
+    position: relative;
     width: 100%;
     aspect-ratio: 1;
-    object-fit: cover;
     border-radius: var(--radius);
-    filter: grayscale(30%);
-    transition: var(--transition);
+    overflow: hidden;
 }
 
-.celeb-card:hover img {
-    filter: grayscale(0%);
+.celeb-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
 }
 
-.celeb-card span {
+.celeb-card:hover .celeb-img-wrap img {
+    transform: scale(1.05);
+}
+
+.celeb-card > span {
     display: block;
-    margin-top: 10px;
-    font-size: 0.82rem;
-    color: var(--text-secondary);
-    font-weight: 400;
+    margin-top: 14px;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* Flip badge for multiple collabs */
+.flip-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 50px;
+    z-index: 2;
+}
+
+/* Flip animation for wang-zhongping */
+.celeb-flip .celeb-img-wrap img {
+    animation: celebFlip 8s ease-in-out infinite;
+}
+
+@keyframes celebFlip {
+    0%, 20% { opacity: 1; transform: scale(1); }
+    22% { opacity: 0; transform: scale(0.95) rotateY(15deg); }
+    25%, 45% { opacity: 1; transform: scale(1); }
+    47% { opacity: 0; transform: scale(0.95) rotateY(15deg); }
+    50%, 70% { opacity: 1; transform: scale(1); }
+    72% { opacity: 0; transform: scale(0.95) rotateY(15deg); }
+    75%, 95% { opacity: 1; transform: scale(1); }
+    97% { opacity: 0; transform: scale(0.95) rotateY(15deg); }
 }
 
 @media (max-width: 968px) {
     .celeb-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
     }
 }
 
 @media (max-width: 768px) {
     .celeb-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
     }
 
-    .celeb-card span {
-        font-size: 0.75rem;
+    .celeb-card > span {
+        font-size: 0.9rem;
     }
 }
 
 @media (max-width: 480px) {
     .celeb-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        gap: 12px;
     }
 }
 

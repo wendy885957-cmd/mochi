@@ -207,6 +207,24 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
+// Celebrity photo flip (multiple collab)
+document.querySelectorAll('.celeb-flip').forEach(card => {
+    const images = JSON.parse(card.dataset.images);
+    if (images.length <= 1) return;
+    const img = card.querySelector('img');
+    let idx = 0;
+    setInterval(() => {
+        idx = (idx + 1) % images.length;
+        img.style.opacity = '0';
+        img.style.transform = 'scale(0.95) rotateY(15deg)';
+        setTimeout(() => {
+            img.src = images[idx];
+            img.style.opacity = '1';
+            img.style.transform = 'scale(1) rotateY(0)';
+        }, 300);
+    }, 2500);
+});
+
 // Lazy load images
 if ('IntersectionObserver' in window) {
     const imgObserver = new IntersectionObserver((entries) => {
