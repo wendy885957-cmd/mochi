@@ -1700,6 +1700,14 @@ a.portfolio-link {
     letter-spacing: 0.5px;
 }
 
+.celeb-card > small {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
 /* Flip badge for multiple collabs */
 .flip-badge {
     position: absolute;
