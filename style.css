@@ -1655,10 +1655,8 @@ a.portfolio-link {
     pointer-events: none;
 }
 
+/* Collab: selected clients style */
 .collab-wall {
-    background: #ffffff;
-    border-radius: var(--radius);
-    padding: 48px 40px;
     margin-top: 48px;
 }
 
@@ -1667,41 +1665,44 @@ a.portfolio-link {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 12px 24px;
+    gap: 0;
 }
 
 .collab-card {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px;
+    padding: 16px 24px;
     transition: var(--transition);
 }
 
 .collab-card:hover {
-    transform: scale(1.05);
+    opacity: 0.6;
 }
 
 .collab-logo {
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: #333;
-    letter-spacing: 1px;
-}
-
-.collab-logo img {
-    height: 100%;
-    width: auto;
-    object-fit: contain;
+    display: none;
 }
 
 .collab-info {
-    display: none;
+    display: block;
+    text-align: center;
+}
+
+.collab-info h4 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin: 0;
+    white-space: nowrap;
+}
+
+.collab-info p {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin: 2px 0 0;
+}
+
+.collab-info p a {
+    color: var(--accent);
+    text-decoration: none;
 }
 
 a.collab-link {
@@ -1713,18 +1714,28 @@ a.collab-link {
     display: none;
 }
 
+/* Divider dots between names */
+.collab-card + .collab-card {
+    position: relative;
+}
+
+.collab-card + .collab-card::before {
+    content: '·';
+    position: absolute;
+    left: -2px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 1.2rem;
+}
+
 @media (max-width: 768px) {
-    .collab-wall {
-        padding: 32px 20px;
+    .collab-card {
+        padding: 10px 16px;
     }
 
-    .collab-logo {
-        height: 44px;
-        font-size: 1.1rem;
-    }
-
-    .collab-grid {
-        gap: 8px 16px;
+    .collab-info h4 {
+        font-size: 0.85rem;
     }
 }
 
