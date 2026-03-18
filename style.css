@@ -1657,10 +1657,9 @@ a.portfolio-link {
 
 /* Selected Clients */
 .clients-title {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Noto Sans TC', sans-serif;
     font-size: clamp(1.2rem, 3vw, 1.6rem);
-    font-weight: 800;
-    font-style: italic;
+    font-weight: 700;
     text-align: center;
     color: var(--accent);
     letter-spacing: 3px;
