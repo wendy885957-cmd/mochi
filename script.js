@@ -210,19 +210,28 @@ document.head.appendChild(style);
 // Celebrity photo flip (multiple collab)
 document.querySelectorAll('.celeb-flip').forEach(card => {
     const images = JSON.parse(card.dataset.images);
+    const names = card.dataset.names ? JSON.parse(card.dataset.names) : null;
     if (images.length <= 1) return;
     const img = card.querySelector('img');
+    const nameEl = card.querySelector('.celeb-name');
     let idx = 0;
+
+    // Smooth transition style
+    img.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+
     setInterval(() => {
         idx = (idx + 1) % images.length;
+        // Fade out
         img.style.opacity = '0';
-        img.style.transform = 'scale(0.95) rotateY(15deg)';
+        img.style.transform = 'scale(0.97)';
         setTimeout(() => {
             img.src = images[idx];
+            if (names && nameEl) nameEl.textContent = names[idx];
+            // Fade in
             img.style.opacity = '1';
-            img.style.transform = 'scale(1) rotateY(0)';
-        }, 300);
-    }, 2500);
+            img.style.transform = 'scale(1)';
+        }, 500);
+    }, 3000);
 });
 
 // Lazy load images

@@ -1715,21 +1715,6 @@ a.portfolio-link {
     z-index: 2;
 }
 
-/* Flip animation for wang-zhongping */
-.celeb-flip .celeb-img-wrap img {
-    animation: celebFlip 8s ease-in-out infinite;
-}
-
-@keyframes celebFlip {
-    0%, 20% { opacity: 1; transform: scale(1); }
-    22% { opacity: 0; transform: scale(0.95) rotateY(15deg); }
-    25%, 45% { opacity: 1; transform: scale(1); }
-    47% { opacity: 0; transform: scale(0.95) rotateY(15deg); }
-    50%, 70% { opacity: 1; transform: scale(1); }
-    72% { opacity: 0; transform: scale(0.95) rotateY(15deg); }
-    75%, 95% { opacity: 1; transform: scale(1); }
-    97% { opacity: 0; transform: scale(0.95) rotateY(15deg); }
-}
 
 @media (max-width: 968px) {
     .celeb-grid {
