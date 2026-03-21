@@ -39,6 +39,24 @@ const heroVideo = document.getElementById('heroVideo');
 const heroBlurVideo = document.querySelector('.hero-video-blur video');
 
 if (heroSoundBtn && heroVideo) {
+    // Try to autoplay with sound; browsers may block it
+    heroVideo.muted = false;
+    heroVideo.volume = 0.4;
+    var playPromise = heroVideo.play();
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            // Autoplay with sound succeeded
+            heroSoundBtn.classList.add('playing');
+            heroSoundBtn.lastChild.textContent = ' 關閉聲音';
+        }).catch(() => {
+            // Blocked — fall back to muted autoplay
+            heroVideo.muted = true;
+            heroVideo.play();
+            heroSoundBtn.classList.remove('playing');
+            heroSoundBtn.lastChild.textContent = ' 開啟聲音';
+        });
+    }
+
     heroSoundBtn.addEventListener('click', () => {
         if (heroVideo.muted) {
             heroVideo.muted = false;
@@ -52,20 +70,21 @@ if (heroSoundBtn && heroVideo) {
         }
     });
 
+    // Loop: replay muted when ended
     heroVideo.addEventListener('ended', () => {
-        if (heroReplayBtn) heroReplayBtn.style.display = 'inline-flex';
+        heroVideo.muted = true;
+        heroVideo.currentTime = 0;
+        heroVideo.play();
+        heroSoundBtn.classList.remove('playing');
+        heroSoundBtn.lastChild.textContent = ' 開啟聲音';
+        if (heroBlurVideo) {
+            heroBlurVideo.currentTime = 0;
+            heroBlurVideo.play();
+        }
     });
 
     if (heroReplayBtn) {
-        heroReplayBtn.addEventListener('click', () => {
-            heroVideo.currentTime = 0;
-            heroVideo.play();
-            if (heroBlurVideo) {
-                heroBlurVideo.currentTime = 0;
-                heroBlurVideo.play();
-            }
-            heroReplayBtn.style.display = 'none';
-        });
+        heroReplayBtn.style.display = 'none';
     }
 }
 
@@ -270,6 +289,27 @@ document.querySelectorAll('.celeb-flip').forEach(card => {
         }, 500);
     }, 3000);
 });
+
+// Reviews drag to scroll
+(function() {
+    const scroll = document.querySelector('.reviews-scroll');
+    if (!scroll) return;
+    let isDown = false, startX, scrollLeft;
+    scroll.addEventListener('mousedown', e => {
+        isDown = true;
+        scroll.classList.add('is-dragging');
+        startX = e.pageX - scroll.offsetLeft;
+        scrollLeft = scroll.scrollLeft;
+    });
+    scroll.addEventListener('mouseleave', () => { isDown = false; scroll.classList.remove('is-dragging'); });
+    scroll.addEventListener('mouseup', () => { isDown = false; scroll.classList.remove('is-dragging'); });
+    scroll.addEventListener('mousemove', e => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - scroll.offsetLeft;
+        scroll.scrollLeft = scrollLeft - (x - startX);
+    });
+})();
 
 // Review screenshots click to enlarge
 document.querySelectorAll('.reviews-track img').forEach(img => {
