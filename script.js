@@ -273,6 +273,18 @@ document.querySelectorAll('.celeb-flip').forEach(card => {
     }, 3000);
 });
 
+// Review screenshots click to enlarge
+document.querySelectorAll('.reviews-track img').forEach(img => {
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', () => {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxContent = document.getElementById('lightboxContent');
+        lightboxContent.innerHTML = `<img src="${img.src}" style="max-width:90vw; max-height:85vh; border-radius:12px;">`;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+});
+
 // Lazy load images
 if ('IntersectionObserver' in window) {
     const imgObserver = new IntersectionObserver((entries) => {
