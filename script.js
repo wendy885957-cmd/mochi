@@ -36,15 +36,24 @@ window.addEventListener('load', () => {
 const heroSoundBtn = document.getElementById('heroSoundBtn');
 const heroReplayBtn = document.getElementById('heroReplayBtn');
 const heroVideo = document.getElementById('heroVideo');
-const heroBlurVideo = document.querySelector('.hero-video-blur video');
 
 if (heroSoundBtn && heroVideo) {
-    // Autoplay muted — don't try to unmute automatically
+    // Autoplay muted — never set volume before play on mobile
     heroVideo.muted = true;
-    heroVideo.volume = 0.4;
-    heroVideo.play().catch(() => {});
+    heroVideo.setAttribute('muted', '');
+    heroVideo.play().catch(function() {
+        // Autoplay blocked — retry on first user interaction
+        var retryEvents = ['touchstart', 'click', 'scroll'];
+        var retryPlay = function() {
+            heroVideo.muted = true;
+            heroVideo.play().then(function() {
+                retryEvents.forEach(function(e) { document.removeEventListener(e, retryPlay); });
+            }).catch(function() {});
+        };
+        retryEvents.forEach(function(e) { document.addEventListener(e, retryPlay, { passive: true }); });
+    });
 
-    heroSoundBtn.addEventListener('click', () => {
+    heroSoundBtn.addEventListener('click', function() {
         if (heroVideo.muted) {
             heroVideo.muted = false;
             heroVideo.volume = 0.4;
@@ -58,22 +67,36 @@ if (heroSoundBtn && heroVideo) {
     });
 
     // Loop: replay muted when ended
-    heroVideo.addEventListener('ended', () => {
+    heroVideo.addEventListener('ended', function() {
         heroVideo.muted = true;
         heroVideo.currentTime = 0;
         heroVideo.play();
         heroSoundBtn.classList.remove('playing');
         heroSoundBtn.lastChild.textContent = ' 開啟聲音';
-        if (heroBlurVideo) {
-            heroBlurVideo.currentTime = 0;
-            heroBlurVideo.play();
-        }
     });
 
     if (heroReplayBtn) {
         heroReplayBtn.style.display = 'none';
     }
 }
+
+// Blur background canvas (desktop only)
+(function() {
+    var blurLayer = document.querySelector('.hero-video-blur-layer');
+    if (!blurLayer || !heroVideo || window.innerWidth <= 768) return;
+    var canvas = document.createElement('canvas');
+    canvas.width = 320;
+    canvas.height = 568;
+    blurLayer.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    function drawFrame() {
+        if (!heroVideo.paused && !heroVideo.ended) {
+            ctx.drawImage(heroVideo, 0, 0, canvas.width, canvas.height);
+        }
+        requestAnimationFrame(drawFrame);
+    }
+    heroVideo.addEventListener('playing', drawFrame);
+})()
 
 // Navbar scroll effect
 const navbar = document.getElementById('navbar');
