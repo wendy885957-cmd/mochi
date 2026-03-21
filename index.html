@@ -46,13 +46,7 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="hero hero-minimal hero-video" id="hero">
-        <div class="hero-video-blur">
-            <video src="intro.mp4" muted autoplay playsinline webkit-playsinline></video>
-        </div>
-        <div class="hero-video-main">
-            <video src="intro.mp4" muted autoplay playsinline webkit-playsinline id="heroVideo"></video>
-        </div>
+    <section class="hero hero-minimal" id="hero">
         <div class="hero-bg-overlay"></div>
         <div class="hero-content">
             <div class="hero-line anim-reveal" style="--delay: 0.8s">
@@ -67,29 +61,38 @@
                     <a href="#contact" class="btn btn-outline">找我合作</a>
                 </div>
             </div>
-            <div class="hero-line anim-reveal" style="--delay: 1.6s">
-                <div class="hero-btns-row">
-                    <button class="hero-sound-btn" id="heroSoundBtn">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                            <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-                            <line x1="23" y1="9" x2="17" y2="15" class="mute-line"/>
-                            <line x1="17" y1="9" x2="23" y2="15" class="mute-line"/>
-                        </svg>
-                        開啟聲音
-                    </button>
-                    <button class="hero-sound-btn" id="heroReplayBtn" style="display:none">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                            <path d="M1 4v6h6"/>
-                            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
-                        </svg>
-                        重播
-                    </button>
-                </div>
-            </div>
         </div>
-        <div class="scroll-indicator anim-reveal" style="--delay: 1.9s">
+        <div class="scroll-indicator anim-reveal" style="--delay: 1.7s">
             <span>SCROLL</span>
             <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Intro Video Section -->
+    <section class="section intro-video-section" id="intro-video">
+        <div class="container">
+            <p class="section-tag">ABOUT ME</p>
+            <h2 class="section-title">自我介紹</h2>
+        </div>
+        <div class="intro-video-wrap">
+            <video src="intro.mp4" muted playsinline webkit-playsinline id="heroVideo"></video>
+            <div class="intro-video-controls">
+                <button class="hero-sound-btn" id="heroSoundBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                        <line x1="23" y1="9" x2="17" y2="15" class="mute-line"/>
+                        <line x1="17" y1="9" x2="23" y2="15" class="mute-line"/>
+                    </svg>
+                    開啟聲音
+                </button>
+                <button class="hero-sound-btn" id="heroReplayBtn" style="display:none">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <path d="M1 4v6h6"/>
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+                    </svg>
+                    重播
+                </button>
+            </div>
         </div>
     </section>
 

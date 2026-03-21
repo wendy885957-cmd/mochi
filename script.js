@@ -32,17 +32,28 @@ window.addEventListener('load', () => {
     }
 });
 
-// Hero video controls
+// Intro video controls
 const heroSoundBtn = document.getElementById('heroSoundBtn');
 const heroReplayBtn = document.getElementById('heroReplayBtn');
 const heroVideo = document.getElementById('heroVideo');
-const heroBlurVideo = document.querySelector('.hero-video-blur video');
 
 if (heroSoundBtn && heroVideo) {
-    // Sound toggle
+    // Autoplay when scrolled into view
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                heroVideo.play();
+                videoObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+    videoObserver.observe(heroVideo);
+
+    // Sound toggle (lower volume)
     heroSoundBtn.addEventListener('click', () => {
         if (heroVideo.muted) {
             heroVideo.muted = false;
+            heroVideo.volume = 0.4;
             heroSoundBtn.classList.add('playing');
             heroSoundBtn.lastChild.textContent = ' 關閉聲音';
         } else {
@@ -62,10 +73,6 @@ if (heroSoundBtn && heroVideo) {
         heroReplayBtn.addEventListener('click', () => {
             heroVideo.currentTime = 0;
             heroVideo.play();
-            if (heroBlurVideo) {
-                heroBlurVideo.currentTime = 0;
-                heroBlurVideo.play();
-            }
             heroReplayBtn.style.display = 'none';
         });
     }
