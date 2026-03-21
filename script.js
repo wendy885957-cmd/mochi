@@ -32,24 +32,13 @@ window.addEventListener('load', () => {
     }
 });
 
-// Intro video controls
+// Hero video controls
 const heroSoundBtn = document.getElementById('heroSoundBtn');
 const heroReplayBtn = document.getElementById('heroReplayBtn');
 const heroVideo = document.getElementById('heroVideo');
+const heroBlurVideo = document.querySelector('.hero-video-blur video');
 
 if (heroSoundBtn && heroVideo) {
-    // Autoplay when scrolled into view
-    const videoObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                heroVideo.play();
-                videoObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.3 });
-    videoObserver.observe(heroVideo);
-
-    // Sound toggle (lower volume)
     heroSoundBtn.addEventListener('click', () => {
         if (heroVideo.muted) {
             heroVideo.muted = false;
@@ -63,16 +52,18 @@ if (heroSoundBtn && heroVideo) {
         }
     });
 
-    // Show replay button when video ends
     heroVideo.addEventListener('ended', () => {
         if (heroReplayBtn) heroReplayBtn.style.display = 'inline-flex';
     });
 
-    // Replay
     if (heroReplayBtn) {
         heroReplayBtn.addEventListener('click', () => {
             heroVideo.currentTime = 0;
             heroVideo.play();
+            if (heroBlurVideo) {
+                heroBlurVideo.currentTime = 0;
+                heroBlurVideo.play();
+            }
             heroReplayBtn.style.display = 'none';
         });
     }
