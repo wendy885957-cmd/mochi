@@ -219,11 +219,21 @@ img {
 
 .hero-video {
     align-items: flex-end;
-    padding-bottom: 60px;
+    padding-bottom: 40px;
 }
 
 .hero-video .hero-content {
     padding-bottom: 0;
+}
+
+.hero-video .hero-title {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    margin-bottom: 10px;
+}
+
+.hero-video .hero-desc {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
 }
 
 .hero-minimal .hero-title {
@@ -373,7 +383,7 @@ img {
 /* ===== HERO VIDEO ===== */
 .hero-video .hero-bg-overlay {
     background:
-        linear-gradient(180deg, transparent 0%, transparent 40%, rgba(8,8,8,0.6) 70%, var(--bg-primary) 100%);
+        linear-gradient(180deg, transparent 0%, transparent 55%, rgba(8,8,8,0.7) 80%, var(--bg-primary) 100%);
     z-index: 2;
 }
 
@@ -405,7 +415,13 @@ img {
 .hero-video-main video {
     height: 100%;
     width: auto;
-    opacity: 0.5;
+    opacity: 0.85;
+}
+
+.hero-btns-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
 }
 
 .hero-sound-btn {

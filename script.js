@@ -32,21 +32,43 @@ window.addEventListener('load', () => {
     }
 });
 
-// Hero video sound toggle
+// Hero video controls
 const heroSoundBtn = document.getElementById('heroSoundBtn');
+const heroReplayBtn = document.getElementById('heroReplayBtn');
 const heroVideo = document.getElementById('heroVideo');
+const heroBlurVideo = document.querySelector('.hero-video-blur video');
+
 if (heroSoundBtn && heroVideo) {
+    // Sound toggle
     heroSoundBtn.addEventListener('click', () => {
         if (heroVideo.muted) {
             heroVideo.muted = false;
             heroSoundBtn.classList.add('playing');
-            heroSoundBtn.querySelector('span') || (heroSoundBtn.lastChild.textContent = ' 點擊關閉聲音');
+            heroSoundBtn.lastChild.textContent = ' 關閉聲音';
         } else {
             heroVideo.muted = true;
             heroSoundBtn.classList.remove('playing');
-            heroSoundBtn.lastChild.textContent = ' 點擊開啟聲音';
+            heroSoundBtn.lastChild.textContent = ' 開啟聲音';
         }
     });
+
+    // Show replay button when video ends
+    heroVideo.addEventListener('ended', () => {
+        if (heroReplayBtn) heroReplayBtn.style.display = 'inline-flex';
+    });
+
+    // Replay
+    if (heroReplayBtn) {
+        heroReplayBtn.addEventListener('click', () => {
+            heroVideo.currentTime = 0;
+            heroVideo.play();
+            if (heroBlurVideo) {
+                heroBlurVideo.currentTime = 0;
+                heroBlurVideo.play();
+            }
+            heroReplayBtn.style.display = 'none';
+        });
+    }
 }
 
 // Navbar scroll effect
