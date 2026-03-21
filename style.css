@@ -1288,6 +1288,15 @@ a.portfolio-link {
     color: var(--accent);
 }
 
+.about-note {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+}
+
 .about-stats {
     display: flex;
     gap: 32px;
