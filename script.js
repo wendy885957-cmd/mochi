@@ -39,26 +39,10 @@ const heroVideo = document.getElementById('heroVideo');
 const heroBlurVideo = document.querySelector('.hero-video-blur video');
 
 if (heroSoundBtn && heroVideo) {
-    // Ensure muted autoplay first, then try unmuting
+    // Autoplay muted — don't try to unmute automatically
     heroVideo.muted = true;
     heroVideo.volume = 0.4;
-    heroVideo.play().then(() => {
-        // Playing muted — now try to unmute
-        heroVideo.muted = false;
-        // If browser didn't throw, sound is on
-        heroSoundBtn.classList.add('playing');
-        heroSoundBtn.lastChild.textContent = ' 關閉聲音';
-    }).catch(() => {
-        // Even muted autoplay failed — do nothing
-    });
-
-    // If browser re-mutes or pauses after unmute, catch it
-    heroVideo.addEventListener('volumechange', () => {
-        if (heroVideo.muted) {
-            heroSoundBtn.classList.remove('playing');
-            heroSoundBtn.lastChild.textContent = ' 開啟聲音';
-        }
-    });
+    heroVideo.play().catch(() => {});
 
     heroSoundBtn.addEventListener('click', () => {
         if (heroVideo.muted) {
