@@ -38,20 +38,19 @@ const heroReplayBtn = document.getElementById('heroReplayBtn');
 const heroVideo = document.getElementById('heroVideo');
 
 if (heroSoundBtn && heroVideo) {
-    // Autoplay muted — never set volume before play on mobile
-    heroVideo.muted = true;
-    heroVideo.setAttribute('muted', '');
-    heroVideo.play().catch(function() {
-        // Autoplay blocked — retry on first user interaction
-        var retryEvents = ['touchstart', 'click', 'scroll'];
-        var retryPlay = function() {
-            heroVideo.muted = true;
-            heroVideo.play().then(function() {
+    // Don't call play() — let browser handle native autoplay
+    // Only retry on user interaction if autoplay didn't start
+    setTimeout(function() {
+        if (heroVideo.paused) {
+            var retryEvents = ['touchstart', 'click', 'scroll'];
+            var retryPlay = function() {
+                heroVideo.muted = true;
+                heroVideo.play().catch(function() {});
                 retryEvents.forEach(function(e) { document.removeEventListener(e, retryPlay); });
-            }).catch(function() {});
-        };
-        retryEvents.forEach(function(e) { document.addEventListener(e, retryPlay, { passive: true }); });
-    });
+            };
+            retryEvents.forEach(function(e) { document.addEventListener(e, retryPlay, { passive: true }); });
+        }
+    }, 1000);
 
     heroSoundBtn.addEventListener('click', function() {
         if (heroVideo.muted) {
@@ -64,15 +63,6 @@ if (heroSoundBtn && heroVideo) {
             heroSoundBtn.classList.remove('playing');
             heroSoundBtn.lastChild.textContent = ' 開啟聲音';
         }
-    });
-
-    // Loop: replay muted when ended
-    heroVideo.addEventListener('ended', function() {
-        heroVideo.muted = true;
-        heroVideo.currentTime = 0;
-        heroVideo.play();
-        heroSoundBtn.classList.remove('playing');
-        heroSoundBtn.lastChild.textContent = ' 開啟聲音';
     });
 
     if (heroReplayBtn) {
