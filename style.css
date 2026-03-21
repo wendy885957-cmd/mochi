@@ -217,6 +217,15 @@ img {
     min-height: 80vh;
 }
 
+.hero-video {
+    align-items: flex-end;
+    padding-bottom: 60px;
+}
+
+.hero-video .hero-content {
+    padding-bottom: 0;
+}
+
 .hero-minimal .hero-title {
     font-size: clamp(2.5rem, 7vw, 5rem);
     margin-bottom: 16px;
@@ -364,8 +373,7 @@ img {
 /* ===== HERO VIDEO ===== */
 .hero-video .hero-bg-overlay {
     background:
-        radial-gradient(ellipse at center, rgba(8,8,8,0.3) 0%, rgba(8,8,8,0.7) 100%),
-        linear-gradient(180deg, transparent 70%, var(--bg-primary) 100%);
+        linear-gradient(180deg, transparent 0%, transparent 40%, rgba(8,8,8,0.6) 70%, var(--bg-primary) 100%);
     z-index: 2;
 }
 
