@@ -32,6 +32,23 @@ window.addEventListener('load', () => {
     }
 });
 
+// Hero video sound toggle
+const heroSoundBtn = document.getElementById('heroSoundBtn');
+const heroVideo = document.getElementById('heroVideo');
+if (heroSoundBtn && heroVideo) {
+    heroSoundBtn.addEventListener('click', () => {
+        if (heroVideo.muted) {
+            heroVideo.muted = false;
+            heroSoundBtn.classList.add('playing');
+            heroSoundBtn.querySelector('span') || (heroSoundBtn.lastChild.textContent = ' 點擊關閉聲音');
+        } else {
+            heroVideo.muted = true;
+            heroSoundBtn.classList.remove('playing');
+            heroSoundBtn.lastChild.textContent = ' 點擊開啟聲音';
+        }
+    });
+}
+
 // Navbar scroll effect
 const navbar = document.getElementById('navbar');
 let lastScroll = 0;

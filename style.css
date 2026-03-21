@@ -361,26 +361,86 @@ img {
     100% { opacity: 0; pointer-events: none; }
 }
 
-/* ===== HERO VIDEO BG ===== */
-.hero-video-bg {
+/* ===== HERO VIDEO ===== */
+.hero-video .hero-bg-overlay {
+    background:
+        radial-gradient(ellipse at center, rgba(8,8,8,0.3) 0%, rgba(8,8,8,0.7) 100%),
+        linear-gradient(180deg, transparent 70%, var(--bg-primary) 100%);
+    z-index: 2;
+}
+
+.hero-video-blur {
     position: absolute;
-    inset: 0;
+    inset: -20px;
     z-index: 0;
     overflow: hidden;
 }
 
-.hero-video-bg video {
+.hero-video-blur video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.3;
+    filter: blur(30px) brightness(0.4);
+    transform: scale(1.1);
 }
 
-.hero-video-bg::after {
-    content: '';
+.hero-video-main {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(8,8,8,0.4) 0%, rgba(8,8,8,0.8) 60%, var(--bg-primary) 100%);
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.hero-video-main video {
+    height: 100%;
+    width: auto;
+    opacity: 0.5;
+}
+
+.hero-sound-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-secondary);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hero-sound-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+}
+
+.hero-sound-btn.playing .mute-line {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .hero-video-main {
+        width: 100%;
+        left: 0;
+        transform: none;
+    }
+
+    .hero-video-main video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .hero-video-blur {
+        display: none;
+    }
 }
 
 /* ===== TEXT REVEAL ANIMATION ===== */
