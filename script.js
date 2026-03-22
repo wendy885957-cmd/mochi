@@ -205,6 +205,17 @@ document.querySelectorAll('.portfolio-video[data-youtube]').forEach(function(ite
     });
 });
 
+// Portfolio local videos — open in lightbox
+document.querySelectorAll('.portfolio-video-local[data-video]').forEach(function(item) {
+    item.style.cursor = 'pointer';
+    item.addEventListener('click', function() {
+        var src = item.getAttribute('data-video');
+        lightboxContent.innerHTML = '<video src="' + src + '" controls autoplay playsinline style="width:90vw; max-width:900px; max-height:80vh; border-radius:12px;"></video>';
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+});
+
 // Click sounds on buttons and interactive elements
 document.querySelectorAll('.btn, .filter-btn, .pain-tab, .nav-links a, .contact-btn, .mobile-cta-btn').forEach(el => {
     el.addEventListener('click', () => playSound('click'));
