@@ -399,9 +399,16 @@ img {
     z-index: 10000;
     background: var(--bg-primary);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    animation: curtainFade 0.6s ease 0.9s forwards;
+    cursor: pointer;
+    transition: opacity 0.6s ease;
+}
+
+.curtain.fade-out {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .curtain-logo {
@@ -414,14 +421,17 @@ img {
     animation: curtainLogoIn 0.6s ease 0.1s forwards;
 }
 
-@keyframes curtainLogoIn {
-    0% { opacity: 0; transform: translateY(20px); letter-spacing: 4px; }
-    100% { opacity: 1; transform: translateY(0); letter-spacing: 8px; }
+.curtain-hint {
+    margin-top: 24px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    opacity: 0;
+    animation: curtainLogoIn 0.5s ease 0.7s forwards;
 }
 
-@keyframes curtainFade {
-    0% { opacity: 1; }
-    100% { opacity: 0; pointer-events: none; }
+@keyframes curtainLogoIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 /* ===== HERO VIDEO ===== */

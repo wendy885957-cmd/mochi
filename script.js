@@ -18,40 +18,35 @@ function playSound(name) {
     } catch(e) {}
 }
 
-// Opening animation
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        document.body.classList.add('loaded');
-        playSound('whoosh');
-    }, 200);
-
-    // Remove curtain from DOM after animation
-    const curtain = document.getElementById('curtain');
-    if (curtain) {
-        setTimeout(() => curtain.remove(), 1800);
-    }
-});
-
-// Hero video controls
+// Opening animation — wait for user tap on curtain
+const curtain = document.getElementById('curtain');
 const heroSoundBtn = document.getElementById('heroSoundBtn');
 const heroReplayBtn = document.getElementById('heroReplayBtn');
 const heroVideo = document.getElementById('heroVideo');
 
-if (heroSoundBtn && heroVideo) {
-    // Don't call play() — let browser handle native autoplay
-    // Only retry on user interaction if autoplay didn't start
-    setTimeout(function() {
-        if (heroVideo.paused) {
-            var retryEvents = ['touchstart', 'click', 'scroll'];
-            var retryPlay = function() {
-                heroVideo.muted = true;
-                heroVideo.play().catch(function() {});
-                retryEvents.forEach(function(e) { document.removeEventListener(e, retryPlay); });
-            };
-            retryEvents.forEach(function(e) { document.addEventListener(e, retryPlay, { passive: true }); });
-        }
-    }, 1000);
+if (curtain) {
+    curtain.addEventListener('click', function() {
+        // User interaction — now we can play with sound
+        curtain.classList.add('fade-out');
+        setTimeout(function() { curtain.remove(); }, 800);
 
+        document.body.classList.add('loaded');
+        playSound('whoosh');
+
+        if (heroVideo) {
+            heroVideo.muted = false;
+            heroVideo.volume = 0.4;
+            heroVideo.currentTime = 0;
+            heroVideo.play().catch(function() {});
+            if (heroSoundBtn) {
+                heroSoundBtn.classList.add('playing');
+                heroSoundBtn.lastChild.textContent = ' 關閉聲音';
+            }
+        }
+    });
+}
+
+if (heroSoundBtn && heroVideo) {
     heroSoundBtn.addEventListener('click', function() {
         if (heroVideo.muted) {
             heroVideo.muted = false;
