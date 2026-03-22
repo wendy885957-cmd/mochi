@@ -211,7 +211,16 @@ document.querySelectorAll('.portfolio-video-inline').forEach(function(item) {
     item.style.cursor = 'pointer';
     var video = item.querySelector('.portfolio-inline-video');
 
-    // Only handle click on the cover/play button, not on the video or expand btn
+    // Click on video itself to pause/play
+    video.addEventListener('click', function() {
+        if (video.paused) {
+            video.play();
+        } else {
+            video.pause();
+        }
+    });
+
+    // Click on cover/play button to start, not on video or expand btn
     item.addEventListener('click', function(e) {
         if (e.target.closest('.portfolio-inline-video')) return;
         if (e.target.closest('.portfolio-expand-btn')) return;
