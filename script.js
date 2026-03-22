@@ -205,14 +205,21 @@ document.querySelectorAll('.portfolio-video[data-youtube]').forEach(function(ite
     });
 });
 
-// Portfolio local videos — open in lightbox
-document.querySelectorAll('.portfolio-video-local[data-video]').forEach(function(item) {
+// Portfolio inline videos — play in grid
+document.querySelectorAll('.portfolio-video-inline').forEach(function(item) {
     item.style.cursor = 'pointer';
+    var video = item.querySelector('.portfolio-inline-video');
     item.addEventListener('click', function() {
-        var src = item.getAttribute('data-video');
-        lightboxContent.innerHTML = '<video src="' + src + '" controls autoplay playsinline style="width:90vw; max-width:900px; max-height:80vh; border-radius:12px;"></video>';
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        if (item.classList.contains('playing')) {
+            video.pause();
+            item.classList.remove('playing');
+        } else {
+            video.play();
+            item.classList.add('playing');
+        }
+    });
+    video.addEventListener('ended', function() {
+        item.classList.remove('playing');
     });
 });
 

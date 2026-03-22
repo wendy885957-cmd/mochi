@@ -853,6 +853,26 @@ a.portfolio-link {
     transform: translate(-50%, -50%) scale(1.1);
 }
 
+.portfolio-inline-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+    z-index: 1;
+}
+
+.portfolio-video-inline.playing .portfolio-inline-video {
+    display: block;
+}
+
+.portfolio-video-inline.playing .portfolio-cover,
+.portfolio-video-inline.playing .portfolio-play,
+.portfolio-video-inline.playing .portfolio-overlay {
+    display: none;
+}
+
 .portfolio-thumb video {
     cursor: pointer;
 }
