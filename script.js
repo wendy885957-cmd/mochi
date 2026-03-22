@@ -46,7 +46,7 @@ if (heroSoundBtn && heroVideo) {
         } else {
             heroVideo.muted = true;
             heroSoundBtn.classList.remove('playing');
-            heroSoundBtn.lastChild.textContent = ' 🔇 點我開啟聲音';
+            heroSoundBtn.lastChild.textContent = ' 開啟聲音';
         }
     });
 
