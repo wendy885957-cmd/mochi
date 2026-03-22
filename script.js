@@ -211,9 +211,10 @@ document.querySelectorAll('.portfolio-video-inline').forEach(function(item) {
     item.style.cursor = 'pointer';
     var video = item.querySelector('.portfolio-inline-video');
 
-    // Only handle click on the cover/play button, not on the video controls
+    // Only handle click on the cover/play button, not on the video or expand btn
     item.addEventListener('click', function(e) {
         if (e.target.closest('.portfolio-inline-video')) return;
+        if (e.target.closest('.portfolio-expand-btn')) return;
         if (item.classList.contains('playing')) {
             video.pause();
             item.classList.remove('playing');
@@ -222,6 +223,21 @@ document.querySelectorAll('.portfolio-video-inline').forEach(function(item) {
             item.classList.add('playing');
         }
     });
+
+    // Expand button — open in lightbox (portrait friendly)
+    var expandBtn = item.querySelector('.portfolio-expand-btn');
+    if (expandBtn) {
+        expandBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var currentTime = video.currentTime;
+            video.pause();
+            item.classList.remove('playing');
+            lightboxContent.innerHTML = '<video src="' + video.src + '" controls autoplay playsinline webkit-playsinline style="max-width:90vw; max-height:85vh; border-radius:12px;"></video>';
+            lightboxContent.querySelector('video').currentTime = currentTime;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
 
     video.addEventListener('pause', function() {
         if (!document.fullscreenElement && !document.webkitFullscreenElement) {

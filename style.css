@@ -874,6 +874,34 @@ a.portfolio-link {
     display: none;
 }
 
+.portfolio-expand-btn {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 2;
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.portfolio-video-inline.playing .portfolio-expand-btn {
+    display: flex;
+}
+
+.portfolio-expand-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
 .portfolio-thumb video {
     cursor: pointer;
 }
