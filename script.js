@@ -194,6 +194,17 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeLightbox();
 });
 
+// Portfolio YouTube videos — open in lightbox
+document.querySelectorAll('.portfolio-video[data-youtube]').forEach(function(item) {
+    item.style.cursor = 'pointer';
+    item.addEventListener('click', function() {
+        var id = item.getAttribute('data-youtube');
+        lightboxContent.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="width:90vw; max-width:900px; height:50.6vw; max-height:506px; border-radius:12px;"></iframe>';
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+});
+
 // Click sounds on buttons and interactive elements
 document.querySelectorAll('.btn, .filter-btn, .pain-tab, .nav-links a, .contact-btn, .mobile-cta-btn').forEach(el => {
     el.addEventListener('click', () => playSound('click'));
