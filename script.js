@@ -155,18 +155,17 @@ const isTouch = 'ontouchstart' in window;
 document.querySelectorAll('.portfolio-thumb video').forEach(video => {
     const item = video.closest('.portfolio-item');
 
+    // Skip inline video items — handled separately
+    if (item.classList.contains('portfolio-video-inline')) return;
+
     if (!isTouch) {
-        // Desktop: hover to play
         item.addEventListener('mouseenter', () => video.play());
         item.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
     }
 
-    // Click/tap to open lightbox (skip inline video items)
-    if (!item.classList.contains('portfolio-video-inline')) {
-        item.addEventListener('click', () => {
-            openLightbox(video.src);
-        });
-    }
+    item.addEventListener('click', () => {
+        openLightbox(video.src);
+    });
 });
 
 // Video Lightbox
@@ -211,7 +210,10 @@ document.querySelectorAll('.portfolio-video[data-youtube]').forEach(function(ite
 document.querySelectorAll('.portfolio-video-inline').forEach(function(item) {
     item.style.cursor = 'pointer';
     var video = item.querySelector('.portfolio-inline-video');
-    item.addEventListener('click', function() {
+
+    // Only handle click on the cover/play button, not on the video controls
+    item.addEventListener('click', function(e) {
+        if (e.target.closest('.portfolio-inline-video')) return;
         if (item.classList.contains('playing')) {
             video.pause();
             item.classList.remove('playing');
@@ -219,6 +221,15 @@ document.querySelectorAll('.portfolio-video-inline').forEach(function(item) {
             video.play();
             item.classList.add('playing');
         }
+    });
+
+    video.addEventListener('pause', function() {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+            item.classList.remove('playing');
+        }
+    });
+    video.addEventListener('play', function() {
+        item.classList.add('playing');
     });
     video.addEventListener('ended', function() {
         item.classList.remove('playing');
