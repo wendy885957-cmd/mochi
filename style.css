@@ -508,18 +508,18 @@ img {
 }
 
 .hero-sound-btn-prominent {
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     color: #fff;
-    padding: 12px 28px;
-    font-size: 0.95rem;
+    padding: 10px;
+    border-radius: 50%;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     animation: soundPulse 2s ease-in-out infinite;
 }
 
 .hero-sound-btn-prominent:hover {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.7);
 }
 
 .hero-sound-btn-prominent.playing {

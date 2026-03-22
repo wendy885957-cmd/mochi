@@ -42,11 +42,9 @@ if (heroSoundBtn && heroVideo) {
             heroVideo.muted = false;
             heroVideo.volume = 0.4;
             heroSoundBtn.classList.add('playing');
-            heroSoundBtn.lastChild.textContent = ' 關閉聲音';
         } else {
             heroVideo.muted = true;
             heroSoundBtn.classList.remove('playing');
-            heroSoundBtn.lastChild.textContent = ' 開啟聲音';
         }
     });
 
