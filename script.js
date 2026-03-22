@@ -161,10 +161,12 @@ document.querySelectorAll('.portfolio-thumb video').forEach(video => {
         item.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
     }
 
-    // Click/tap to open lightbox
-    item.addEventListener('click', () => {
-        openLightbox(video.src);
-    });
+    // Click/tap to open lightbox (skip inline video items)
+    if (!item.classList.contains('portfolio-video-inline')) {
+        item.addEventListener('click', () => {
+            openLightbox(video.src);
+        });
+    }
 });
 
 // Video Lightbox
