@@ -266,9 +266,9 @@ img {
 
 .hero-fullvid-controls {
     position: absolute;
-    bottom: 12px;
-    right: 12px;
-    z-index: 3;
+    bottom: 16px;
+    right: 16px;
+    z-index: 5;
     display: flex;
     gap: 10px;
 }
@@ -508,16 +508,18 @@ img {
 }
 
 .hero-sound-btn-prominent {
-    background: rgba(200, 169, 126, 0.25);
-    border: 1px solid var(--accent);
-    color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #fff;
     padding: 12px 28px;
     font-size: 0.95rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     animation: soundPulse 2s ease-in-out infinite;
 }
 
 .hero-sound-btn-prominent:hover {
-    background: rgba(200, 169, 126, 0.4);
+    background: rgba(0, 0, 0, 0.8);
 }
 
 .hero-sound-btn-prominent.playing {
