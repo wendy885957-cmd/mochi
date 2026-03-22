@@ -18,33 +18,23 @@ function playSound(name) {
     } catch(e) {}
 }
 
-// Opening animation — wait for user tap on curtain
-const curtain = document.getElementById('curtain');
+// Opening animation
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        document.body.classList.add('loaded');
+        playSound('whoosh');
+    }, 200);
+
+    var curtain = document.getElementById('curtain');
+    if (curtain) {
+        setTimeout(function() { curtain.remove(); }, 1800);
+    }
+});
+
+// Hero video controls
 const heroSoundBtn = document.getElementById('heroSoundBtn');
 const heroReplayBtn = document.getElementById('heroReplayBtn');
 const heroVideo = document.getElementById('heroVideo');
-
-if (curtain) {
-    curtain.addEventListener('click', function() {
-        // User interaction — now we can play with sound
-        curtain.classList.add('fade-out');
-        setTimeout(function() { curtain.remove(); }, 800);
-
-        document.body.classList.add('loaded');
-        playSound('whoosh');
-
-        if (heroVideo) {
-            heroVideo.muted = false;
-            heroVideo.volume = 0.4;
-            heroVideo.currentTime = 0;
-            heroVideo.play().catch(function() {});
-            if (heroSoundBtn) {
-                heroSoundBtn.classList.add('playing');
-                heroSoundBtn.lastChild.textContent = ' 關閉聲音';
-            }
-        }
-    });
-}
 
 if (heroSoundBtn && heroVideo) {
     heroSoundBtn.addEventListener('click', function() {
@@ -56,7 +46,7 @@ if (heroSoundBtn && heroVideo) {
         } else {
             heroVideo.muted = true;
             heroSoundBtn.classList.remove('playing');
-            heroSoundBtn.lastChild.textContent = ' 開啟聲音';
+            heroSoundBtn.lastChild.textContent = ' 🔇 點我開啟聲音';
         }
     });
 

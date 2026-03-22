@@ -40,10 +40,9 @@
         </div>
     </nav>
 
-    <!-- Opening Curtain — tap to enter & play with sound -->
+    <!-- Opening Curtain -->
     <div class="curtain" id="curtain">
         <div class="curtain-logo">MOCHI FILM</div>
-        <div class="curtain-hint">點擊進入</div>
     </div>
 
     <!-- Hero Section — fullscreen video -->
@@ -54,20 +53,13 @@
         <div class="hero-video-blur-layer"></div>
         <div class="hero-bg-overlay"></div>
         <div class="hero-fullvid-controls anim-reveal" style="--delay: 1.2s">
-            <button class="hero-sound-btn" id="heroSoundBtn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <button class="hero-sound-btn hero-sound-btn-prominent" id="heroSoundBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
                     <path d="M11 5L6 9H2v6h4l5 4V5z"/>
                     <line x1="23" y1="9" x2="17" y2="15" class="mute-line"/>
                     <line x1="17" y1="9" x2="23" y2="15" class="mute-line"/>
                 </svg>
-                開啟聲音
-            </button>
-            <button class="hero-sound-btn" id="heroReplayBtn" style="display:none">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                    <path d="M1 4v6h6"/>
-                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
-                </svg>
-                重播
+                🔇 點我開啟聲音
             </button>
         </div>
         <div class="scroll-indicator anim-reveal" style="--delay: 1.6s">
