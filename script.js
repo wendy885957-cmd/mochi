@@ -199,7 +199,7 @@ document.querySelectorAll('.portfolio-video[data-youtube]').forEach(function(ite
     item.style.cursor = 'pointer';
     item.addEventListener('click', function() {
         var id = item.getAttribute('data-youtube');
-        lightboxContent.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="width:90vw; max-width:900px; height:50.6vw; max-height:506px; border-radius:12px;"></iframe>';
+        lightboxContent.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen style="width:90vw; max-width:900px; height:50.6vw; max-height:506px; border-radius:12px;"></iframe>';
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden';
     });
