@@ -261,7 +261,7 @@ img {
 
 .hero-fullvid-controls {
     position: absolute;
-    bottom: 100px;
+    bottom: 30px;
     right: 24px;
     z-index: 3;
     display: flex;
