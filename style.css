@@ -2505,8 +2505,8 @@ a.portfolio-link {
     .reviews-track img { height: 260px; }
     .reviews-track { gap: 10px; }
 
-    /* === 藝人網紅（3排，照片間距大、字間距小） === */
-    .celeb-grid { grid-template-columns: repeat(3, 1fr); column-gap: 10px; row-gap: 28px; margin-bottom: 24px; }
+    /* === 藝人網紅（3排） === */
+    .celeb-grid { grid-template-columns: repeat(3, 1fr); column-gap: 10px; row-gap: 32px; margin-bottom: 24px; }
     .celeb-card > span { font-size: 0.78rem; margin-top: 5px; line-height: 1.2; }
     .celeb-card > small { font-size: 0.58rem; margin-top: 1px; line-height: 1.2; }
 
@@ -2526,20 +2526,16 @@ a.portfolio-link {
     .service-icon { width: 40px; height: 40px; margin-bottom: 14px; }
     .service-icon svg { width: 26px; height: 26px; }
 
-    /* === 痛點對話（改上下排列） === */
-    .chat-list { gap: 14px; }
-    .chat-row { flex-direction: column; gap: 0; }
-    .chat-bubble-left { padding: 14px 16px; border-radius: 14px 14px 4px 4px; }
-    .chat-bubble-right { padding: 14px 16px; border-radius: 4px 4px 14px 14px; }
-    .chat-bubble-left h4 { font-size: 0.95rem; }
-    .chat-bubble-left p { font-size: 0.82rem; }
-    .chat-bubble-right strong { font-size: 0.92rem; }
-    .chat-bubble-right p { font-size: 0.82rem; }
-    .chat-arrow { width: auto; height: 28px; transform: rotate(90deg); }
-    .chat-arrow svg { width: 14px; height: 14px; }
-    .chat-row:hover .chat-arrow { transform: rotate(90deg); }
-    .chat-row:hover .chat-bubble-left { transform: none; }
-    .chat-row:hover .chat-bubble-right { transform: none; }
+    /* === 痛點對話（左右排列） === */
+    .chat-list { gap: 10px; }
+    .chat-bubble-left { padding: 10px 12px; border-radius: 12px 4px 4px 12px; }
+    .chat-bubble-right { padding: 10px 12px; border-radius: 4px 12px 12px 4px; }
+    .chat-bubble-left h4 { font-size: 0.82rem; }
+    .chat-bubble-left p { font-size: 0.7rem; }
+    .chat-bubble-right strong { font-size: 0.78rem; }
+    .chat-bubble-right p { font-size: 0.7rem; }
+    .chat-arrow { width: 24px; }
+    .chat-arrow svg { width: 12px; height: 12px; }
     .pain-cta { margin-top: 20px; }
 
     /* === 報價（手機版：compact 三卡 + 共用功能） === */
@@ -2563,14 +2559,14 @@ a.portfolio-link {
     .step-content p { font-size: 0.82rem; }
     .process-timeline::before { left: 15px; }
 
-    /* === 關於我 === */
-    .about-grid { grid-template-columns: 1fr; gap: 16px; text-align: center; }
-    .about-photo { width: 100px; height: 100px; object-fit: cover; object-position: center top; border-radius: 50%; margin: 0 auto; }
-    .about-content p { font-size: 0.85rem; line-height: 1.6; }
-    .about-content .section-tag { text-align: center; font-size: 0.65rem; }
-    .about-content .section-title { text-align: center; font-size: 1.1rem; }
-    .about-tags { gap: 5px; justify-content: center; }
-    .tag { font-size: 0.7rem; padding: 4px 10px; }
+    /* === 關於我（左右排列） === */
+    .about-grid { grid-template-columns: 80px 1fr; gap: 12px; align-items: start; }
+    .about-photo { width: 80px; height: 80px; object-fit: cover; object-position: center top; border-radius: 50%; }
+    .about-content p { font-size: 0.82rem; line-height: 1.6; }
+    .about-content .section-tag { text-align: left; font-size: 0.65rem; }
+    .about-content .section-title { text-align: left; font-size: 1.05rem; }
+    .about-tags { gap: 5px; }
+    .tag { font-size: 0.68rem; padding: 3px 9px; }
 
     /* === 聯絡 === */
     .contact-buttons { flex-direction: row; gap: 8px; }
@@ -2793,8 +2789,9 @@ a.portfolio-link {
 
 @media (max-width: 768px) {
     .celeb-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 12px;
+        row-gap: 28px;
     }
 
     .celeb-card > span {
