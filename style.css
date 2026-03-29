@@ -2327,121 +2327,123 @@ a.portfolio-link {
 }
 
 @media (max-width: 480px) {
-    /* === 全局縮小 === */
-    .container { padding: 0 16px; }
-    .section { padding: 50px 0; }
+    /* === 全局 === */
+    .container { padding: 0 14px; }
+    .section { padding: 36px 0; }
 
-    /* === 字體縮小 === */
+    /* === 字體 === */
     .section-tag { letter-spacing: 2px; font-size: 0.7rem; }
-    .section-desc { margin-bottom: 32px; font-size: 0.88rem; }
+    .section-title { font-size: 1.3rem; }
+    .section-desc { margin-bottom: 24px; font-size: 0.85rem; }
     .nav-logo { letter-spacing: 1px; font-size: 1rem; }
 
     /* === Hero === */
-    .hero { padding: 80px 16px 40px; }
-    .hero-intro-section { padding: 40px 16px; }
-    .hero-intro-desc { font-size: 0.9rem; letter-spacing: 1px; }
+    .hero { padding: 80px 14px 40px; }
+    .hero-intro-section { padding: 30px 14px; }
+    .hero-intro-desc { font-size: 0.88rem; letter-spacing: 1px; }
 
-    /* === 作品集 === */
-    .portfolio-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    /* === 作品集（4排） === */
+    .portfolio-grid { grid-template-columns: repeat(4, 1fr); gap: 5px; }
     .portfolio-thumb { aspect-ratio: 9/16; }
 
-    /* === 品牌合作 === */
-    .company-section { margin-top: 2rem; padding: 1.2rem; }
-    .company-grid { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    /* === 品牌合作（5排） === */
+    .company-section { margin-top: 1.5rem; padding: 1rem; }
+    .company-grid { grid-template-columns: repeat(5, 1fr); gap: 5px; }
     .company-item { aspect-ratio: 9/16; }
-    .company-section-title { font-size: 1.1rem; }
-    .company-section-desc { font-size: 0.8rem; }
+    .company-section-title { font-size: 1rem; }
+    .company-section-desc { font-size: 0.75rem; }
 
     /* === 質感訪談 === */
-    .interview-section { margin-top: 2rem; padding: 1.2rem; }
+    .interview-section { margin-top: 1.5rem; padding: 1rem; }
 
-    /* === 好評回饋 === */
-    .reviews-track img { height: 180px; }
-    .reviews-track { gap: 8px; animation-duration: 35s; }
+    /* === 好評回饋（圖片放大） === */
+    .reviews-track img { height: 260px; }
+    .reviews-track { gap: 10px; }
 
-    /* === 藝人網紅 === */
-    .celeb-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 32px; }
-    .celeb-card > span { font-size: 0.85rem; margin-top: 8px; }
-    .celeb-card > small { font-size: 0.7rem; }
-    .clients-title { font-size: 1.1rem; letter-spacing: 1px; margin-bottom: 24px; }
+    /* === 藝人網紅（4排） === */
+    .celeb-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 24px; }
+    .celeb-card > span { font-size: 0.75rem; margin-top: 6px; }
+    .celeb-card > small { font-size: 0.6rem; }
+    .clients-title { font-size: 1rem; letter-spacing: 1px; margin-bottom: 20px; }
 
-    /* === 服務卡片 === */
-    .service-card { padding: 24px 18px; }
-    .service-card h3 { font-size: 1rem; }
-    .service-card > p { font-size: 0.85rem; }
-    .service-features li { font-size: 0.8rem; padding: 4px 0; }
-    .service-icon { width: 36px; height: 36px; margin-bottom: 16px; }
-    .service-icon svg { width: 24px; height: 24px; }
-    .services-grid { gap: 14px; }
+    /* === 服務卡片（改1排，不擠） === */
+    .services-grid { grid-template-columns: 1fr; gap: 12px; }
+    .service-card { padding: 20px 18px; }
+    .service-card h3 { font-size: 1.05rem; }
+    .service-card > p { font-size: 0.88rem; margin-bottom: 16px; }
+    .service-features li { font-size: 0.85rem; padding: 5px 0; padding-left: 16px; }
+    .service-features li::before { top: 50%; transform: translateY(-50%); }
+    .service-icon { width: 40px; height: 40px; margin-bottom: 14px; }
+    .service-icon svg { width: 26px; height: 26px; }
 
     /* === 痛點對話 === */
-    .chat-list { gap: 12px; }
-    .chat-bubble-left { padding: 14px 16px; border-radius: 14px 4px 4px 14px; }
-    .chat-bubble-right { padding: 14px 16px; border-radius: 4px 14px 14px 4px; }
-    .chat-bubble-left h4 { font-size: 1rem; }
-    .chat-bubble-left p { font-size: 0.85rem; }
-    .chat-bubble-right strong { font-size: 0.95rem; }
-    .chat-bubble-right p { font-size: 0.85rem; }
-    .chat-arrow { width: 36px; }
-    .chat-arrow svg { width: 16px; height: 16px; }
-    .pain-cta { margin-top: 24px; }
+    .chat-list { gap: 10px; }
+    .chat-bubble-left { padding: 12px 14px; border-radius: 12px 4px 4px 12px; }
+    .chat-bubble-right { padding: 12px 14px; border-radius: 4px 12px 12px 4px; }
+    .chat-bubble-left h4 { font-size: 0.9rem; }
+    .chat-bubble-left p { font-size: 0.78rem; }
+    .chat-bubble-right strong { font-size: 0.88rem; }
+    .chat-bubble-right p { font-size: 0.78rem; }
+    .chat-arrow { width: 28px; }
+    .chat-arrow svg { width: 14px; height: 14px; }
+    .pain-cta { margin-top: 20px; }
 
-    /* === 報價卡片（維持三排） === */
-    .pricing-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .pricing-card { padding: 16px 12px; }
-    .pricing-card.popular { transform: scale(1.01); }
-    .pricing-card.popular:hover { transform: scale(1.03) translateY(-4px); }
-    .pricing-header h3 { font-size: 0.85rem; }
-    .pricing-subtitle { font-size: 0.65rem; margin-bottom: 12px; }
-    .amount { font-size: 1.4rem; }
-    .currency { font-size: 0.7rem; }
-    .period { font-size: 0.6rem; }
-    .pricing-qty { font-size: 0.8rem; }
-    .pricing-compare { gap: 4px; flex-direction: column; }
-    .pricing-original { font-size: 0.65rem; }
-    .pricing-saving { font-size: 0.6rem; padding: 2px 6px; }
-    .pricing-unit { font-size: 0.7rem; padding: 5px 8px; }
-    .pricing-unit strong { font-size: 0.8rem; }
-    .pricing-note { font-size: 0.65rem; margin-bottom: 10px; }
-    .pricing-features li { font-size: 0.7rem; padding: 3px 0; gap: 6px; }
-    .pricing-features li svg { width: 14px; height: 14px; }
-    .popular-badge { top: -8px; padding: 2px 10px; font-size: 0.6rem; }
-    .pricing-bottom-note p { font-size: 0.75rem; }
-    .btn { padding: 10px 16px; font-size: 0.78rem; }
+    /* === 報價卡片（改1排，好閱讀） === */
+    .pricing-grid { grid-template-columns: 1fr; gap: 16px; max-width: 340px; margin: 0 auto; }
+    .pricing-card { padding: 28px 24px; }
+    .pricing-card.popular { transform: none; }
+    .pricing-card.popular:hover { transform: translateY(-4px); }
+    .pricing-header h3 { font-size: 1.15rem; }
+    .pricing-subtitle { font-size: 0.85rem; margin-bottom: 16px; }
+    .amount { font-size: 2.2rem; font-weight: 700; }
+    .currency { font-size: 0.9rem; }
+    .period { font-size: 0.82rem; }
+    .pricing-qty { font-size: 1.1rem; }
+    .pricing-compare { gap: 6px; }
+    .pricing-original { font-size: 0.82rem; }
+    .pricing-saving { font-size: 0.75rem; padding: 3px 10px; }
+    .pricing-unit { font-size: 0.9rem; padding: 8px 12px; }
+    .pricing-unit strong { font-size: 1rem; }
+    .pricing-note { font-size: 0.8rem; margin-bottom: 14px; }
+    .pricing-features li { font-size: 0.88rem; padding: 6px 0; }
+    .pricing-features li svg { width: 16px; height: 16px; }
+    .popular-badge { top: -10px; padding: 3px 14px; font-size: 0.7rem; }
+    .pricing-bottom-note p { font-size: 0.85rem; }
+    .btn { padding: 12px 20px; font-size: 0.88rem; }
 
-    /* === 加購項目（維持四排） === */
+    /* === 加購項目（2排） === */
     .addons h3 { font-size: 1rem; }
-    .addons-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
-    .addon-item { padding: 10px 8px; }
-    .addon-name { font-size: 0.68rem; }
-    .addon-price { font-size: 0.75rem; }
+    .addons-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .addon-item { padding: 14px 12px; }
+    .addon-name { font-size: 0.82rem; }
+    .addon-price { font-size: 0.9rem; }
 
     /* === 合作流程 === */
-    .process-step { gap: 14px; padding: 18px 0; }
-    .step-number { width: 36px; height: 36px; font-size: 0.75rem; }
+    .process-step { gap: 14px; padding: 16px 0; }
+    .step-number { width: 34px; height: 34px; font-size: 0.72rem; }
     .step-content h3 { font-size: 0.95rem; }
     .step-content p { font-size: 0.82rem; }
-    .process-timeline::before { left: 16px; }
+    .process-timeline::before { left: 15px; }
 
-    /* === 關於我（維持左右排列） === */
-    .about-grid { grid-template-columns: auto 1fr; gap: 16px; }
-    .about-photo { width: 100px; height: 100px; }
+    /* === 關於我 === */
+    .about-grid { grid-template-columns: auto 1fr; gap: 14px; }
+    .about-photo { width: 90px; height: 90px; }
     .about-content p { font-size: 0.82rem; line-height: 1.6; }
-    .about-content .section-tag { text-align: left; }
-    .about-content .section-title { text-align: left; font-size: 1.2rem; }
+    .about-content .section-tag { text-align: left; font-size: 0.65rem; }
+    .about-content .section-title { text-align: left; font-size: 1.1rem; }
     .about-tags { gap: 5px; }
-    .tag { font-size: 0.68rem; padding: 3px 10px; }
+    .tag { font-size: 0.7rem; padding: 4px 10px; }
 
-    /* === 聯絡（維持左右排列） === */
-    .contact-buttons { flex-direction: row; gap: 10px; }
-    .contact-btn { padding: 14px 16px; min-width: auto; flex: 1; gap: 10px; }
+    /* === 聯絡 === */
+    .contact-buttons { flex-direction: row; gap: 8px; }
+    .contact-btn { padding: 14px 14px; min-width: auto; flex: 1; gap: 8px; }
     .contact-btn svg { width: 24px; height: 24px; }
     .contact-btn-label { font-size: 0.82rem; }
-    .contact-btn-id { font-size: 0.72rem; }
+    .contact-btn-id { font-size: 0.7rem; }
     .faq-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
     .faq-item { padding: 12px; }
-    .faq-item strong { font-size: 0.78rem; }
-    .faq-item p { font-size: 0.72rem; }
+    .faq-item strong { font-size: 0.8rem; }
+    .faq-item p { font-size: 0.75rem; }
 
     /* === 底部 === */
     body { padding-bottom: 72px; }
@@ -2635,19 +2637,11 @@ a.portfolio-link {
     cursor: grabbing;
 }
 
-.reviews-scroll.is-dragging .reviews-track {
-    animation-play-state: paused;
-}
 
 .reviews-track {
     display: flex;
     gap: 16px;
-    animation: reviewsScroll 60s linear infinite;
     width: max-content;
-}
-
-.reviews-track:hover {
-    animation-play-state: paused;
 }
 
 .reviews-track img {
@@ -2664,11 +2658,6 @@ a.portfolio-link {
     transform: scale(1.03);
 }
 
-@keyframes reviewsScroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
 @media (max-width: 768px) {
     .reviews-track img {
         height: 240px;
@@ -2676,7 +2665,6 @@ a.portfolio-link {
 
     .reviews-track {
         gap: 12px;
-        animation-duration: 45s;
     }
 }
 

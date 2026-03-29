@@ -413,24 +413,56 @@ document.querySelectorAll('.celeb-flip').forEach(card => {
     }, 3000);
 });
 
-// Reviews drag to scroll
+// Reviews infinite auto-scroll
 (function() {
-    const scroll = document.querySelector('.reviews-scroll');
-    if (!scroll) return;
-    let isDown = false, startX, scrollLeft;
-    scroll.addEventListener('mousedown', e => {
-        isDown = true;
-        scroll.classList.add('is-dragging');
-        startX = e.pageX - scroll.offsetLeft;
-        scrollLeft = scroll.scrollLeft;
+    var scroll = document.querySelector('.reviews-scroll');
+    var track = document.querySelector('.reviews-track');
+    if (!scroll || !track) return;
+
+    var speed = 0.5; // px per frame
+    var paused = false;
+    var dragging = false;
+    var startX, startScrollLeft;
+
+    // Auto scroll
+    function autoScroll() {
+        if (!paused && !dragging) {
+            scroll.scrollLeft += speed;
+            // When scrolled past half (the duplicated set), reset to start
+            if (scroll.scrollLeft >= track.scrollWidth / 2) {
+                scroll.scrollLeft = 0;
+            }
+        }
+        requestAnimationFrame(autoScroll);
+    }
+    requestAnimationFrame(autoScroll);
+
+    // Pause on hover
+    scroll.addEventListener('mouseenter', function() { paused = true; });
+    scroll.addEventListener('mouseleave', function() { paused = false; dragging = false; });
+
+    // Pause on touch
+    scroll.addEventListener('touchstart', function() { paused = true; }, { passive: true });
+    scroll.addEventListener('touchend', function() {
+        setTimeout(function() { paused = false; }, 2000); // resume after 2s
     });
-    scroll.addEventListener('mouseleave', () => { isDown = false; scroll.classList.remove('is-dragging'); });
-    scroll.addEventListener('mouseup', () => { isDown = false; scroll.classList.remove('is-dragging'); });
-    scroll.addEventListener('mousemove', e => {
-        if (!isDown) return;
+
+    // Drag to scroll (desktop)
+    scroll.addEventListener('mousedown', function(e) {
+        dragging = true;
+        startX = e.pageX - scroll.offsetLeft;
+        startScrollLeft = scroll.scrollLeft;
+        scroll.style.cursor = 'grabbing';
+    });
+    scroll.addEventListener('mousemove', function(e) {
+        if (!dragging) return;
         e.preventDefault();
-        const x = e.pageX - scroll.offsetLeft;
-        scroll.scrollLeft = scrollLeft - (x - startX);
+        var x = e.pageX - scroll.offsetLeft;
+        scroll.scrollLeft = startScrollLeft - (x - startX);
+    });
+    scroll.addEventListener('mouseup', function() {
+        dragging = false;
+        scroll.style.cursor = 'grab';
     });
 })();
 
