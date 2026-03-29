@@ -1635,6 +1635,107 @@ a.portfolio-link {
     margin-left: 4px;
 }
 
+/* === MOBILE COMPACT PRICING === */
+.pricing-compact { display: none; }
+.pricing-shared-features { display: none; }
+
+.pricing-compact {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.pricing-compact-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    position: relative;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-compact-card.popular {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, rgba(200, 169, 126, 0.1) 0%, var(--bg-card) 50%);
+    padding-top: 28px;
+}
+
+.pricing-compact-badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: var(--bg-primary);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 12px;
+    border-radius: 50px;
+    white-space: nowrap;
+}
+
+.pricing-compact-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.pricing-compact-price {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.pricing-compact-price strong {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    display: block;
+    line-height: 1.2;
+}
+
+.pricing-compact-sub {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.pricing-shared-features {
+    background: rgba(200, 169, 126, 0.06);
+    border: 1px solid rgba(200, 169, 126, 0.15);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.pricing-shared-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 12px;
+}
+
+.pricing-shared-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pricing-shared-list span {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 50px;
+}
+
 .pricing-compare {
     display: flex;
     align-items: center;
@@ -2388,27 +2489,11 @@ a.portfolio-link {
     .chat-arrow svg { width: 14px; height: 14px; }
     .pain-cta { margin-top: 20px; }
 
-    /* === 報價卡片（改1排，好閱讀） === */
-    .pricing-grid { grid-template-columns: 1fr; gap: 16px; max-width: 340px; margin: 0 auto; }
-    .pricing-card { padding: 28px 24px; }
-    .pricing-card.popular { transform: none; }
-    .pricing-card.popular:hover { transform: translateY(-4px); }
-    .pricing-header h3 { font-size: 1.15rem; }
-    .pricing-subtitle { font-size: 0.85rem; margin-bottom: 16px; }
-    .amount { font-size: 2.2rem; font-weight: 700; }
-    .currency { font-size: 0.9rem; }
-    .period { font-size: 0.82rem; }
-    .pricing-qty { font-size: 1.1rem; }
-    .pricing-compare { gap: 6px; }
-    .pricing-original { font-size: 0.82rem; }
-    .pricing-saving { font-size: 0.75rem; padding: 3px 10px; }
-    .pricing-unit { font-size: 0.9rem; padding: 8px 12px; }
-    .pricing-unit strong { font-size: 1rem; }
-    .pricing-note { font-size: 0.8rem; margin-bottom: 14px; }
-    .pricing-features li { font-size: 0.88rem; padding: 6px 0; }
-    .pricing-features li svg { width: 16px; height: 16px; }
-    .popular-badge { top: -10px; padding: 3px 14px; font-size: 0.7rem; }
-    .pricing-bottom-note p { font-size: 0.85rem; }
+    /* === 報價（手機版：compact 三卡 + 共用功能） === */
+    .pricing-grid { display: none !important; }
+    .pricing-compact { display: grid !important; }
+    .pricing-shared-features { display: block !important; }
+    .pricing-bottom-note p { font-size: 0.82rem; }
     .btn { padding: 12px 20px; font-size: 0.88rem; }
 
     /* === 加購項目（2排） === */
