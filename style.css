@@ -2472,7 +2472,7 @@ a.portfolio-link {
 
 @media (max-width: 480px) {
     /* === 全局 === */
-    .container { padding: 0 14px; }
+    .container { padding: 0 20px; }
     .section { padding: 36px 0; }
 
     /* === 字體 === */
