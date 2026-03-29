@@ -2001,28 +2001,12 @@ a.portfolio-link {
     margin-bottom: 0;
     padding-top: 4px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-}
-
-.step-toggle {
-    font-size: 1rem;
-    color: var(--accent);
-    font-weight: 300;
-    transition: transform 0.3s ease;
-    flex-shrink: 0;
-}
-
-.process-step.open .step-toggle {
-    transform: rotate(45deg);
 }
 
 .step-content p {
     font-size: 0.9rem;
     color: var(--text-secondary);
-    line-height: 1.7;
+    line-height: 1.6;
     max-height: 0;
     overflow: hidden;
     opacity: 0;
@@ -2033,11 +2017,18 @@ a.portfolio-link {
 .process-step.open .step-content p {
     max-height: 100px;
     opacity: 1;
-    margin-top: 8px;
+    margin-top: 6px;
 }
 
 .process-step {
     cursor: pointer;
+    padding: 20px 0;
+}
+
+.process-step.open .step-number {
+    background: var(--accent);
+    color: var(--bg-primary);
+    transition: all 0.3s ease;
 }
 
 /* ===== ABOUT ===== */
@@ -2598,12 +2589,12 @@ a.portfolio-link {
 
     /* === 合作流程 === */
     .process-timeline { overflow: hidden; }
-    .process-step { gap: 16px; padding: 24px 0; }
-    .step-number { width: 36px; height: 36px; font-size: 0.75rem; flex-shrink: 0; }
+    .process-step { gap: 14px; padding: 16px 0; }
+    .step-number { width: 34px; height: 34px; font-size: 0.72rem; flex-shrink: 0; }
     .step-content { min-width: 0; overflow: hidden; }
-    .step-content h3 { font-size: 1rem; margin-bottom: 6px; }
-    .step-content p { font-size: 0.85rem; line-height: 1.7; }
-    .process-timeline::before { left: 16px; }
+    .step-content h3 { font-size: 0.95rem; margin-bottom: 0; }
+    .step-content p { font-size: 0.82rem; line-height: 1.6; }
+    .process-timeline::before { left: 15px; }
 
     /* === 關於我（上下排列，避免出血） === */
     .about-grid { grid-template-columns: 1fr; gap: 16px; }
