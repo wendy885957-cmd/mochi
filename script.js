@@ -28,15 +28,15 @@ window.addEventListener('load', function() {
     var curtain = document.getElementById('curtain');
     if (curtain) {
         var logo = curtain.querySelector('.curtain-logo');
-        // Add glow after logo appears
+        // Logo glow
         setTimeout(function() {
             if (logo) logo.classList.add('glow');
-        }, 500);
-        // Trigger split curtain
+        }, 600);
+        // Fade out
         setTimeout(function() {
             curtain.classList.add('curtain-done');
-        }, 800);
-        setTimeout(function() { curtain.remove(); }, 2200);
+        }, 1000);
+        setTimeout(function() { curtain.remove(); }, 1800);
     }
 });
 
