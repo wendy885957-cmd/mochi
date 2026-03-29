@@ -2657,6 +2657,7 @@ a.portfolio-link {
     border: 1px solid var(--border);
     flex-shrink: 0;
     transition: transform 0.3s ease;
+    background: var(--bg-card);
 }
 
 .reviews-track img:hover {
