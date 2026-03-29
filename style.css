@@ -1134,7 +1134,7 @@ a.portfolio-link {
 
 .company-section-title {
     font-size: 1.3rem;
-    color: var(--text);
+    color: var(--text-primary);
     margin-top: 0.5rem;
 }
 
@@ -1310,7 +1310,7 @@ a.portfolio-link {
 
 .artist-section-title {
     font-size: 1.3rem;
-    color: var(--text);
+    color: var(--text-primary);
     margin-top: 0.5rem;
 }
 
@@ -2522,6 +2522,9 @@ a.portfolio-link {
     /* === 作品集（3排） === */
     .portfolio { padding-top: 20px; }
     .portfolio-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .portfolio-overlay { transform: translateY(0); opacity: 1; }
+    .portfolio-overlay h4 { font-size: 0.7rem; }
+    .portfolio-category { font-size: 0.55rem; }
     .portfolio-thumb { aspect-ratio: 9/16; }
 
     /* === 品牌合作（3排） === */
