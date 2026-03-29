@@ -438,6 +438,35 @@ document.querySelectorAll('.about-content').forEach(el => {
             compact.classList.remove('has-expanded');
         }
     });
+
+    // Swipe left/right to switch plans when expanded
+    var swipeStartX = 0;
+    compact.addEventListener('touchstart', function(e) {
+        swipeStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    compact.addEventListener('touchend', function(e) {
+        if (!compact.classList.contains('has-expanded')) return;
+        var dx = e.changedTouches[0].clientX - swipeStartX;
+        if (Math.abs(dx) < 50) return; // too small
+
+        var currentIdx = -1;
+        cards.forEach(function(c, i) { if (c.classList.contains('expanded')) currentIdx = i; });
+        if (currentIdx === -1) return;
+
+        var nextIdx;
+        if (dx < 0) {
+            // swipe left → next
+            nextIdx = (currentIdx + 1) % cards.length;
+        } else {
+            // swipe right → prev
+            nextIdx = (currentIdx - 1 + cards.length) % cards.length;
+        }
+
+        cards.forEach(function(c) { c.classList.remove('expanded'); });
+        cards[nextIdx].classList.add('expanded');
+        playSound('click');
+    });
 })();
 
 // Contact buttons
