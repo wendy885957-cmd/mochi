@@ -1172,7 +1172,8 @@ a.portfolio-link {
 
 @media (max-width: 968px) {
     .company-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
     }
     .company-section {
         padding: 1.5rem;
@@ -1181,8 +1182,8 @@ a.portfolio-link {
 
 @media (max-width: 600px) {
     .company-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 6px;
     }
 }
 
@@ -2150,7 +2151,8 @@ a.portfolio-link {
     }
 
     .portfolio-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
     }
 
     .pricing-grid {
@@ -2297,8 +2299,8 @@ a.portfolio-link {
     }
 
     .portfolio-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
     }
 
     .form-row {
@@ -2368,13 +2370,13 @@ a.portfolio-link {
     .hero-intro-desc { font-size: 0.9rem; letter-spacing: 1px; }
 
     /* === 作品集 === */
-    .portfolio-grid { grid-template-columns: 1fr; gap: 14px; }
-    .portfolio-thumb { aspect-ratio: 9/14; }
+    .portfolio-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .portfolio-thumb { aspect-ratio: 9/16; }
 
     /* === 品牌合作 === */
     .company-section { margin-top: 2rem; padding: 1.2rem; }
-    .company-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-    .company-item { aspect-ratio: 9/14; }
+    .company-grid { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .company-item { aspect-ratio: 9/16; }
     .company-section-title { font-size: 1.1rem; }
     .company-section-desc { font-size: 0.8rem; }
 
@@ -2386,7 +2388,7 @@ a.portfolio-link {
     .reviews-track { gap: 8px; animation-duration: 35s; }
 
     /* === 藝人網紅 === */
-    .celeb-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 32px; }
+    .celeb-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 32px; }
     .celeb-card > span { font-size: 0.85rem; margin-top: 8px; }
     .celeb-card > small { font-size: 0.7rem; }
     .clients-title { font-size: 1.1rem; letter-spacing: 1px; margin-bottom: 24px; }
@@ -2562,26 +2564,26 @@ a.portfolio-link {
 
 @media (max-width: 968px) {
     .celeb-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
     }
 }
 
 @media (max-width: 768px) {
     .celeb-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
     }
 
     .celeb-card > span {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
 }
 
 @media (max-width: 480px) {
     .celeb-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
     }
 }
 
