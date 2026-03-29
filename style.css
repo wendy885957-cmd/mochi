@@ -2529,16 +2529,17 @@ a.portfolio-link {
     .service-icon { width: 40px; height: 40px; margin-bottom: 14px; }
     .service-icon svg { width: 26px; height: 26px; }
 
-    /* === 痛點對話（左右排列） === */
-    .chat-list { gap: 12px; }
-    .chat-bubble-left { padding: 12px 14px; border-radius: 14px 4px 4px 14px; }
-    .chat-bubble-right { padding: 12px 14px; border-radius: 4px 14px 14px 4px; }
-    .chat-bubble-left h4 { font-size: 0.88rem; }
-    .chat-bubble-left p { font-size: 0.78rem; line-height: 1.5; }
-    .chat-bubble-right strong { font-size: 0.85rem; }
-    .chat-bubble-right p { font-size: 0.78rem; line-height: 1.5; }
-    .chat-arrow { width: 28px; }
-    .chat-arrow svg { width: 14px; height: 14px; }
+    /* === 痛點對話（左右排列，框框一致） === */
+    .chat-list { gap: 10px; max-width: 100%; }
+    .chat-row { gap: 0; }
+    .chat-bubble-left { padding: 10px 12px; border-radius: 12px 4px 4px 12px; flex: 1; min-width: 0; }
+    .chat-bubble-right { padding: 10px 12px; border-radius: 4px 12px 12px 4px; flex: 1; min-width: 0; }
+    .chat-bubble-left h4 { font-size: 0.78rem; margin-bottom: 2px; }
+    .chat-bubble-left p { font-size: 0.68rem; line-height: 1.45; }
+    .chat-bubble-right strong { font-size: 0.75rem; }
+    .chat-bubble-right p { font-size: 0.68rem; line-height: 1.45; }
+    .chat-arrow { width: 20px; flex-shrink: 0; }
+    .chat-arrow svg { width: 10px; height: 10px; }
     .pain-cta { margin-top: 24px; }
 
     /* === 報價（compact 三卡） === */
