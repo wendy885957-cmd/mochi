@@ -2353,26 +2353,107 @@ a.portfolio-link {
 }
 
 @media (max-width: 480px) {
-    .portfolio-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-    }
+    /* === 全局縮小 === */
+    .container { padding: 0 16px; }
+    .section { padding: 50px 0; }
 
-    .portfolio-thumb {
-        aspect-ratio: 9/14;
-    }
+    /* === 字體縮小 === */
+    .section-tag { letter-spacing: 2px; font-size: 0.7rem; }
+    .section-desc { margin-bottom: 32px; font-size: 0.88rem; }
+    .nav-logo { letter-spacing: 1px; font-size: 1rem; }
 
-    .pricing-card {
-        padding: 32px 24px;
-    }
+    /* === Hero === */
+    .hero { padding: 80px 16px 40px; }
+    .hero-intro-section { padding: 40px 16px; }
+    .hero-intro-desc { font-size: 0.9rem; letter-spacing: 1px; }
 
-    .testimonials-grid {
-        grid-template-columns: 1fr;
-    }
+    /* === 作品集 === */
+    .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .portfolio-thumb { aspect-ratio: 9/14; }
 
-    body {
-        padding-bottom: 72px;
-    }
+    /* === 品牌合作 === */
+    .company-section { margin-top: 2rem; padding: 1.2rem; }
+    .company-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .company-item { aspect-ratio: 9/14; }
+    .company-section-title { font-size: 1.1rem; }
+    .company-section-desc { font-size: 0.8rem; }
+
+    /* === 質感訪談 === */
+    .interview-section { margin-top: 2rem; padding: 1.2rem; }
+
+    /* === 好評回饋 === */
+    .reviews-track img { height: 180px; }
+    .reviews-track { gap: 8px; animation-duration: 35s; }
+
+    /* === 藝人網紅 === */
+    .celeb-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 32px; }
+    .celeb-card > span { font-size: 0.85rem; margin-top: 8px; }
+    .celeb-card > small { font-size: 0.7rem; }
+    .clients-title { font-size: 1.1rem; letter-spacing: 1px; margin-bottom: 24px; }
+
+    /* === 服務卡片 === */
+    .service-card { padding: 24px 18px; }
+    .service-card h3 { font-size: 1rem; }
+    .service-card > p { font-size: 0.85rem; }
+    .service-features li { font-size: 0.8rem; padding: 4px 0; }
+    .service-icon { width: 36px; height: 36px; margin-bottom: 16px; }
+    .service-icon svg { width: 24px; height: 24px; }
+    .services-grid { gap: 14px; }
+
+    /* === 痛點對話 === */
+    .chat-list { gap: 12px; }
+    .chat-bubble-left { padding: 14px 16px; border-radius: 14px 4px 4px 14px; }
+    .chat-bubble-right { padding: 14px 16px; border-radius: 4px 14px 14px 4px; }
+    .chat-bubble-left h4 { font-size: 1rem; }
+    .chat-bubble-left p { font-size: 0.85rem; }
+    .chat-bubble-right strong { font-size: 0.95rem; }
+    .chat-bubble-right p { font-size: 0.85rem; }
+    .chat-arrow { width: 36px; }
+    .chat-arrow svg { width: 16px; height: 16px; }
+    .pain-cta { margin-top: 24px; }
+
+    /* === 報價卡片 === */
+    .pricing-card { padding: 28px 20px; }
+    .pricing-header h3 { font-size: 1.05rem; }
+    .pricing-subtitle { font-size: 0.8rem; }
+    .amount { font-size: 2rem; }
+    .pricing-qty { font-size: 1.1rem; }
+    .pricing-compare { gap: 6px; }
+    .pricing-original { font-size: 0.78rem; }
+    .pricing-saving { font-size: 0.72rem; padding: 2px 8px; }
+    .pricing-unit { font-size: 0.88rem; padding: 6px 10px; }
+    .pricing-unit strong { font-size: 1rem; }
+    .pricing-features li { font-size: 0.82rem; padding: 6px 0; }
+    .popular-badge { top: -10px; padding: 3px 14px; font-size: 0.7rem; }
+    .pricing-bottom-note p { font-size: 0.82rem; }
+
+    /* === 加購項目 === */
+    .addons-grid { gap: 8px; }
+    .addon-item { padding: 14px; }
+    .addon-name { font-size: 0.8rem; }
+    .addon-price { font-size: 0.95rem; }
+
+    /* === 合作流程 === */
+    .process-step { gap: 14px; padding: 18px 0; }
+    .step-number { width: 36px; height: 36px; font-size: 0.75rem; }
+    .step-content h3 { font-size: 0.95rem; }
+    .step-content p { font-size: 0.82rem; }
+    .process-timeline::before { left: 16px; }
+
+    /* === 關於我 === */
+    .about-photo { width: 140px; height: 140px; }
+    .about-content p { font-size: 0.88rem; }
+    .about-tags { gap: 6px; }
+    .tag { font-size: 0.72rem; padding: 4px 12px; }
+
+    /* === 聯絡 === */
+    .contact-btn { padding: 18px 24px; min-width: auto; }
+    .faq-item { padding: 14px; }
+    .faq-item strong { font-size: 0.82rem; }
+    .faq-item p { font-size: 0.78rem; }
+
+    /* === 底部 === */
+    body { padding-bottom: 72px; }
 }
 
 /* ===== COLLABORATION ===== */
