@@ -49,13 +49,18 @@
     <section class="hero hero-fullvid" id="hero">
         <div class="hero-fullvid-wrap">
             <div class="hero-vid-container">
-                <video src="intro.mp4" muted autoplay loop playsinline webkit-playsinline preload="auto" id="heroVideo"></video>
+                <video src="intro.mp4" muted autoplay playsinline webkit-playsinline preload="auto" id="heroVideo"></video>
                 <div class="hero-fullvid-controls anim-reveal" style="--delay: 1.2s">
                     <button class="hero-sound-btn hero-sound-btn-prominent" id="heroSoundBtn" aria-label="開啟聲音">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
                             <path d="M11 5L6 9H2v6h4l5 4V5z"/>
                             <line x1="23" y1="9" x2="17" y2="15" class="mute-line"/>
                             <line x1="17" y1="9" x2="23" y2="15" class="mute-line"/>
+                        </svg>
+                    </button>
+                    <button class="hero-replay-btn" id="heroReplayBtn" aria-label="重播">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                            <path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
                         </svg>
                     </button>
                 </div>
@@ -86,34 +91,27 @@
         <div class="container">
             <p class="section-tag">PORTFOLIO</p>
             <h2 class="section-title">作品集</h2>
-            <div class="portfolio-filters">
-                <button class="filter-btn active" data-filter="all">全部</button>
-                <button class="filter-btn" data-filter="short">短影音</button>
-                <button class="filter-btn" data-filter="vlog">Vlog</button>
-                <button class="filter-btn" data-filter="commercial">商業廣告</button>
-                <button class="filter-btn" data-filter="brand">品牌形象</button>
-            </div>
+            <p style="color:var(--text-secondary); font-size:0.85rem; margin-bottom:1.5rem; line-height:1.6; text-align:center;">因部分職務作品涉及公司資產與保密規範，公開作品集以自主創作與可公開案例為主。</p>
             <div class="portfolio-grid">
 
                 <!-- 把 placeholder 裡的 SVG 換成影片或圖片就好 -->
 
                 <!-- 作品 1 -->
-                <a href="https://www.instagram.com/reel/DVvXGBoiYCl/" target="_blank" rel="noopener" class="portfolio-item portfolio-link" data-category="short">
+                <a href="https://www.instagram.com/reel/DVvXGBoiYCl/" target="_blank" rel="noopener" class="portfolio-item portfolio-link" data-category="kol">
                     <div class="portfolio-thumb">
                         <img src="reel-01.jpg" alt="日韓爆火穀胱甘肽" loading="lazy">
                         <div class="portfolio-play">
                             <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         </div>
                         <div class="portfolio-overlay">
-                            <span class="portfolio-category">短影音</span>
-                            <h4>日韓爆火穀胱甘肽</h4>
-                            <p>網紅業配</p>
+                            <span class="portfolio-category">網紅業配</span>
+                            <h4>保健食品</h4>
                         </div>
                     </div>
                 </a>
 
                 <!-- 作品 2 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="vlog">
+                <div class="portfolio-item portfolio-video-inline" data-category="kol">
                     <div class="portfolio-thumb">
                         <img src="https://img.youtube.com/vi/nI-3qj6p_0A/maxresdefault.jpg" alt="苗栗山chill露營區" loading="lazy" class="portfolio-cover">
                         <video src="portfolio/vlog-camping.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
@@ -125,14 +123,13 @@
                         </div>
                         <div class="portfolio-overlay">
                             <span class="portfolio-category">Vlog</span>
-                            <h4>苗栗山chill露營區</h4>
-                            <p>網紅 Vlog</p>
+                            <h4>露營紀錄</h4>
                         </div>
                     </div>
                 </div>
 
                 <!-- 作品 3 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="commercial">
+                <div class="portfolio-item portfolio-video-inline" data-category="kol">
                     <div class="portfolio-thumb">
                         <img src="portfolio/lador-yuan-cover.jpg" alt="LADOR護髮" loading="lazy" class="portfolio-cover" onerror="this.src='portfolio/lador-yuan.mp4#t=1'">
                         <video src="portfolio/lador-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
@@ -143,15 +140,14 @@
                             <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         </div>
                         <div class="portfolio-overlay">
-                            <span class="portfolio-category">商業廣告</span>
-                            <h4>LADOR護髮</h4>
-                            <p>網紅業配</p>
+                            <span class="portfolio-category">網紅業配</span>
+                            <h4>護髮產品</h4>
                         </div>
                     </div>
                 </div>
 
                 <!-- 作品 4 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="commercial">
+                <div class="portfolio-item portfolio-video-inline" data-category="kol">
                     <div class="portfolio-thumb">
                         <img src="portfolio/innex-yuan-cover.jpg" alt="INNEX身體乳" loading="lazy" class="portfolio-cover">
                         <video src="portfolio/innex-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
@@ -162,15 +158,14 @@
                             <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         </div>
                         <div class="portfolio-overlay">
-                            <span class="portfolio-category">商業廣告</span>
-                            <h4>INNEX身體乳</h4>
-                            <p>網紅業配</p>
+                            <span class="portfolio-category">網紅業配</span>
+                            <h4>身體保養</h4>
                         </div>
                     </div>
                 </div>
 
                 <!-- 作品 5 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="commercial">
+                <div class="portfolio-item portfolio-video-inline" data-category="kol">
                     <div class="portfolio-thumb">
                         <img src="portfolio/roborock-yuan-cover.jpg" alt="石頭掃地機器人" loading="lazy" class="portfolio-cover">
                         <video src="portfolio/roborock-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
@@ -181,15 +176,14 @@
                             <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         </div>
                         <div class="portfolio-overlay">
-                            <span class="portfolio-category">商業廣告</span>
-                            <h4>石頭掃地機器人</h4>
-                            <p>網紅業配</p>
+                            <span class="portfolio-category">網紅業配</span>
+                            <h4>家電產品</h4>
                         </div>
                     </div>
                 </div>
 
                 <!-- 作品 6 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="commercial">
+                <div class="portfolio-item portfolio-video-inline" data-category="kol">
                     <div class="portfolio-thumb">
                         <img src="portfolio/amorfati-yuan-cover.jpg" alt="Amor Fati 私密保養噴霧" loading="lazy" class="portfolio-cover">
                         <video src="portfolio/amorfati-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
@@ -200,15 +194,14 @@
                             <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         </div>
                         <div class="portfolio-overlay">
-                            <span class="portfolio-category">商業廣告</span>
-                            <h4>Amor Fati 私密保養噴霧</h4>
-                            <p>網紅業配</p>
+                            <span class="portfolio-category">網紅業配</span>
+                            <h4>私密保養</h4>
                         </div>
                     </div>
                 </div>
 
                 <!-- 作品 7 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="commercial">
+                <div class="portfolio-item portfolio-video-inline" data-category="kol">
                     <div class="portfolio-thumb">
                         <img src="portfolio/huaner-yuan-cover.jpg" alt="華納婚紗" loading="lazy" class="portfolio-cover">
                         <video src="portfolio/huaner-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
@@ -219,15 +212,14 @@
                             <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         </div>
                         <div class="portfolio-overlay">
-                            <span class="portfolio-category">商業廣告</span>
-                            <h4>華納婚紗</h4>
-                            <p>網紅業配</p>
+                            <span class="portfolio-category">網紅業配</span>
+                            <h4>婚紗攝影</h4>
                         </div>
                     </div>
                 </div>
 
                 <!-- 作品 8 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="commercial">
+                <div class="portfolio-item portfolio-video-inline" data-category="kol">
                     <div class="portfolio-thumb">
                         <img src="portfolio/collagen-yuan-cover.jpg" alt="膠原蛋白" loading="lazy" class="portfolio-cover">
                         <video src="portfolio/collagen-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
@@ -238,15 +230,14 @@
                             <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         </div>
                         <div class="portfolio-overlay">
-                            <span class="portfolio-category">商業廣告</span>
-                            <h4>膠原蛋白</h4>
-                            <p>網紅業配</p>
+                            <span class="portfolio-category">網紅業配</span>
+                            <h4>保健食品</h4>
                         </div>
                     </div>
                 </div>
 
                 <!-- 作品 9 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="commercial">
+                <div class="portfolio-item portfolio-video-inline" data-category="kol">
                     <div class="portfolio-thumb">
                         <img src="portfolio/sportswear-yuan-cover.jpg" alt="絕世好波健身服" loading="lazy" class="portfolio-cover">
                         <video src="portfolio/sportswear-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
@@ -257,15 +248,14 @@
                             <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         </div>
                         <div class="portfolio-overlay">
-                            <span class="portfolio-category">商業廣告</span>
-                            <h4>絕世好波健身服</h4>
-                            <p>網紅業配</p>
+                            <span class="portfolio-category">網紅業配</span>
+                            <h4>運動服飾</h4>
                         </div>
                     </div>
                 </div>
 
                 <!-- 作品 10 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="commercial">
+                <div class="portfolio-item portfolio-video-inline" data-category="kol">
                     <div class="portfolio-thumb">
                         <img src="portfolio/drmay-yuan-cover.jpg" alt="Dr May紅外泌膠原安瓶" loading="lazy" class="portfolio-cover">
                         <video src="portfolio/drmay-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
@@ -276,15 +266,14 @@
                             <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         </div>
                         <div class="portfolio-overlay">
-                            <span class="portfolio-category">商業廣告</span>
-                            <h4>Dr May紅外泌膠原安瓶</h4>
-                            <p>網紅業配</p>
+                            <span class="portfolio-category">網紅業配</span>
+                            <h4>保養品</h4>
                         </div>
                     </div>
                 </div>
 
                 <!-- 作品 11 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="commercial">
+                <div class="portfolio-item portfolio-video-inline" data-category="kol">
                     <div class="portfolio-thumb">
                         <img src="portfolio/unikcy-yuan-cover.jpg" alt="UNIKCY" loading="lazy" class="portfolio-cover">
                         <video src="portfolio/unikcy-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
@@ -295,15 +284,14 @@
                             <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         </div>
                         <div class="portfolio-overlay">
-                            <span class="portfolio-category">商業廣告</span>
-                            <h4>UNIKCY</h4>
-                            <p>網紅業配</p>
+                            <span class="portfolio-category">網紅業配</span>
+                            <h4>保養品</h4>
                         </div>
                     </div>
                 </div>
 
                 <!-- 作品 12 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="commercial">
+                <div class="portfolio-item portfolio-video-inline" data-category="kol">
                     <div class="portfolio-thumb">
                         <img src="portfolio/galaxy-zflip-yuan-cover.jpg" alt="Galaxy Z Flip 7" loading="lazy" class="portfolio-cover">
                         <video src="portfolio/galaxy-zflip-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
@@ -314,9 +302,8 @@
                             <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         </div>
                         <div class="portfolio-overlay">
-                            <span class="portfolio-category">商業廣告</span>
-                            <h4>Galaxy Z Flip 7</h4>
-                            <p>網紅業配</p>
+                            <span class="portfolio-category">網紅業配</span>
+                            <h4>3C 科技</h4>
                         </div>
                     </div>
                 </div>
@@ -324,6 +311,182 @@
                 <!-- 要加更多作品？複製上面任一個 portfolio-item 區塊就好 -->
 
             </div>
+
+            <div class="company-section">
+                <div class="company-section-header">
+                    <span class="company-section-tag">BRAND COLLABORATION</span>
+                    <h3 class="company-section-title">品牌合作與商業專案</h3>
+                    <p class="company-section-desc">以下作品因涉及品牌方版權與合約規範，僅以<strong style="text-decoration:underline;">截圖方式</strong>呈現。<br>如需觀看完整影片或了解更多合作案例，歡迎透過下方聯絡方式與我聯繫。</p>
+                </div>
+                <div class="company-grid">
+                    <!-- 藝人 -->
+                    <div class="company-item">
+                        <img src="portfolio/company-01-cover.jpg" alt="門市介紹 王中平" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">門市介紹</span>
+                            <h4>王中平</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-02-cover.jpg" alt="門市介紹 王中平" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">門市介紹</span>
+                            <h4>王中平</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-06-cover.jpg" alt="產品介紹 李又汝" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">產品介紹</span>
+                            <h4>李又汝</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-16-cover.jpg" alt="門市介紹 陳宇風家人" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">門市介紹</span>
+                            <h4>宇風＆家妤</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-17-cover.jpg" alt="門市介紹 陳宇風家人" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">門市介紹</span>
+                            <h4>宇風＆家妤</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-20-cover.jpg" alt="門市介紹 江國賓" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">門市介紹</span>
+                            <h4>江國賓</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-21-cover.jpg" alt="門市介紹 顏曉筠" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">門市介紹</span>
+                            <h4>顏曉筠</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-22-cover.jpg" alt="門市介紹 吳皓昇＆文汶" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">門市介紹</span>
+                            <h4>吳皓昇＆文汶</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-23-cover.jpg" alt="門市介紹 林祐星" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">門市介紹</span>
+                            <h4>林祐星</h4>
+                        </div>
+                    </div>
+                    <!-- 網紅素人 -->
+                    <div class="company-item">
+                        <img src="portfolio/company-03-cover.jpg" alt="門市介紹" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">門市介紹</span>
+                            <h4>家庭組合</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-05-cover.jpg" alt="產品介紹" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">產品介紹</span>
+                            <h4>外國人</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-07-cover.jpg" alt="門市介紹 築夢者婷雅" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">門市介紹</span>
+                            <h4>築夢者婷雅</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-09-cover.jpg" alt="產品介紹 陳晨威" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">產品介紹</span>
+                            <h4>陳晨威</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-10-cover.jpg" alt="商品介紹 Joy" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">商品介紹</span>
+                            <h4>Joy</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-13-cover.jpg" alt="商品介紹 網紅" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">商品介紹</span>
+                            <h4>網紅</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-14-cover.jpg" alt="商品介紹 網紅" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">商品介紹</span>
+                            <h4>網紅</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-15-cover.jpg" alt="商品介紹 網紅" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">商品介紹</span>
+                            <h4>網紅</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-24-cover.jpg" alt="門市介紹 網紅" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">門市介紹</span>
+                            <h4>網紅</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-25-cover.jpg" alt="門市介紹 網紅" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">門市介紹</span>
+                            <h4>網紅</h4>
+                        </div>
+                    </div>
+                    <div class="company-item">
+                        <img src="portfolio/company-26-cover.jpg" alt="門市介紹 梓梓" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">門市介紹</span>
+                            <h4>梓梓</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interview-section">
+                <div class="company-section-header">
+                    <span class="company-section-tag">QUALITY INTERVIEW</span>
+                    <h3 class="company-section-title">質感訪談</h3>
+                </div>
+                <div class="interview-grid">
+                    <div class="interview-item">
+                        <img src="portfolio/company-18-cover.jpg" alt="品牌訪談 BaNAna 阿蕉" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">品牌訪談</span>
+                            <h4>BaNAna 阿蕉・林彥良</h4>
+                        </div>
+                    </div>
+                    <div class="interview-item">
+                        <img src="portfolio/company-19-cover.jpg" alt="質感訪談 王中平" loading="lazy">
+                        <div class="company-overlay">
+                            <span class="company-overlay-type">質感訪談</span>
+                            <h4>王中平</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -410,7 +573,17 @@
                     <span>宇風＆家妤</span>
                     <small>藝人 / 演員夫妻檔</small>
                 </div>
+                <div class="celeb-card">
+                    <div class="celeb-img-wrap"><img src="collab/li-youru.jpg" alt="李又汝" loading="lazy"></div>
+                    <span>李又汝</span>
+                    <small>藝人</small>
+                </div>
                 <!-- 網紅 -->
+                <div class="celeb-card">
+                    <div class="celeb-img-wrap"><img src="collab/xie-jingying.jpg" alt="謝京穎" loading="lazy"></div>
+                    <span>謝京穎</span>
+                    <small>藝人 / 啦啦隊</small>
+                </div>
                 <div class="celeb-card">
                     <div class="celeb-img-wrap"><img src="collab/zhangyan-samsung.jpg" alt="張媛" loading="lazy"></div>
                     <span>張媛</span>
@@ -471,10 +644,6 @@
                 </div>
             </div>
 
-            <h2 class="clients-title" style="margin-top: 60px;">內容製作經驗</h2>
-            <div class="clients-list">
-                <p>社群短影音製作 / 產品介紹影片 / 空間展示影片 / 門市導流內容 / 活動宣傳影片 / 人物合作拍攝 / 內容企劃與拍攝協調</p>
-            </div>
         </div>
     </section>
 
@@ -534,124 +703,123 @@
         </div>
     </section>
 
-    <!-- Pain Points Section -->
+    <!-- Pain Points Section — Chat Style -->
     <section class="section painpoints" id="painpoints">
         <div class="container">
             <p class="section-tag">PROBLEMS</p>
             <h2 class="section-title">你是不是也遇到這些問題？</h2>
-            <p class="section-desc">如果你也有這些困擾，那我們可以聊聊。</p>
+            <p class="section-desc">點擊看看我怎麼幫你解決</p>
 
-            <div class="pain-tabs">
-                <button class="pain-tab active" data-target="creator">網紅 / 創作者</button>
-                <button class="pain-tab" data-target="brand">電商 / 品牌</button>
-            </div>
-
-            <div class="pain-group active" id="pain-creator">
-                <div class="pain-grid">
-                    <div class="pain-card">
-                        <div class="pain-content">
-                            <h4>接了業配，但沒人幫拍</h4>
-                            <p class="pain-problem">自己架腳架拍，角度跟構圖怎麼調都不太對。</p>
-                            <div class="pain-solution">
-                                <span class="solution-label">我可以</span>
-                                <p>到現場幫你跟拍，引導你的動作跟表情，你只要專心表現就好。</p>
-                            </div>
-                        </div>
+            <div class="chat-list">
+                <div class="chat-row">
+                    <div class="chat-bubble-left">
+                        <h4>沒人幫拍</h4>
+                        <p>自己架腳架，角度怎麼調都不對</p>
                     </div>
-                    <div class="pain-card">
-                        <div class="pain-content">
-                            <h4>剪片佔掉太多時間</h4>
-                            <p class="pain-problem">一支短影音剪一整天，時間都耗在後製，沒辦法專心做內容。</p>
-                            <div class="pain-solution">
-                                <span class="solution-label">我可以</span>
-                                <p>素材給我就好，大約 3 個工作天交件，你的時間留給創作。</p>
-                            </div>
-                        </div>
+                    <div class="chat-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                     </div>
-                    <div class="pain-card">
-                        <div class="pain-content">
-                            <h4>發片量跟不上</h4>
-                            <p class="pain-problem">平台要你常常發，但一個人產量就是有限。</p>
-                            <div class="pain-solution">
-                                <span class="solution-label">我可以</span>
-                                <p>一次幫你做 5-10 支，批量交付，發片節奏不用斷。</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pain-card">
-                        <div class="pain-content">
-                            <h4>不知道要拍什麼</h4>
-                            <p class="pain-problem">看著鏡頭不知道要說什麼、怎麼開場，產品拿在手上也不知道怎麼呈現。</p>
-                            <div class="pain-solution">
-                                <span class="solution-label">我可以</span>
-                                <p>幫你寫好腳本、規劃拍攝內容，到現場直接帶你走流程。</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pain-card">
-                        <div class="pain-content">
-                            <h4>預算有限，請不起團隊</h4>
-                            <p class="pain-problem">影像公司隨便報都好幾萬，剛起步的創作者很難負擔。</p>
-                            <div class="pain-solution">
-                                <span class="solution-label">我可以</span>
-                                <p>企劃到剪輯我一個人就能完成，省下團隊的溝通成本和費用。</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pain-card">
-                        <div class="pain-content">
-                            <h4>自己剪的總覺得差一點</h4>
-                            <p class="pain-problem">看別人的影片很流暢，自己剪的就是少了那個感覺，但又說不上來。</p>
-                            <div class="pain-solution">
-                                <span class="solution-label">我可以</span>
-                                <p>做了 3 年商業剪輯，對節奏跟轉場比較有經驗，幫你把質感拉上來。</p>
-                            </div>
-                        </div>
+                    <div class="chat-bubble-right">
+                        <strong>我到現場幫你拍</strong>
+                        <p>引導動作表情，你專心表現就好</p>
                     </div>
                 </div>
-            </div>
 
-            <div class="pain-group" id="pain-brand">
-                <div class="pain-grid">
-                    <div class="pain-card">
-                        <div class="pain-content">
-                            <h4>產品影片拍不出質感</h4>
-                            <p class="pain-problem">自己拍的素材放上去，看起來就是不夠有吸引力。</p>
-                            <div class="pain-solution">
-                                <span class="solution-label">我可以</span>
-                                <p>之前在家具品牌做了 3 年，對產品怎麼拍才好看蠻有心得的。</p>
-                            </div>
-                        </div>
+                <div class="chat-row">
+                    <div class="chat-bubble-left">
+                        <h4>剪片太花時間</h4>
+                        <p>一支短影音剪一整天，沒空做內容</p>
                     </div>
-                    <div class="pain-card">
-                        <div class="pain-content">
-                            <h4>廣告素材來不及做</h4>
-                            <p class="pain-problem">投廣告需要不同版本的素材去測，但內部人力做不了那麼多。</p>
-                            <div class="pain-solution">
-                                <span class="solution-label">我可以</span>
-                                <p>批量幫你做，一次交多支不同版本，讓你有足夠的素材可以測。</p>
-                            </div>
-                        </div>
+                    <div class="chat-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                     </div>
-                    <div class="pain-card">
-                        <div class="pain-content">
-                            <h4>模特兒拍起來很不自然</h4>
-                            <p class="pain-problem">找了人來拍，但畫面看起來很僵，表情動作都很不自在。</p>
-                            <div class="pain-solution">
-                                <span class="solution-label">我可以</span>
-                                <p>引導演員是我比較擅長的部分，可以讓畫面看起來更自然。</p>
-                            </div>
-                        </div>
+                    <div class="chat-bubble-right">
+                        <strong>素材丟給我就好</strong>
+                        <p>約 3 個工作天交件</p>
                     </div>
-                    <div class="pain-card">
-                        <div class="pain-content">
-                            <h4>不同平台要不同尺寸</h4>
-                            <p class="pain-problem">IG 要方的、Reels 要直的、YouTube 要橫的，同一支片要改好幾版。</p>
-                            <div class="pain-solution">
-                                <span class="solution-label">我可以</span>
-                                <p>一次幫你輸出各平台需要的格式，不用自己一個一個調。</p>
-                            </div>
-                        </div>
+                </div>
+
+                <div class="chat-row">
+                    <div class="chat-bubble-left">
+                        <h4>發片量跟不上</h4>
+                        <p>平台要常發，但一個人產量有限</p>
+                    </div>
+                    <div class="chat-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </div>
+                    <div class="chat-bubble-right">
+                        <strong>一次做 5-10 支</strong>
+                        <p>批量交付，發片節奏不斷</p>
+                    </div>
+                </div>
+
+                <div class="chat-row">
+                    <div class="chat-bubble-left">
+                        <h4>不知道拍什麼</h4>
+                        <p>看著鏡頭腦袋空白，不知道怎麼開場</p>
+                    </div>
+                    <div class="chat-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </div>
+                    <div class="chat-bubble-right">
+                        <strong>腳本我來寫</strong>
+                        <p>到現場直接帶你走流程</p>
+                    </div>
+                </div>
+
+                <div class="chat-row">
+                    <div class="chat-bubble-left">
+                        <h4>請不起團隊</h4>
+                        <p>影像公司報價好幾萬，剛起步負擔不了</p>
+                    </div>
+                    <div class="chat-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </div>
+                    <div class="chat-bubble-right">
+                        <strong>一個人幫你搞定</strong>
+                        <p>企劃到剪輯全包，省錢省溝通</p>
+                    </div>
+                </div>
+
+                <div class="chat-row">
+                    <div class="chat-bubble-left">
+                        <h4>剪出來差一點</h4>
+                        <p>看別人的很流暢，自己的就是少了感覺</p>
+                    </div>
+                    <div class="chat-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </div>
+                    <div class="chat-bubble-right">
+                        <strong>3 年剪輯經驗</strong>
+                        <p>節奏轉場我來，質感拉上來</p>
+                    </div>
+                </div>
+
+                <div class="chat-row">
+                    <div class="chat-bubble-left">
+                        <h4>素材做不完</h4>
+                        <p>廣告要測不同版本，內部人力不夠</p>
+                    </div>
+                    <div class="chat-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </div>
+                    <div class="chat-bubble-right">
+                        <strong>批量幫你做</strong>
+                        <p>一次交多版本，夠你測</p>
+                    </div>
+                </div>
+
+                <div class="chat-row">
+                    <div class="chat-bubble-left">
+                        <h4>尺寸改到崩潰</h4>
+                        <p>IG、Reels、YouTube 每個都要不同比例</p>
+                    </div>
+                    <div class="chat-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </div>
+                    <div class="chat-bubble-right">
+                        <strong>各平台一次輸出</strong>
+                        <p>不用自己一個個調</p>
                     </div>
                 </div>
             </div>
@@ -677,7 +845,6 @@
                     <p>我主要從事影片企劃、拍攝執行與剪輯後製，內容類型涵蓋社群短影音、產品介紹、空間展示、活動宣傳與人物合作內容。</p>
                     <p>過往累積居家生活與零售相關內容製作經驗，熟悉從主題設定、腳本整理、現場拍攝到後期成片的完整流程。</p>
                     <p>我擅長將資訊整理成更容易被觀看與理解的影像內容，<strong>重視畫面節奏、內容清晰度與整體完成度</strong>。</p>
-                    <p class="about-note">因部分職務作品涉及公司資產與保密規範，公開作品集以自主創作與可公開案例為主。</p>
                     <div class="about-tags">
                         <span class="tag">內容企劃</span>
                         <span class="tag">拍攝執行</span>

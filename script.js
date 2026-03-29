@@ -27,7 +27,16 @@ window.addEventListener('load', function() {
 
     var curtain = document.getElementById('curtain');
     if (curtain) {
-        setTimeout(function() { curtain.remove(); }, 1800);
+        var logo = curtain.querySelector('.curtain-logo');
+        // Add glow after logo appears
+        setTimeout(function() {
+            if (logo) logo.classList.add('glow');
+        }, 500);
+        // Trigger split curtain
+        setTimeout(function() {
+            curtain.classList.add('curtain-done');
+        }, 800);
+        setTimeout(function() { curtain.remove(); }, 2200);
     }
 });
 
@@ -48,8 +57,18 @@ if (heroSoundBtn && heroVideo) {
         }
     });
 
+    heroVideo.addEventListener('ended', function() {
+        if (heroReplayBtn) {
+            heroReplayBtn.classList.add('show');
+        }
+    });
+
     if (heroReplayBtn) {
-        heroReplayBtn.style.display = 'none';
+        heroReplayBtn.addEventListener('click', function() {
+            heroVideo.currentTime = 0;
+            heroVideo.play();
+            heroReplayBtn.classList.remove('show');
+        });
     }
 }
 
@@ -136,18 +155,6 @@ filterBtns.forEach(btn => {
     });
 });
 
-// Pain points tab switching
-const painTabs = document.querySelectorAll('.pain-tab');
-const painGroups = document.querySelectorAll('.pain-group');
-
-painTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        painTabs.forEach(t => t.classList.remove('active'));
-        painGroups.forEach(g => g.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById('pain-' + tab.dataset.target).classList.add('active');
-    });
-});
 
 // Portfolio videos: hover play (desktop) + tap to lightbox
 const isTouch = 'ontouchstart' in window;
@@ -262,7 +269,7 @@ document.querySelectorAll('.portfolio-video-inline').forEach(function(item) {
 });
 
 // Click sounds on buttons and interactive elements
-document.querySelectorAll('.btn, .filter-btn, .pain-tab, .nav-links a, .contact-btn, .mobile-cta-btn').forEach(el => {
+document.querySelectorAll('.btn, .filter-btn, .nav-links a, .contact-btn, .mobile-cta-btn').forEach(el => {
     el.addEventListener('click', () => playSound('click'));
 });
 
@@ -280,27 +287,78 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Intersection Observer for scroll animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -30px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
+// Scroll reveal animations
+const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-            observer.unobserve(entry.target);
+            entry.target.classList.add('revealed');
+            revealObserver.unobserve(entry.target);
         }
     });
-}, observerOptions);
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-document.querySelectorAll('.service-card, .pricing-card, .process-step, .portfolio-item, .pain-card, .testimonial-card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(24px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    observer.observe(el);
+// Section titles - underline reveal
+document.querySelectorAll('.section-title').forEach(el => {
+    el.classList.add('scroll-reveal');
+    revealObserver.observe(el);
+});
+
+// Section tags
+document.querySelectorAll('.section-tag').forEach(el => {
+    el.classList.add('scroll-reveal');
+    revealObserver.observe(el);
+});
+
+// Service cards, pricing cards - stagger via parent
+document.querySelectorAll('.services-grid, .pricing-grid, .about-tags').forEach(grid => {
+    grid.classList.add('stagger-children');
+    revealObserver.observe(grid);
+});
+
+// Chat rows - stagger children
+document.querySelectorAll('.chat-list').forEach(grid => {
+    grid.classList.add('stagger-children');
+    revealObserver.observe(grid);
+});
+
+// Individual elements
+document.querySelectorAll('.process-step, .pricing-bottom-note, .contact-faq, .section-desc, .pain-cta, .addons').forEach(el => {
+    el.classList.add('scroll-reveal');
+    revealObserver.observe(el);
+});
+
+// Company and interview sections
+document.querySelectorAll('.company-section, .interview-section').forEach(el => {
+    el.classList.add('scroll-reveal-scale');
+    revealObserver.observe(el);
+});
+
+// Company grid, celeb grid, interview grid - stagger children
+document.querySelectorAll('.company-grid, .celeb-grid, .interview-grid').forEach(grid => {
+    grid.classList.add('stagger-children');
+    revealObserver.observe(grid);
+});
+
+// About section
+document.querySelectorAll('.about-image').forEach(el => {
+    el.classList.add('scroll-reveal-left');
+    revealObserver.observe(el);
+});
+document.querySelectorAll('.about-content').forEach(el => {
+    el.classList.add('scroll-reveal-right');
+    revealObserver.observe(el);
+});
+
+// Contact buttons
+document.querySelectorAll('.contact-buttons').forEach(el => {
+    el.classList.add('stagger-children');
+    revealObserver.observe(el);
+});
+
+// Hero intro section
+document.querySelectorAll('.hero-intro-section .container').forEach(el => {
+    el.classList.add('scroll-reveal');
+    revealObserver.observe(el);
 });
 
 // Add fadeIn keyframe
@@ -312,6 +370,21 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Button ripple effect
+document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        var ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+        var rect = this.getBoundingClientRect();
+        var size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+        this.appendChild(ripple);
+        setTimeout(function() { ripple.remove(); }, 600);
+    });
+});
 
 // Celebrity photo flip (multiple collab)
 document.querySelectorAll('.celeb-flip').forEach(card => {
