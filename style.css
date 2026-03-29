@@ -2368,7 +2368,7 @@ a.portfolio-link {
     .hero-intro-desc { font-size: 0.9rem; letter-spacing: 1px; }
 
     /* === 作品集 === */
-    .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .portfolio-grid { grid-template-columns: 1fr; gap: 14px; }
     .portfolio-thumb { aspect-ratio: 9/14; }
 
     /* === 品牌合作 === */
