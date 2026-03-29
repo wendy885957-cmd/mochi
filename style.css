@@ -1642,8 +1642,8 @@ a.portfolio-link {
 }
 
 .pricing-compact-card.popular {
-    border-color: var(--accent);
-    background: linear-gradient(180deg, rgba(200, 169, 126, 0.1) 0%, var(--bg-card) 50%);
+    border-color: var(--border);
+    background: var(--bg-card);
     padding-top: 28px;
 }
 
@@ -2540,7 +2540,7 @@ a.portfolio-link {
         border-color: var(--accent);
         box-shadow: 0 0 20px rgba(200, 169, 126, 0.25);
         background: linear-gradient(180deg, rgba(200, 169, 126, 0.12) 0%, var(--bg-card) 50%);
-        transform: scale(1.03);
+        animation: cardFloat 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     .pricing-compact-card.selected .pricing-compact-price strong {
@@ -2549,6 +2549,12 @@ a.portfolio-link {
 
     .pricing-compact-card.selected .pricing-compact-label {
         color: var(--accent);
+    }
+
+    @keyframes cardFloat {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.06) translateY(-4px); }
+        100% { transform: scale(1.03) translateY(-2px); }
     }
 
     .pricing-shared-checklist li {
