@@ -489,7 +489,7 @@ document.querySelectorAll('.celeb-flip').forEach(card => {
     if (!scroll || !track) return;
 
     var pos = 0;
-    var speed = 0.5;
+    var speed = 1.2;
     var paused = false;
     var halfWidth = 0;
 
@@ -517,30 +517,56 @@ document.querySelectorAll('.celeb-flip').forEach(card => {
     scroll.addEventListener('mouseenter', function() { paused = true; });
     scroll.addEventListener('mouseleave', function() { paused = false; });
 
-    // Touch drag to scroll
+    // Touch drag to scroll with momentum
     var touchStartX = 0;
     var touchStartPos = 0;
+    var touchLastX = 0;
+    var touchLastTime = 0;
+    var velocity = 0;
     var isDragging = false;
+    var momentumId = null;
 
     scroll.addEventListener('touchstart', function(e) {
         paused = true;
         isDragging = true;
+        if (momentumId) cancelAnimationFrame(momentumId);
         touchStartX = e.touches[0].clientX;
+        touchLastX = touchStartX;
+        touchLastTime = Date.now();
         touchStartPos = pos;
     }, { passive: true });
 
     scroll.addEventListener('touchmove', function(e) {
         if (!isDragging) return;
-        var dx = touchStartX - e.touches[0].clientX;
+        var now = Date.now();
+        var currentX = e.touches[0].clientX;
+        var dt = now - touchLastTime;
+        if (dt > 0) velocity = (touchLastX - currentX) / dt;
+        touchLastX = currentX;
+        touchLastTime = now;
+        var dx = touchStartX - currentX;
         pos = touchStartPos + dx;
-        if (pos < 0) pos = 0;
-        if (halfWidth > 0 && pos >= halfWidth) pos = 0;
+        if (pos < 0) pos += halfWidth;
+        if (halfWidth > 0 && pos >= halfWidth) pos -= halfWidth;
         track.style.transform = 'translateX(' + (-pos) + 'px)';
     }, { passive: true });
 
     scroll.addEventListener('touchend', function() {
         isDragging = false;
-        setTimeout(function() { paused = false; }, 2000);
+        // Momentum
+        function momentum() {
+            if (Math.abs(velocity) < 0.01) {
+                setTimeout(function() { paused = false; }, 1500);
+                return;
+            }
+            pos += velocity * 16;
+            velocity *= 0.95;
+            if (pos < 0) pos += halfWidth;
+            if (halfWidth > 0 && pos >= halfWidth) pos -= halfWidth;
+            track.style.transform = 'translateX(' + (-pos) + 'px)';
+            momentumId = requestAnimationFrame(momentum);
+        }
+        momentum();
     });
 })();
 
