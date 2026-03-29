@@ -2478,7 +2478,7 @@ a.portfolio-link {
     .reviews-track { gap: 10px; }
 
     /* === 藝人網紅（3排） === */
-    .celeb-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
+    .celeb-grid { grid-template-columns: repeat(3, 1fr); column-gap: 8px; row-gap: 24px; margin-bottom: 24px; }
     .celeb-card > span { font-size: 0.78rem; margin-top: 4px; }
     .celeb-card > small { font-size: 0.58rem; margin-top: 0; }
 
