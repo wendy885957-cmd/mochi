@@ -671,7 +671,7 @@ body.loaded .anim-reveal {
 }
 
 /* Section title underline reveal */
-.section-title::after {
+.section-title:not(.left)::after {
     content: '';
     display: block;
     width: 0;
@@ -682,7 +682,7 @@ body.loaded .anim-reveal {
     transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.section-title.revealed::after {
+.section-title:not(.left).revealed::after {
     width: 60px;
 }
 
