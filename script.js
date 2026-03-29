@@ -389,6 +389,17 @@ document.querySelectorAll('.about-content').forEach(el => {
     revealObserver.observe(el);
 });
 
+// Compact pricing card tap-to-select
+document.querySelectorAll('.pricing-compact-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+        document.querySelectorAll('.pricing-compact-card').forEach(function(c) {
+            c.classList.remove('selected');
+        });
+        card.classList.add('selected');
+        playSound('click');
+    });
+});
+
 // Contact buttons
 document.querySelectorAll('.contact-buttons').forEach(el => {
     el.classList.add('stagger-children');
