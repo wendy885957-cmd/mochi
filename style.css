@@ -2443,13 +2443,13 @@ a.portfolio-link {
     .hero-intro-section { padding: 30px 14px; }
     .hero-intro-desc { font-size: 0.88rem; letter-spacing: 1px; }
 
-    /* === 作品集（4排） === */
-    .portfolio-grid { grid-template-columns: repeat(4, 1fr); gap: 5px; }
+    /* === 作品集（3排） === */
+    .portfolio-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
     .portfolio-thumb { aspect-ratio: 9/16; }
 
-    /* === 品牌合作（5排） === */
+    /* === 品牌合作（4排） === */
     .company-section { margin-top: 1.5rem; padding: 1rem; }
-    .company-grid { grid-template-columns: repeat(5, 1fr); gap: 5px; }
+    .company-grid { grid-template-columns: repeat(4, 1fr); gap: 5px; }
     .company-item { aspect-ratio: 9/16; }
     .company-section-title { font-size: 1rem; }
     .company-section-desc { font-size: 0.75rem; }
@@ -2461,10 +2461,13 @@ a.portfolio-link {
     .reviews-track img { height: 260px; }
     .reviews-track { gap: 10px; }
 
-    /* === 藝人網紅（4排） === */
-    .celeb-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 24px; }
-    .celeb-card > span { font-size: 0.75rem; margin-top: 6px; }
-    .celeb-card > small { font-size: 0.6rem; }
+    /* === 藝人網紅（3排） === */
+    .celeb-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
+    .celeb-card > span { font-size: 0.78rem; margin-top: 6px; }
+    .celeb-card > small { font-size: 0.62rem; }
+
+    /* === 合作次數 badge 縮小 === */
+    .flip-badge { font-size: 0.55rem; padding: 2px 6px; top: 6px; right: 6px; }
     .clients-title { font-size: 1rem; letter-spacing: 1px; margin-bottom: 20px; }
 
     /* === 服務卡片（改1排，不擠） === */
