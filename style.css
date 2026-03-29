@@ -492,14 +492,25 @@ img {
     }
 
     .hero-fullvid-controls {
-        bottom: 40px;
-        right: 8px;
+        bottom: 12px;
+        right: 4px;
+        z-index: 5;
+    }
+
+    .hero-sound-btn-prominent {
+        padding: 6px;
+        opacity: 0.5;
+    }
+
+    .hero-replay-btn {
+        padding: 6px;
+        opacity: 0.5;
     }
 
     .hero-video-blur-layer {
         display: block;
         position: absolute;
-        inset: -20px;
+        inset: -30px;
         z-index: 0;
         overflow: hidden;
     }
@@ -512,7 +523,8 @@ img {
         content: '';
         position: absolute;
         inset: 0;
-        background: radial-gradient(ellipse at center, rgba(200, 169, 126, 0.08) 0%, rgba(8, 8, 8, 0.95) 70%);
+        z-index: 1;
+        background: radial-gradient(ellipse at center, transparent 30%, rgba(8, 8, 8, 0.7) 75%);
     }
 }
 
