@@ -138,14 +138,32 @@ window.addEventListener('scroll', () => {
     const currentScroll = window.scrollY;
     navbar.classList.toggle('scrolled', currentScroll > 50);
 
-    // Hide/show floating CTA based on footer visibility
+    // Hide navbar on scroll down, show on scroll up
+    if (currentScroll > 100) {
+        if (currentScroll > lastScroll) {
+            navbar.classList.add('nav-hidden');
+        } else {
+            navbar.classList.remove('nav-hidden');
+        }
+    } else {
+        navbar.classList.remove('nav-hidden');
+    }
+
+    // Hide/show floating CTA: hide on scroll down, show on scroll up
     const mobileCta = document.querySelector('.mobile-cta');
     if (mobileCta) {
         const footer = document.querySelector('.footer');
+        var nearFooter = false;
         if (footer) {
-            const footerTop = footer.getBoundingClientRect().top;
-            mobileCta.style.opacity = footerTop < window.innerHeight ? '0' : '1';
-            mobileCta.style.pointerEvents = footerTop < window.innerHeight ? 'none' : 'auto';
+            nearFooter = footer.getBoundingClientRect().top < window.innerHeight;
+        }
+
+        if (nearFooter) {
+            mobileCta.classList.add('cta-hidden');
+        } else if (currentScroll > lastScroll && currentScroll > 100) {
+            mobileCta.classList.add('cta-hidden');
+        } else {
+            mobileCta.classList.remove('cta-hidden');
         }
     }
 
