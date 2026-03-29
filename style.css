@@ -2481,7 +2481,7 @@ a.portfolio-link {
     /* === 全局安全邊距（防出血） === */
     .container { padding: 0 24px; }
     .section { padding: 52px 0; }
-    .container > * { max-width: 100%; box-sizing: border-box; }
+    .container * { max-width: 100%; box-sizing: border-box; }
 
     /* === 文字排版（參考 Linear text-wrap） === */
     h2, h3, .section-title, .company-section-title, .service-card h3 { text-wrap: balance; }
@@ -2565,8 +2565,10 @@ a.portfolio-link {
     .addon-price { font-size: 0.92rem; }
 
     /* === 合作流程 === */
+    .process-timeline { overflow: hidden; }
     .process-step { gap: 16px; padding: 24px 0; }
-    .step-number { width: 36px; height: 36px; font-size: 0.75rem; }
+    .step-number { width: 36px; height: 36px; font-size: 0.75rem; flex-shrink: 0; }
+    .step-content { min-width: 0; overflow: hidden; }
     .step-content h3 { font-size: 1rem; margin-bottom: 6px; }
     .step-content p { font-size: 0.85rem; line-height: 1.7; }
     .process-timeline::before { left: 16px; }
