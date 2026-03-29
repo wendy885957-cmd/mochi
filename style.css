@@ -2471,124 +2471,123 @@ a.portfolio-link {
 }
 
 @media (max-width: 480px) {
-    /* === 全局 === */
-    .container { padding: 0 20px; }
-    .section { padding: 36px 0; }
+    /* === 全局（參考 Apple/Stripe 間距） === */
+    .container { padding: 0 24px; }
+    .section { padding: 52px 0; }
 
-    /* === 字體 === */
-    .section-tag { letter-spacing: 2px; font-size: 0.7rem; }
-    .section-title { font-size: 1.3rem; }
-    .section-desc { margin-bottom: 24px; font-size: 0.85rem; }
+    /* === 文字排版（參考 Linear text-wrap） === */
+    h2, h3, .section-title, .company-section-title, .service-card h3 { text-wrap: balance; }
+    p, li, .section-desc { text-wrap: pretty; word-break: keep-all; overflow-wrap: break-word; }
+    .section-tag { letter-spacing: 3px; font-size: 0.72rem; }
+    .section-title { font-size: 1.6rem; }
+    .section-desc { margin-bottom: 32px; font-size: 0.92rem; line-height: 1.7; }
     .nav-logo { letter-spacing: 1px; font-size: 1rem; }
 
     /* === Hero === */
-    .hero { padding: 80px 14px 40px; }
-    .hero-intro-section { padding: 16px 14px 8px; }
-    .hero-intro-desc { font-size: 0.88rem; letter-spacing: 1px; }
+    .hero { padding: 80px 16px 40px; }
+    .hero-intro-section { padding: 24px 16px 16px; }
+    .hero-intro-desc { font-size: 0.95rem; letter-spacing: 1.5px; }
 
     /* === 作品集（3排） === */
-    .portfolio { padding-top: 16px; }
-    .portfolio-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .portfolio { padding-top: 20px; }
+    .portfolio-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .portfolio-thumb { aspect-ratio: 9/16; }
 
-    /* === 品牌合作（4排） === */
-    .company-section { margin-top: 1.5rem; padding: 1rem; }
-    .company-grid { grid-template-columns: repeat(4, 1fr); gap: 5px; }
+    /* === 品牌合作（3排） === */
+    .company-section { margin-top: 2rem; padding: 1.25rem; }
+    .company-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
     .company-item { aspect-ratio: 9/16; }
-    .company-section-title { font-size: 1rem; }
-    .company-section-desc { font-size: 0.75rem; }
+    .company-section-title { font-size: 1.15rem; text-wrap: balance; }
+    .company-section-desc { font-size: 0.8rem; line-height: 1.6; }
 
     /* === 質感訪談 === */
-    .interview-section { margin-top: 1.5rem; padding: 1rem; }
+    .interview-section { margin-top: 2rem; padding: 1.25rem; }
+    .interview-grid { grid-template-columns: 1fr; gap: 10px; }
 
-    /* === 好評回饋（圖片放大） === */
-    .reviews-track img { height: 260px; }
-    .reviews-track { gap: 10px; }
+    /* === 好評回饋 === */
+    .reviews-track img { height: 300px; }
+    .reviews-track { gap: 12px; }
 
     /* === 藝人網紅（3排） === */
-    .celeb-grid { grid-template-columns: repeat(3, 1fr); column-gap: 10px; row-gap: 32px; margin-bottom: 24px; }
-    .celeb-card > span { font-size: 0.78rem; margin-top: 5px; line-height: 1.2; }
-    .celeb-card > small { font-size: 0.58rem; margin-top: 1px; line-height: 1.2; }
+    .celeb-grid { grid-template-columns: repeat(3, 1fr); column-gap: 12px; row-gap: 32px; margin-bottom: 28px; }
+    .celeb-card > span { font-size: 0.8rem; margin-top: 6px; line-height: 1.3; }
+    .celeb-card > small { font-size: 0.62rem; margin-top: 2px; line-height: 1.3; }
 
-    /* === 合作次數 badge 縮小 === */
+    /* === 合作次數 badge === */
     .flip-badge { font-size: 0.45rem; padding: 1px 4px; top: 3px; left: 3px; bottom: auto; right: auto; }
     .badge-full { display: none; }
     .badge-short { display: inline; }
-    .clients-title { font-size: 1rem; letter-spacing: 1px; margin-bottom: 20px; }
+    .clients-title { font-size: 1.1rem; letter-spacing: 1px; margin-bottom: 24px; }
 
-    /* === 服務卡片（改1排，不擠） === */
-    .services-grid { grid-template-columns: 1fr; gap: 12px; }
-    .service-card { padding: 20px 18px; }
-    .service-card h3 { font-size: 1.05rem; }
-    .service-card > p { font-size: 0.88rem; margin-bottom: 16px; }
-    .service-features li { font-size: 0.85rem; padding: 5px 0; padding-left: 16px; }
+    /* === 服務卡片（單排） === */
+    .services-grid { grid-template-columns: 1fr; gap: 16px; }
+    .service-card { padding: 24px 20px; }
+    .service-card h3 { font-size: 1.1rem; }
+    .service-card > p { font-size: 0.9rem; line-height: 1.65; margin-bottom: 16px; }
+    .service-features li { font-size: 0.88rem; padding: 6px 0; padding-left: 16px; }
     .service-features li::before { top: 50%; transform: translateY(-50%); }
     .service-icon { width: 40px; height: 40px; margin-bottom: 14px; }
     .service-icon svg { width: 26px; height: 26px; }
 
     /* === 痛點對話（左右排列） === */
-    .chat-list { gap: 10px; }
-    .chat-bubble-left { padding: 10px 12px; border-radius: 12px 4px 4px 12px; }
-    .chat-bubble-right { padding: 10px 12px; border-radius: 4px 12px 12px 4px; }
-    .chat-bubble-left h4 { font-size: 0.82rem; }
-    .chat-bubble-left p { font-size: 0.7rem; }
-    .chat-bubble-right strong { font-size: 0.78rem; }
-    .chat-bubble-right p { font-size: 0.7rem; }
-    .chat-arrow { width: 24px; }
-    .chat-arrow svg { width: 12px; height: 12px; }
-    .pain-cta { margin-top: 20px; }
+    .chat-list { gap: 12px; }
+    .chat-bubble-left { padding: 12px 14px; border-radius: 14px 4px 4px 14px; }
+    .chat-bubble-right { padding: 12px 14px; border-radius: 4px 14px 14px 4px; }
+    .chat-bubble-left h4 { font-size: 0.88rem; }
+    .chat-bubble-left p { font-size: 0.78rem; line-height: 1.5; }
+    .chat-bubble-right strong { font-size: 0.85rem; }
+    .chat-bubble-right p { font-size: 0.78rem; line-height: 1.5; }
+    .chat-arrow { width: 28px; }
+    .chat-arrow svg { width: 14px; height: 14px; }
+    .pain-cta { margin-top: 24px; }
 
-    /* === 報價（手機版：compact 三卡 + 共用功能） === */
+    /* === 報價（compact 三卡） === */
     .pricing-grid { display: none !important; }
     .pricing-compact { display: grid !important; }
     .pricing-shared-features { display: block !important; }
-    .pricing-bottom-note p { font-size: 0.82rem; }
-    .btn { padding: 12px 20px; font-size: 0.88rem; }
+    .pricing-bottom-note p { font-size: 0.85rem; line-height: 1.6; }
+    .btn { padding: 14px 24px; font-size: 0.9rem; min-height: 48px; }
 
     /* === 加購項目（2排） === */
-    .addons h3 { font-size: 1rem; }
-    .addons-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-    .addon-item { padding: 14px 12px; }
-    .addon-name { font-size: 0.82rem; }
-    .addon-price { font-size: 0.9rem; }
+    .addons h3 { font-size: 1.05rem; }
+    .addons-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .addon-item { padding: 16px 14px; }
+    .addon-name { font-size: 0.85rem; }
+    .addon-price { font-size: 0.92rem; }
 
     /* === 合作流程 === */
-    .process-step { gap: 14px; padding: 16px 0; }
-    .step-number { width: 34px; height: 34px; font-size: 0.72rem; }
-    .step-content h3 { font-size: 0.95rem; }
-    .step-content p { font-size: 0.82rem; }
-    .process-timeline::before { left: 15px; }
+    .process-step { gap: 16px; padding: 20px 0; }
+    .step-number { width: 36px; height: 36px; font-size: 0.75rem; }
+    .step-content h3 { font-size: 1rem; }
+    .step-content p { font-size: 0.85rem; line-height: 1.6; }
+    .process-timeline::before { left: 16px; }
 
     /* === 關於我（左右排列） === */
-    .about-grid { grid-template-columns: 80px 1fr; gap: 12px; align-items: start; }
-    .about-photo { width: 80px; height: 80px; object-fit: cover; object-position: center top; border-radius: 50%; }
-    .about-content p { font-size: 0.82rem; line-height: 1.6; }
-    .about-content .section-tag { text-align: left; font-size: 0.65rem; }
-    .about-content .section-title { text-align: left; font-size: 1.05rem; }
-    .about-tags { gap: 5px; }
-    .tag { font-size: 0.68rem; padding: 3px 9px; }
+    .about-grid { grid-template-columns: 90px 1fr; gap: 16px; align-items: start; }
+    .about-photo { width: 90px; height: 90px; object-fit: cover; object-position: center top; border-radius: 50%; }
+    .about-content p { font-size: 0.88rem; line-height: 1.7; }
+    .about-content .section-tag { text-align: left; font-size: 0.68rem; }
+    .about-content .section-title { text-align: left; font-size: 1.15rem; }
+    .about-tags { gap: 6px; }
+    .tag { font-size: 0.72rem; padding: 4px 10px; }
 
     /* === 聯絡 === */
-    .contact-buttons { flex-direction: row; gap: 8px; }
-    .contact-btn { padding: 14px 14px; min-width: auto; flex: 1; gap: 8px; }
+    .contact-buttons { flex-direction: row; gap: 10px; }
+    .contact-btn { padding: 16px 14px; min-width: auto; flex: 1; gap: 10px; min-height: 48px; }
     .contact-btn svg { width: 24px; height: 24px; }
-    .contact-btn-label { font-size: 0.82rem; }
-    .contact-btn-id { font-size: 0.7rem; }
-    .faq-grid { grid-template-columns: 1fr; gap: 8px; }
-    .faq-item { padding: 14px 16px; }
-    .faq-item strong { font-size: 0.88rem; }
-    .faq-item p { font-size: 0.82rem; }
+    .contact-btn-label { font-size: 0.85rem; }
+    .contact-btn-id { font-size: 0.72rem; }
 
-    /* === 文字斷行優化 === */
-    p, li, .pricing-subtitle, .company-section-desc, .section-desc {
-        word-break: keep-all;
-        overflow-wrap: break-word;
-    }
+    /* === FAQ（單排） === */
+    .faq-grid { grid-template-columns: 1fr; gap: 10px; }
+    .faq-item { padding: 16px 18px; }
+    .faq-item strong { font-size: 0.92rem; }
+    .faq-item p { font-size: 0.85rem; line-height: 1.6; }
 
     /* === 底部 === */
     body { padding-bottom: 72px; }
 
-    /* === 手機動畫強化 === */
+    /* === 動畫 === */
     .pricing-compact-card {
         animation: mobileCardPop 0.5s ease both;
     }
@@ -2602,14 +2601,8 @@ a.portfolio-link {
         background: linear-gradient(180deg, rgba(200, 169, 126, 0.12) 0%, var(--bg-card) 50%);
         animation: cardFloat 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-
-    .pricing-compact-card.selected .pricing-compact-price strong {
-        text-shadow: 0 0 12px rgba(200, 169, 126, 0.4);
-    }
-
-    .pricing-compact-card.selected .pricing-compact-label {
-        color: var(--accent);
-    }
+    .pricing-compact-card.selected .pricing-compact-price strong { text-shadow: 0 0 12px rgba(200, 169, 126, 0.4); }
+    .pricing-compact-card.selected .pricing-compact-label { color: var(--accent); }
 
     @keyframes cardFloat {
         0% { transform: scale(1); }
@@ -2617,49 +2610,18 @@ a.portfolio-link {
         100% { transform: scale(1.03) translateY(-2px); }
     }
 
-    .pricing-shared-checklist li {
-        animation: mobileTagPop 0.4s ease both;
-    }
+    .pricing-shared-checklist li { animation: mobileTagPop 0.4s ease both; }
     .pricing-shared-checklist li:nth-child(1) { animation-delay: 0.4s; }
     .pricing-shared-checklist li:nth-child(2) { animation-delay: 0.5s; }
     .pricing-shared-checklist li:nth-child(3) { animation-delay: 0.6s; }
-    .pricing-shared-checklist li:nth-child(4) { animation-delay: 0.7s; }
 
-    /* 觸碰回饋 */
-    .company-item:active,
-    .celeb-card:active,
-    .portfolio-item:active {
-        transform: scale(0.95);
-        transition: transform 0.1s ease;
-    }
-
-    .chat-row:active .chat-bubble-left {
-        border-color: var(--accent);
-        transition: border-color 0.15s ease;
-    }
-
-    .service-card:active {
-        transform: scale(0.97);
-        transition: transform 0.1s ease;
-    }
-
-    .addon-item:active {
-        transform: scale(0.95);
-        background: rgba(200, 169, 126, 0.08);
-        transition: all 0.1s ease;
-    }
-
-    .process-step:active .step-number {
-        background: var(--accent);
-        color: var(--bg-primary);
-        transition: all 0.15s ease;
-    }
-
-    .faq-item:active {
-        border-color: var(--accent);
-        transform: scale(0.97);
-        transition: all 0.1s ease;
-    }
+    /* === 觸碰回饋 === */
+    .company-item:active, .celeb-card:active, .portfolio-item:active { transform: scale(0.95); transition: transform 0.1s ease; }
+    .chat-row:active .chat-bubble-left { border-color: var(--accent); transition: border-color 0.15s ease; }
+    .service-card:active { transform: scale(0.97); transition: transform 0.1s ease; }
+    .addon-item:active { transform: scale(0.95); background: rgba(200, 169, 126, 0.08); transition: all 0.1s ease; }
+    .process-step:active .step-number { background: var(--accent); color: var(--bg-primary); transition: all 0.15s ease; }
+    .faq-item:active { border-color: var(--accent); transform: scale(0.97); transition: all 0.1s ease; }
 }
 
 @keyframes mobileCardPop {
@@ -2796,13 +2758,6 @@ a.portfolio-link {
 
     .celeb-card > span {
         font-size: 0.8rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .celeb-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 6px;
     }
 }
 
