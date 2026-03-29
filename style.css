@@ -2536,7 +2536,14 @@ a.portfolio-link {
 
     .pricing-compact-card:active {
         transform: scale(0.96);
-        transition: transform 0.1s ease;
+        border-color: var(--accent) !important;
+        box-shadow: 0 0 20px rgba(200, 169, 126, 0.25);
+        background: linear-gradient(180deg, rgba(200, 169, 126, 0.1) 0%, var(--bg-card) 50%);
+        transition: all 0.1s ease;
+    }
+
+    .pricing-compact-card:active .pricing-compact-price strong {
+        text-shadow: 0 0 12px rgba(200, 169, 126, 0.4);
     }
 
     .pricing-shared-checklist li {
