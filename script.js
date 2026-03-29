@@ -407,31 +407,38 @@ document.querySelectorAll('.about-content').forEach(el => {
     revealObserver.observe(el);
 });
 
-// Compact pricing card tap-to-expand
-document.querySelectorAll('.pricing-compact-card').forEach(function(card) {
-    card.addEventListener('click', function(e) {
-        e.stopPropagation();
-        var wasExpanded = card.classList.contains('expanded');
-        // Close all
-        document.querySelectorAll('.pricing-compact-card').forEach(function(c) {
-            c.classList.remove('expanded');
+// Compact pricing card flip-to-expand
+(function() {
+    var compact = document.querySelector('.pricing-compact');
+    if (!compact) return;
+    var cards = compact.querySelectorAll('.pricing-compact-card');
+
+    cards.forEach(function(card) {
+        card.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var wasExpanded = card.classList.contains('expanded');
+
+            // Close all
+            cards.forEach(function(c) { c.classList.remove('expanded'); });
+            compact.classList.remove('has-expanded');
+
+            if (!wasExpanded) {
+                // Expand this card
+                card.classList.add('expanded');
+                compact.classList.add('has-expanded');
+                playSound('click');
+            }
         });
-        // Toggle clicked
-        if (!wasExpanded) {
-            card.classList.add('expanded');
-            playSound('click');
+    });
+
+    // Tap outside to close
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.pricing-compact')) {
+            cards.forEach(function(c) { c.classList.remove('expanded'); });
+            compact.classList.remove('has-expanded');
         }
     });
-});
-
-// Close expanded card when tapping outside
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('.pricing-compact-card')) {
-        document.querySelectorAll('.pricing-compact-card.expanded').forEach(function(c) {
-            c.classList.remove('expanded');
-        });
-    }
-});
+})();
 
 // Contact buttons
 document.querySelectorAll('.contact-buttons').forEach(el => {
