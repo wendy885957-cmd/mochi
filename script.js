@@ -517,9 +517,29 @@ document.querySelectorAll('.celeb-flip').forEach(card => {
     scroll.addEventListener('mouseenter', function() { paused = true; });
     scroll.addEventListener('mouseleave', function() { paused = false; });
 
-    // Pause on touch, resume after 2s
-    scroll.addEventListener('touchstart', function() { paused = true; }, { passive: true });
+    // Touch drag to scroll
+    var touchStartX = 0;
+    var touchStartPos = 0;
+    var isDragging = false;
+
+    scroll.addEventListener('touchstart', function(e) {
+        paused = true;
+        isDragging = true;
+        touchStartX = e.touches[0].clientX;
+        touchStartPos = pos;
+    }, { passive: true });
+
+    scroll.addEventListener('touchmove', function(e) {
+        if (!isDragging) return;
+        var dx = touchStartX - e.touches[0].clientX;
+        pos = touchStartPos + dx;
+        if (pos < 0) pos = 0;
+        if (halfWidth > 0 && pos >= halfWidth) pos = 0;
+        track.style.transform = 'translateX(' + (-pos) + 'px)';
+    }, { passive: true });
+
     scroll.addEventListener('touchend', function() {
+        isDragging = false;
         setTimeout(function() { paused = false; }, 2000);
     });
 })();
