@@ -2569,13 +2569,14 @@ a.portfolio-link {
     .step-content p { font-size: 0.85rem; line-height: 1.6; }
     .process-timeline::before { left: 16px; }
 
-    /* === 關於我（左右排列） === */
-    .about-grid { grid-template-columns: 90px 1fr; gap: 16px; align-items: start; }
-    .about-photo { width: 90px; height: 90px; object-fit: cover; object-position: center top; border-radius: 50%; }
-    .about-content p { font-size: 0.88rem; line-height: 1.7; }
-    .about-content .section-tag { text-align: left; font-size: 0.68rem; }
-    .about-content .section-title { text-align: left; font-size: 1.15rem; }
-    .about-tags { gap: 6px; }
+    /* === 關於我（上下排列，避免出血） === */
+    .about-grid { grid-template-columns: 1fr; gap: 16px; }
+    .about-photo { width: 100px; height: 100px; object-fit: cover; object-position: center top; border-radius: 50%; margin: 0 auto; }
+    .about-content { text-align: center; }
+    .about-content p { font-size: 0.88rem; line-height: 1.7; padding: 0 8px; }
+    .about-content .section-tag { text-align: center; font-size: 0.68rem; }
+    .about-content .section-title { text-align: center; font-size: 1.15rem; }
+    .about-tags { gap: 6px; justify-content: center; }
     .tag { font-size: 0.72rem; padding: 4px 10px; }
 
     /* === 聯絡 === */
