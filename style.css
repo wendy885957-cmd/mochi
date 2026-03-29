@@ -2588,13 +2588,13 @@ a.portfolio-link {
     .contact-btn-label { font-size: 0.85rem; }
     .contact-btn-id { font-size: 0.72rem; }
 
-    /* === FAQ（單排） === */
-    .contact-faq { margin-top: 32px; }
+    /* === FAQ（單排，防出血） === */
+    .contact-faq { margin-top: 32px; overflow: hidden; }
     .contact-faq h3 { font-size: 1rem; margin-bottom: 16px; }
-    .faq-grid { grid-template-columns: 1fr; gap: 10px; }
-    .faq-item { padding: 14px 16px; margin: 0; }
-    .faq-item strong { font-size: 0.88rem; }
-    .faq-item p { font-size: 0.82rem; line-height: 1.6; }
+    .faq-grid { grid-template-columns: 1fr; gap: 8px; max-width: 100%; }
+    .faq-item { padding: 12px 14px; margin: 0; max-width: 100%; overflow: hidden; }
+    .faq-item strong { font-size: 0.85rem; }
+    .faq-item p { font-size: 0.8rem; line-height: 1.6; }
 
     /* === 底部 === */
     body { padding-bottom: 72px; }
