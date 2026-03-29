@@ -2453,8 +2453,8 @@ a.portfolio-link {
 
     /* === 藝人網紅（3排） === */
     .celeb-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
-    .celeb-card > span { font-size: 0.78rem; margin-top: 6px; }
-    .celeb-card > small { font-size: 0.62rem; }
+    .celeb-card > span { font-size: 0.78rem; margin-top: 4px; }
+    .celeb-card > small { font-size: 0.58rem; margin-top: 0; }
 
     /* === 合作次數 badge 縮小 === */
     .flip-badge { font-size: 0.45rem; padding: 1px 4px; top: 3px; left: 3px; bottom: auto; right: auto; }
@@ -2685,7 +2685,7 @@ a.portfolio-link {
 
 .celeb-card > span {
     display: block;
-    margin-top: 14px;
+    margin-top: 8px;
     font-size: 1.05rem;
     color: var(--text-primary);
     font-weight: 500;
@@ -2694,7 +2694,7 @@ a.portfolio-link {
 
 .celeb-card > small {
     display: block;
-    margin-top: 4px;
+    margin-top: 1px;
     font-size: 0.75rem;
     color: var(--text-muted);
     font-weight: 400;
