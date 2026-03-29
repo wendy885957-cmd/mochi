@@ -1553,13 +1553,49 @@ a.portfolio-link {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 40px 32px;
-    transition: var(--transition);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.4s ease;
     position: relative;
+    overflow: hidden;
+}
+
+.pricing-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: var(--radius);
+    padding: 1px;
+    background: linear-gradient(135deg, transparent 40%, var(--accent) 50%, transparent 60%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
 .pricing-card:hover {
-    border-color: var(--border-light);
-    transform: translateY(-4px);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 25px rgba(200, 169, 126, 0.08);
+}
+
+.pricing-card:hover::before {
+    opacity: 1;
+}
+
+.pricing-card:hover .pricing-header h3 {
+    color: var(--accent);
+}
+
+.pricing-card .pricing-header h3 {
+    transition: color 0.3s ease;
+}
+
+.pricing-card:hover .amount {
+    transform: scale(1.05);
+}
+
+.pricing-card .amount {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-block;
 }
 
 .pricing-card.popular {
@@ -1569,8 +1605,8 @@ a.portfolio-link {
 }
 
 .pricing-card.popular:hover {
-    transform: scale(1.03) translateY(-4px);
-    box-shadow: 0 20px 60px rgba(200, 169, 126, 0.3);
+    transform: scale(1.03) translateY(-6px);
+    box-shadow: 0 24px 60px rgba(200, 169, 126, 0.25), 0 0 30px rgba(200, 169, 126, 0.1);
 }
 
 .popular-badge {
@@ -1638,6 +1674,12 @@ a.portfolio-link {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-bottom-note:hover {
+    border-color: rgba(200, 169, 126, 0.3);
+    box-shadow: 0 4px 20px rgba(200, 169, 126, 0.06);
 }
 
 .pricing-bottom-note p {
@@ -1658,6 +1700,12 @@ a.portfolio-link {
     padding: 8px 0;
     font-size: 0.88rem;
     color: var(--text-secondary);
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.pricing-features li:hover {
+    transform: translateX(4px);
+    color: var(--text-primary);
 }
 
 .pricing-features li svg {
@@ -1693,11 +1741,13 @@ a.portfolio-link {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    transition: var(--transition);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .addon-item:hover {
-    border-color: var(--border-light);
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 0 12px rgba(200, 169, 126, 0.06);
 }
 
 .addon-name {
@@ -1751,6 +1801,17 @@ a.portfolio-link {
     gap: 32px;
     padding: 32px 0;
     position: relative;
+    transition: transform 0.3s ease;
+}
+
+.process-step:hover {
+    transform: translateX(6px);
+}
+
+.process-step:hover .step-number {
+    background: var(--accent);
+    color: var(--bg-primary);
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 .step-number {
@@ -2000,6 +2061,13 @@ a.portfolio-link {
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     padding: 20px;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.faq-item:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .faq-item strong {
