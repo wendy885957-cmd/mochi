@@ -407,15 +407,30 @@ document.querySelectorAll('.about-content').forEach(el => {
     revealObserver.observe(el);
 });
 
-// Compact pricing card tap-to-select
+// Compact pricing card tap-to-expand
 document.querySelectorAll('.pricing-compact-card').forEach(function(card) {
-    card.addEventListener('click', function() {
+    card.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var wasExpanded = card.classList.contains('expanded');
+        // Close all
         document.querySelectorAll('.pricing-compact-card').forEach(function(c) {
-            c.classList.remove('selected');
+            c.classList.remove('expanded');
         });
-        card.classList.add('selected');
-        playSound('click');
+        // Toggle clicked
+        if (!wasExpanded) {
+            card.classList.add('expanded');
+            playSound('click');
+        }
     });
+});
+
+// Close expanded card when tapping outside
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.pricing-compact-card')) {
+        document.querySelectorAll('.pricing-compact-card.expanded').forEach(function(c) {
+            c.classList.remove('expanded');
+        });
+    }
 });
 
 // Contact buttons

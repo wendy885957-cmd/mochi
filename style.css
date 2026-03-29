@@ -2609,19 +2609,81 @@ a.portfolio-link {
     .pricing-compact-card:nth-child(2) { animation-delay: 0.2s; }
     .pricing-compact-card:nth-child(3) { animation-delay: 0.3s; }
 
-    .pricing-compact-card.selected {
-        border-color: var(--accent);
-        box-shadow: 0 0 20px rgba(200, 169, 126, 0.25);
-        background: linear-gradient(180deg, rgba(200, 169, 126, 0.12) 0%, var(--bg-card) 50%);
-        animation: cardFloat 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    /* 展開詳情 */
+    .pricing-compact-detail {
+        display: none;
+        width: 100%;
+        text-align: left;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
     }
-    .pricing-compact-card.selected .pricing-compact-price strong { text-shadow: 0 0 12px rgba(200, 169, 126, 0.4); }
-    .pricing-compact-card.selected .pricing-compact-label { color: var(--accent); }
 
-    @keyframes cardFloat {
+    .pricing-compact-detail .detail-desc {
+        font-size: 0.78rem;
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .pricing-compact-detail ul {
+        list-style: none;
+        margin-bottom: 12px;
+    }
+
+    .pricing-compact-detail li {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        padding: 3px 0;
+        padding-left: 14px;
+        position: relative;
+    }
+
+    .pricing-compact-detail li::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+        font-size: 0.7rem;
+        font-weight: 700;
+    }
+
+    .pricing-compact-detail .btn {
+        padding: 10px 16px;
+        font-size: 0.8rem;
+        min-height: 40px;
+    }
+
+    .pricing-compact-card.expanded {
+        grid-column: 1 / -1;
+        border-color: var(--accent);
+        box-shadow: 0 8px 30px rgba(200, 169, 126, 0.2);
+        background: linear-gradient(180deg, rgba(200, 169, 126, 0.1) 0%, var(--bg-card) 40%);
+        padding: 20px 18px;
+        animation: cardExpand 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .pricing-compact-card.expanded .pricing-compact-detail {
+        display: block;
+        animation: detailFadeIn 0.3s ease 0.1s both;
+    }
+
+    .pricing-compact-card.expanded .pricing-compact-price strong {
+        text-shadow: 0 0 12px rgba(200, 169, 126, 0.4);
+    }
+
+    .pricing-compact-card.expanded .pricing-compact-label {
+        color: var(--accent);
+    }
+
+    @keyframes cardExpand {
         0% { transform: scale(1); }
-        50% { transform: scale(1.06) translateY(-4px); }
-        100% { transform: scale(1.03) translateY(-2px); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes detailFadeIn {
+        from { opacity: 0; transform: translateY(-8px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
     .pricing-shared-checklist li { animation: mobileTagPop 0.4s ease both; }
