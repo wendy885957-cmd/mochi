@@ -464,56 +464,45 @@ document.querySelectorAll('.celeb-flip').forEach(card => {
     }, 3000);
 });
 
-// Reviews infinite auto-scroll
+// Reviews infinite auto-scroll (CSS transform based, works on mobile)
 (function() {
     var scroll = document.querySelector('.reviews-scroll');
     var track = document.querySelector('.reviews-track');
     if (!scroll || !track) return;
 
-    var speed = 0.5; // px per frame
+    var pos = 0;
+    var speed = 0.5;
     var paused = false;
-    var dragging = false;
-    var startX, startScrollLeft;
+    var halfWidth = 0;
 
-    // Auto scroll
-    function autoScroll() {
-        if (!paused && !dragging) {
-            scroll.scrollLeft += speed;
-            // When scrolled past half (the duplicated set), reset to start
-            if (scroll.scrollLeft >= track.scrollWidth / 2) {
-                scroll.scrollLeft = 0;
-            }
-        }
-        requestAnimationFrame(autoScroll);
+    // Calculate half width after images load
+    function calcHalf() {
+        halfWidth = track.scrollWidth / 2;
     }
-    requestAnimationFrame(autoScroll);
+    window.addEventListener('load', calcHalf);
+    setTimeout(calcHalf, 2000);
 
-    // Pause on hover
+    // Disable native scroll, use transform instead
+    scroll.style.overflow = 'hidden';
+
+    function animate() {
+        if (!paused && halfWidth > 0) {
+            pos += speed;
+            if (pos >= halfWidth) pos = 0;
+            track.style.transform = 'translateX(' + (-pos) + 'px)';
+        }
+        requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+
+    // Pause on hover (desktop)
     scroll.addEventListener('mouseenter', function() { paused = true; });
-    scroll.addEventListener('mouseleave', function() { paused = false; dragging = false; });
+    scroll.addEventListener('mouseleave', function() { paused = false; });
 
-    // Pause on touch
+    // Pause on touch, resume after 2s
     scroll.addEventListener('touchstart', function() { paused = true; }, { passive: true });
     scroll.addEventListener('touchend', function() {
-        setTimeout(function() { paused = false; }, 2000); // resume after 2s
-    });
-
-    // Drag to scroll (desktop)
-    scroll.addEventListener('mousedown', function(e) {
-        dragging = true;
-        startX = e.pageX - scroll.offsetLeft;
-        startScrollLeft = scroll.scrollLeft;
-        scroll.style.cursor = 'grabbing';
-    });
-    scroll.addEventListener('mousemove', function(e) {
-        if (!dragging) return;
-        e.preventDefault();
-        var x = e.pageX - scroll.offsetLeft;
-        scroll.scrollLeft = startScrollLeft - (x - startX);
-    });
-    scroll.addEventListener('mouseup', function() {
-        dragging = false;
-        scroll.style.cursor = 'grab';
+        setTimeout(function() { paused = false; }, 2000);
     });
 })();
 
