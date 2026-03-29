@@ -1652,12 +1652,10 @@ a.portfolio-link {
 
 .pricing-qty {
     font-family: 'Inter', sans-serif;
-    font-size: 3rem;
-    font-weight: 800;
+    font-size: 1.3rem;
+    font-weight: 700;
     color: var(--accent);
-    line-height: 1;
-    margin-bottom: 4px;
-    letter-spacing: -1px;
+    margin-left: 4px;
 }
 
 .pricing-compare {
