@@ -112,39 +112,22 @@ if (heroSoundBtn && heroVideo) {
     }
 }
 
-// Blur background
+// Blur background (desktop only — mobile uses HTML video)
 (function() {
     var blurLayer = document.querySelector('.hero-video-blur-layer');
-    if (!blurLayer || !heroVideo) return;
-
-    if (window.innerWidth <= 768) {
-        // Mobile: clone video as blurred background
-        var blurVid = heroVideo.cloneNode(true);
-        blurVid.removeAttribute('id');
-        blurVid.muted = true;
-        blurVid.playsInline = true;
-        blurVid.style.cssText = 'width:100%;height:100%;object-fit:cover;filter:blur(30px) brightness(0.3) saturate(1.2);transform:scale(1.2);pointer-events:none;';
-        blurLayer.appendChild(blurVid);
-        blurVid.play().catch(function(){});
-        // Sync playback
-        heroVideo.addEventListener('play', function() { blurVid.play().catch(function(){}); });
-        heroVideo.addEventListener('pause', function() { blurVid.pause(); });
-        heroVideo.addEventListener('seeked', function() { blurVid.currentTime = heroVideo.currentTime; });
-    } else {
-        // Desktop: canvas approach
-        var canvas = document.createElement('canvas');
-        canvas.width = 320;
-        canvas.height = 568;
-        blurLayer.appendChild(canvas);
-        var ctx = canvas.getContext('2d');
-        function drawFrame() {
-            if (!heroVideo.paused && !heroVideo.ended) {
-                ctx.drawImage(heroVideo, 0, 0, canvas.width, canvas.height);
-            }
-            requestAnimationFrame(drawFrame);
+    if (!blurLayer || !heroVideo || window.innerWidth <= 768) return;
+    var canvas = document.createElement('canvas');
+    canvas.width = 320;
+    canvas.height = 568;
+    blurLayer.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    function drawFrame() {
+        if (!heroVideo.paused && !heroVideo.ended) {
+            ctx.drawImage(heroVideo, 0, 0, canvas.width, canvas.height);
         }
-        heroVideo.addEventListener('playing', drawFrame);
+        requestAnimationFrame(drawFrame);
     }
+    heroVideo.addEventListener('playing', drawFrame);
 })()
 
 // Navbar scroll effect

@@ -454,6 +454,10 @@ img {
     transform: scale(1.1);
 }
 
+.hero-blur-video {
+    display: none;
+}
+
 .hero-btns-row {
     display: flex;
     gap: 10px;
@@ -510,7 +514,7 @@ img {
     .hero-video-blur-layer {
         display: block;
         position: absolute;
-        inset: -30px;
+        inset: -40px;
         z-index: 0;
         overflow: hidden;
     }
@@ -519,12 +523,24 @@ img {
         display: none;
     }
 
+    .hero-blur-video {
+        display: block !important;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: blur(25px) brightness(0.35) saturate(1.3);
+        transform: scale(1.3);
+        pointer-events: none;
+    }
+
     .hero-video-blur-layer::after {
         content: '';
         position: absolute;
         inset: 0;
         z-index: 1;
-        background: radial-gradient(ellipse at center, transparent 30%, rgba(8, 8, 8, 0.7) 75%);
+        background:
+            radial-gradient(ellipse at center, transparent 20%, rgba(8, 8, 8, 0.5) 65%, rgba(8, 8, 8, 0.9) 100%),
+            linear-gradient(180deg, rgba(8,8,8,0.6) 0%, transparent 15%, transparent 85%, rgba(8,8,8,0.8) 100%);
     }
 }
 
