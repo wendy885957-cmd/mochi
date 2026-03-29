@@ -2478,8 +2478,10 @@ a.portfolio-link {
 
 @media (max-width: 480px) {
     /* === 全局（參考 Apple/Stripe 間距） === */
+    /* === 全局安全邊距（防出血） === */
     .container { padding: 0 24px; }
     .section { padding: 52px 0; }
+    .container > * { max-width: 100%; box-sizing: border-box; }
 
     /* === 文字排版（參考 Linear text-wrap） === */
     h2, h3, .section-title, .company-section-title, .service-card h3 { text-wrap: balance; }
@@ -2500,14 +2502,14 @@ a.portfolio-link {
     .portfolio-thumb { aspect-ratio: 9/16; }
 
     /* === 品牌合作（3排） === */
-    .company-section { margin-top: 2rem; padding: 1.25rem; }
+    .company-section { margin-top: 2rem; padding: 1rem; overflow: hidden; }
     .company-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
     .company-item { aspect-ratio: 9/16; }
     .company-section-title { font-size: 1.15rem; text-wrap: balance; }
     .company-section-desc { font-size: 0.8rem; line-height: 1.6; }
 
     /* === 質感訪談 === */
-    .interview-section { margin-top: 2rem; padding: 1.25rem; }
+    .interview-section { margin-top: 2rem; padding: 1rem; overflow: hidden; }
     .interview-grid { grid-template-columns: 1fr; gap: 10px; }
 
     /* === 好評回饋 === */
@@ -2587,10 +2589,12 @@ a.portfolio-link {
     .contact-btn-id { font-size: 0.72rem; }
 
     /* === FAQ（單排） === */
+    .contact-faq { margin-top: 32px; }
+    .contact-faq h3 { font-size: 1rem; margin-bottom: 16px; }
     .faq-grid { grid-template-columns: 1fr; gap: 10px; }
-    .faq-item { padding: 16px 18px; }
-    .faq-item strong { font-size: 0.92rem; }
-    .faq-item p { font-size: 0.85rem; line-height: 1.6; }
+    .faq-item { padding: 14px 16px; margin: 0; }
+    .faq-item strong { font-size: 0.88rem; }
+    .faq-item p { font-size: 0.82rem; line-height: 1.6; }
 
     /* === 底部 === */
     body { padding-bottom: 72px; }
