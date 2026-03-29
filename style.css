@@ -2565,10 +2565,10 @@ a.portfolio-link {
     .addon-price { font-size: 0.92rem; }
 
     /* === 合作流程 === */
-    .process-step { gap: 16px; padding: 20px 0; }
+    .process-step { gap: 16px; padding: 24px 0; }
     .step-number { width: 36px; height: 36px; font-size: 0.75rem; }
-    .step-content h3 { font-size: 1rem; }
-    .step-content p { font-size: 0.85rem; line-height: 1.6; }
+    .step-content h3 { font-size: 1rem; margin-bottom: 6px; }
+    .step-content p { font-size: 0.85rem; line-height: 1.7; }
     .process-timeline::before { left: 16px; }
 
     /* === 關於我（上下排列，避免出血） === */
