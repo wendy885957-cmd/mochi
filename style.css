@@ -463,30 +463,56 @@ img {
 @media (max-width: 768px) {
     .hero-fullvid {
         min-height: auto;
+        background: #000;
+        position: relative;
     }
 
     .hero-fullvid-wrap {
         position: relative;
         inset: auto;
+        display: flex;
+        justify-content: center;
+        padding: 20px 0;
     }
 
     .hero-vid-container {
         height: auto;
-        width: 100%;
+        width: 65%;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
     }
 
     .hero-vid-container video {
         width: 100%;
         height: auto;
+        border-radius: 12px;
     }
 
     .hero-fullvid-controls {
-        bottom: 80px;
-        right: 16px;
+        bottom: 40px;
+        right: 8px;
     }
 
     .hero-video-blur-layer {
+        display: block;
+        position: absolute;
+        inset: -20px;
+        z-index: 0;
+        overflow: hidden;
+    }
+
+    .hero-video-blur-layer canvas {
         display: none;
+    }
+
+    .hero-video-blur-layer::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at center, rgba(200, 169, 126, 0.08) 0%, rgba(8, 8, 8, 0.95) 70%);
     }
 }
 
@@ -2524,6 +2550,12 @@ a.portfolio-link {
     .faq-item { padding: 12px; }
     .faq-item strong { font-size: 0.8rem; }
     .faq-item p { font-size: 0.75rem; }
+
+    /* === 文字斷行優化 === */
+    p, li, .pricing-subtitle, .company-section-desc, .section-desc {
+        word-break: keep-all;
+        overflow-wrap: break-word;
+    }
 
     /* === 底部 === */
     body { padding-bottom: 72px; }
