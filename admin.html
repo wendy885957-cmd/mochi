@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mochi Film - 照片裁切後台</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, sans-serif; background: #1a1a1a; color: #eee; padding: 40px 24px; }
+        h1 { text-align: center; margin-bottom: 8px; font-size: 1.5rem; }
+        .subtitle { text-align: center; color: #888; margin-bottom: 40px; font-size: 0.9rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
+        .card { background: #222; border-radius: 12px; padding: 16px; }
+        .crop-box {
+            width: 100%;
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            position: relative;
+            cursor: grab;
+            border: 2px solid #333;
+            touch-action: none;
+        }
+        .crop-box:active { cursor: grabbing; border-color: #c8a97e; }
+        .crop-box img {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            user-select: none;
+            -webkit-user-drag: none;
+            pointer-events: none;
+        }
+        .name { font-size: 0.85rem; font-weight: 600; text-align: center; margin-bottom: 8px; }
+        .zoom-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+        .zoom-row label { font-size: 0.72rem; color: #888; }
+        .zoom-row input[type="range"] { flex: 1; accent-color: #c8a97e; height: 4px; }
+        .zoom-row .zoom-val { font-size: 0.72rem; color: #c8a97e; width: 32px; text-align: right; }
+        .pos-info { font-size: 0.7rem; color: #c8a97e; text-align: center; }
+        .actions { margin-top: 40px; text-align: center; }
+        .btn { background: #c8a97e; color: #111; border: none; padding: 14px 40px; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; margin: 0 8px; }
+        .btn:hover { background: #d4ba94; }
+        .btn-outline { background: transparent; border: 1px solid #c8a97e; color: #c8a97e; }
+        .output { margin-top: 24px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .output textarea { width: 100%; height: 300px; background: #111; color: #c8a97e; border: 1px solid #333; border-radius: 8px; padding: 16px; font-family: monospace; font-size: 0.8rem; resize: vertical; }
+        .hint { text-align: center; color: #666; font-size: 0.8rem; margin-top: 12px; }
+    </style>
+</head>
+<body>
+    <h1>照片裁切後台</h1>
+    <p class="subtitle">直接拖動照片調整位置，調好後按「產生設定」把結果貼給我</p>
+    <div class="grid" id="grid"></div>
+    <div class="actions">
+        <button class="btn" onclick="generateOutput()">產生設定</button>
+        <button class="btn btn-outline" onclick="resetAll()">全部重設</button>
+    </div>
+    <div class="output" id="output" style="display:none">
+        <textarea id="cssOutput" readonly></textarea>
+        <p class="hint">複製上面的內容貼給我，我幫你更新到網站上。</p>
+    </div>
+
+    <script>
+    const photos = [
+        { file: "wang-zhongping.jpg", name: "王中平" },
+        { file: "wang-hanjing.jpg", name: "王中平＆韓靖" },
+        { file: "wang-3rd.jpg", name: "王中平（三度合作）" },
+        { file: "wu-wenwen.jpg", name: "吳皓昇＆文汶" },
+        { file: "jiang-guobin.jpg", name: "江國賓" },
+        { file: "lin-youxing.jpg", name: "林祐星" },
+        { file: "lin-jingxiang.jpg", name: "林道遠＆靜香" },
+        { file: "dong-zining.jpg", name: "董梓甯" },
+        { file: "yan-xiaojun.jpg", name: "顏曉筠" },
+        { file: "yufeng-jiayu.jpg", name: "宇風＆家妤" },
+        { file: "kuiding.jpg", name: "奎丁" },
+        { file: "weige.jpg", name: "瑋哥" },
+        { file: "hulk-dad.jpg", name: "浩克爸爸" },
+        { file: "xiao-zhiwei.jpg", name: "蕭志瑋" },
+        { file: "chenyi.jpg", name: "陳伊" },
+        { file: "yurou.jpg", name: "魚肉" },
+        { file: "baseball.jpg", name: "陳晨威" },
+        { file: "wang-5th.jpg", name: "王中平（五度合作）" },
+        { file: "zhangyan-samsung.jpg", name: "張媛（三星拍攝）" },
+        { file: "kda.jpg", name: "K大" },
+        { file: "group.jpg", name: "網紅們" },
+    ];
+
+    const positions = {};
+    const grid = document.getElementById('grid');
+
+    photos.forEach((photo, i) => {
+        positions[i] = { top: 0, left: 0, maxScrollY: 0, maxScrollX: 0, zoom: 100, baseImgH: 0, baseImgW: 0, boxSize: 0 };
+
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <div class="crop-box" id="box-${i}">
+                <img id="img-${i}" src="collab-full/${photo.file}" alt="${photo.name}">
+            </div>
+            <div class="name">${photo.name}</div>
+            <div class="zoom-row">
+                <label>縮放</label>
+                <input type="range" min="100" max="300" value="100" id="zoom-${i}">
+                <span class="zoom-val" id="zv-${i}">1x</span>
+            </div>
+            <div class="pos-info" id="info-${i}">↕ 拖動調整</div>
+        `;
+        grid.appendChild(card);
+
+        const box = card.querySelector('.crop-box');
+        const img = card.querySelector('img');
+
+        img.onload = () => {
+            const boxSize = box.clientWidth;
+            positions[i].boxSize = boxSize;
+            positions[i].baseImgH = img.clientHeight;
+            positions[i].baseImgW = img.clientWidth;
+            recalc(i);
+            // Center vertically
+            positions[i].top = -positions[i].maxScrollY / 2;
+            positions[i].left = -positions[i].maxScrollX / 2;
+            applyPos(i);
+        };
+
+        // Zoom slider
+        const zoomSlider = card.querySelector(`#zoom-${i}`);
+        zoomSlider.addEventListener('input', () => {
+            const z = parseInt(zoomSlider.value);
+            positions[i].zoom = z;
+            document.getElementById(`zv-${i}`).textContent = (z / 100).toFixed(1) + 'x';
+            img.style.width = z + '%';
+            recalc(i);
+            // Re-clamp position
+            positions[i].top = Math.min(0, Math.max(-positions[i].maxScrollY, positions[i].top));
+            positions[i].left = Math.min(0, Math.max(-positions[i].maxScrollX, positions[i].left));
+            applyPos(i);
+        });
+
+        function recalc(idx) {
+            const p = positions[idx];
+            const z = p.zoom / 100;
+            const scaledH = p.baseImgH * z;
+            const scaledW = p.baseImgW * z;
+            p.maxScrollY = Math.max(0, scaledH - p.boxSize);
+            p.maxScrollX = Math.max(0, scaledW - p.boxSize);
+        }
+
+        function applyPos(idx) {
+            const p = positions[idx];
+            img.style.top = p.top + 'px';
+            img.style.left = p.left + 'px';
+        }
+
+        // Drag
+        let dragging = false;
+        let startX = 0, startY = 0, startTop = 0, startLeft = 0;
+
+        box.addEventListener('mousedown', start);
+        box.addEventListener('touchstart', start, { passive: false });
+        document.addEventListener('mousemove', move);
+        document.addEventListener('touchmove', move, { passive: false });
+        document.addEventListener('mouseup', end);
+        document.addEventListener('touchend', end);
+
+        function start(e) {
+            dragging = true;
+            const point = e.touches ? e.touches[0] : e;
+            startX = point.clientX;
+            startY = point.clientY;
+            startTop = positions[i].top;
+            startLeft = positions[i].left;
+            e.preventDefault();
+        }
+
+        function move(e) {
+            if (!dragging) return;
+            const point = e.touches ? e.touches[0] : e;
+            const dy = point.clientY - startY;
+            const dx = point.clientX - startX;
+
+            let newTop = startTop + dy;
+            let newLeft = startLeft + dx;
+
+            newTop = Math.min(0, Math.max(-positions[i].maxScrollY, newTop));
+            newLeft = Math.min(0, Math.max(-positions[i].maxScrollX, newLeft));
+
+            positions[i].top = newTop;
+            positions[i].left = newLeft;
+            applyPos(i);
+
+            document.getElementById(`info-${i}`).textContent = '已調整';
+            e.preventDefault();
+        }
+
+        function end() { dragging = false; }
+    });
+
+    function generateOutput() {
+        let result = '';
+        photos.forEach((photo, i) => {
+            const p = positions[i];
+            const yPct = p.maxScrollY > 0 ? Math.round((-p.top / p.maxScrollY) * 100) : 50;
+            const xPct = p.maxScrollX > 0 ? Math.round((-p.left / p.maxScrollX) * 100) : 50;
+            const zoom = p.zoom;
+            result += `${photo.name}: 位置 ${xPct}% ${yPct}%, 縮放 ${zoom}%\n`;
+        });
+
+        document.getElementById('output').style.display = 'block';
+        document.getElementById('cssOutput').value = result;
+        document.getElementById('cssOutput').select();
+    }
+
+    function resetAll() {
+        photos.forEach((photo, i) => {
+            positions[i].zoom = 100;
+            positions[i].top = 0;
+            positions[i].left = 0;
+            const img = document.getElementById(`img-${i}`);
+            img.style.width = '100%';
+            img.style.top = '0px';
+            img.style.left = '0px';
+            document.getElementById(`zoom-${i}`).value = 100;
+            document.getElementById(`zv-${i}`).textContent = '1x';
+            document.getElementById(`info-${i}`).textContent = '↕ 拖動調整';
+            // Recalc and center
+            const boxSize = document.getElementById(`box-${i}`).clientWidth;
+            positions[i].baseImgH = img.clientHeight;
+            positions[i].baseImgW = img.clientWidth;
+            positions[i].boxSize = boxSize;
+        });
+    }
+    </script>
+</body>
+</html>

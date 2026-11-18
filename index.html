@@ -1,1169 +1,274 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-Hant-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#080808">
-    <title>Mochi Film | 影像創作者</title>
-    <meta name="description" content="Mochi Film — 短影音剪輯、業配跟拍、腳本企劃。3 年商業影片經驗，一次可出 10 支短影音。">
-    <meta property="og:title" content="Mochi Film | 影像創作者">
-    <meta property="og:description" content="短影音剪輯、業配跟拍、腳本企劃。一個人幫你搞定拍攝到剪輯。">
+    <meta name="theme-color" content="#FBF6F2">
+    <title>Mochi Film | 短影音企劃・拍攝・剪輯</title>
+    <meta name="description" content="Mochi Film — 社群短影音的企劃、拍攝與剪輯。網紅業配、品牌短影音作品集。">
+    <meta property="og:title" content="Mochi Film | 短影音企劃・拍攝・剪輯">
+    <meta property="og:description" content="社群短影音的企劃、拍攝與剪輯。網紅業配、品牌短影音作品集。">
     <meta property="og:type" content="website">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta property="og:image" content="profile.jpg">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <meta property="og:image" content="profile.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Great+Vibes&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo">MOCHI FILM</a>
-            <div class="nav-links">
-                <a href="#portfolio">作品</a>
-                <a href="#collab">合作經歷</a>
-                <a href="#services">服務</a>
-                <a href="#pricing">價格</a>
-                <a href="#contact" class="nav-cta">私訊我</a>
-            </div>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
+<!-- ============ 導覽列 ============ -->
+<header class="nav" id="nav">
+    <div class="marquee" aria-hidden="true">
+        <div class="marquee-track" id="marqueeTrack"></div>
+    </div>
+    <div class="nav-inner">
+        <a href="#top" class="brand" aria-label="Mochi Film 回到頂部">
+            <span class="brand-mark">M</span>
+            <span class="brand-text">Mochi <em>Film</em></span>
+        </a>
+        <nav class="nav-links" id="navLinks" aria-label="主要導覽">
+            <a href="#works">作品</a>
+            <a href="#brand">品牌合作</a>
+            <a href="#people">合作對象</a>
+            <a href="#services">服務</a>
+            <a href="#about">關於我</a>
+            <a href="#contact" class="nav-cta">私訊合作</a>
+        </nav>
+        <button class="nav-toggle" id="navToggle" aria-label="開啟選單" aria-expanded="false" aria-controls="navLinks">
+            <span></span><span></span>
+        </button>
+    </div>
+</header>
 
-    <!-- Opening Curtain -->
-    <div class="curtain" id="curtain">
-        <div class="curtain-logo">MOCHI FILM</div>
+<main id="top">
+
+<!-- ============ 首頁主視覺 ============ -->
+<section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container hero-grid">
+        <div class="hero-copy">
+            <h1 class="hero-title reveal" style="--d:.08s">
+                <span class="hero-latin">Mochi Film</span>
+                <span class="hero-subline">Short-form Video Studio</span>
+                <span class="hero-zh">從企劃到剪輯，<br>一人完成你的短影音。</span>
+            </h1>
+            <ul class="hero-chips reveal" style="--d:.16s" aria-label="服務項目">
+                <li>內容企劃</li><li>拍攝執行</li><li>剪輯後製</li>
+            </ul>
+            <div class="hero-actions reveal" style="--d:.24s">
+                <a href="#works" class="btn btn-primary">看作品
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+                <a href="https://www.instagram.com/mochi_flm/" target="_blank" rel="noopener" class="btn btn-ghost">IG 私訊 @mochi_flm</a>
+            </div>
+            <dl class="stats reveal" style="--d:.32s">
+                <div><dt><span data-count="4">4</span><small>年</small></dt><dd>短影音經驗</dd></div>
+                <div><dt><span>100+</span><small>位</small></dt><dd>合作演出者</dd></div>
+            </dl>
+        </div>
+
+        <div class="hero-visual reveal" style="--d:.12s">
+            <div class="float-card fc-1" aria-hidden="true"><img src="portfolio/lador-yuan-cover.jpg" alt=""></div>
+            <div class="float-card fc-2" aria-hidden="true"><img src="portfolio/galaxy-zflip-yuan-cover.jpg" alt=""></div>
+            <div class="float-card fc-3" aria-hidden="true"><img src="portfolio/huaner-yuan-cover.jpg" alt=""></div>
+            <div class="phone">
+                <video id="heroVideo" src="intro-web.mp4" poster="intro-poster.jpg" muted autoplay loop playsinline preload="metadata" aria-label="Mochi Film 作品精華"></video>
+                <span class="phone-rec"><i></i>SHOWREEL</span>
+                <button class="sound-btn" id="soundBtn" aria-label="開啟聲音" aria-pressed="false">
+                    <svg class="ic-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="m23 9-6 6M17 9l6 6"/></svg>
+                    <svg class="ic-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+                </button>
+            </div>
+        </div>
     </div>
 
-    <!-- Hero Section — fullscreen video -->
-    <section class="hero hero-fullvid" id="hero">
-        <div class="hero-fullvid-wrap">
-            <div class="hero-vid-container">
-                <video src="intro.mp4" muted autoplay playsinline webkit-playsinline preload="auto" id="heroVideo"></video>
-                <div class="hero-fullvid-controls anim-reveal" style="--delay: 1.2s">
-                    <button class="hero-sound-btn hero-sound-btn-prominent" id="heroSoundBtn" aria-label="開啟聲音">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
-                            <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-                            <line x1="23" y1="9" x2="17" y2="15" class="mute-line"/>
-                            <line x1="17" y1="9" x2="23" y2="15" class="mute-line"/>
-                        </svg>
-                    </button>
-                    <button class="hero-replay-btn" id="heroReplayBtn" aria-label="重播">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
-                            <path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="hero-video-blur-layer">
-            <video src="intro.mp4" muted autoplay playsinline webkit-playsinline loop preload="auto" class="hero-blur-video"></video>
-        </div>
-        <div class="hero-bg-overlay"></div>
-        <div class="scroll-indicator anim-reveal" style="--delay: 1.6s">
-            <span>SCROLL</span>
-            <div class="scroll-line"></div>
-        </div>
-    </section>
+</section>
 
-    <!-- Intro text below hero -->
-    <section class="section hero-intro-section">
-        <div class="container" style="text-align:center;">
-            <h2 class="section-title"><span class="gradient-text">MOCHI FILM</span></h2>
-            <p class="hero-intro-desc">影片企劃 ・ 拍攝執行 ・ 剪輯後製</p>
-            <div class="hero-actions" style="justify-content:center; margin-top:24px;">
-                <a href="#portfolio" class="btn btn-primary">看我的作品</a>
-                <a href="#contact" class="btn btn-outline">找我合作</a>
-            </div>
-        </div>
-    </section>
+<!-- ============ 客戶好評（跑馬燈） ============ -->
+<section class="reviews-band" id="reviews" aria-label="客戶好評">
+    <div class="container">
+        <h2 class="reviews-heading">客戶好評</h2>
+    </div>
+    <div class="reviews" id="reviewsScroller" aria-label="客戶好評截圖">
+        <div class="reviews-track" id="reviewsTrack"></div>
+    </div>
+</section>
 
-    <!-- Portfolio Section -->
-    <section class="section portfolio" id="portfolio">
-        <div class="container">
-            <p class="section-tag">PORTFOLIO</p>
+<!-- ============ 作品集（由 works.js 產生） ============ -->
+<section class="section" id="works">
+    <div class="container">
+        <div class="section-head reveal">
+            <p class="kicker">01 · Selected Works</p>
             <h2 class="section-title">作品集</h2>
-            <p style="color:var(--text-secondary); font-size:0.85rem; margin-bottom:1.5rem; line-height:1.6; text-align:center;">因部分職務作品涉及公司資產與保密規範，公開作品集以自主創作與可公開案例為主。</p>
-            <div class="portfolio-grid">
-
-                <!-- 把 placeholder 裡的 SVG 換成影片或圖片就好 -->
-
-                <!-- 作品 1 -->
-                <a href="https://www.instagram.com/reel/DVvXGBoiYCl/" target="_blank" rel="noopener" class="portfolio-item portfolio-link" data-category="kol">
-                    <div class="portfolio-thumb">
-                        <img src="reel-01.jpg" alt="日韓爆火穀胱甘肽" loading="lazy">
-                        <div class="portfolio-play">
-                            <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-category">網紅業配</span>
-                            <h4>保健食品</h4>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- 作品 2 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="kol">
-                    <div class="portfolio-thumb">
-                        <img src="https://img.youtube.com/vi/nI-3qj6p_0A/maxresdefault.jpg" alt="苗栗山chill露營區" loading="lazy" class="portfolio-cover">
-                        <video src="portfolio/vlog-camping.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
-                        <button class="portfolio-expand-btn" aria-label="放大">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                        </button>
-                        <div class="portfolio-play">
-                            <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-category">Vlog</span>
-                            <h4>露營紀錄</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 作品 3 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="kol">
-                    <div class="portfolio-thumb">
-                        <img src="portfolio/lador-yuan-cover.jpg" alt="LADOR護髮" loading="lazy" class="portfolio-cover" onerror="this.src='portfolio/lador-yuan.mp4#t=1'">
-                        <video src="portfolio/lador-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
-                        <button class="portfolio-expand-btn" aria-label="放大">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                        </button>
-                        <div class="portfolio-play">
-                            <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-category">網紅業配</span>
-                            <h4>護髮產品</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 作品 4 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="kol">
-                    <div class="portfolio-thumb">
-                        <img src="portfolio/innex-yuan-cover.jpg" alt="INNEX身體乳" loading="lazy" class="portfolio-cover">
-                        <video src="portfolio/innex-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
-                        <button class="portfolio-expand-btn" aria-label="放大">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                        </button>
-                        <div class="portfolio-play">
-                            <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-category">網紅業配</span>
-                            <h4>身體保養</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 作品 5 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="kol">
-                    <div class="portfolio-thumb">
-                        <img src="portfolio/roborock-yuan-cover.jpg" alt="石頭掃地機器人" loading="lazy" class="portfolio-cover">
-                        <video src="portfolio/roborock-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
-                        <button class="portfolio-expand-btn" aria-label="放大">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                        </button>
-                        <div class="portfolio-play">
-                            <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-category">網紅業配</span>
-                            <h4>家電產品</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 作品 6 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="kol">
-                    <div class="portfolio-thumb">
-                        <img src="portfolio/amorfati-yuan-cover.jpg" alt="Amor Fati 私密保養噴霧" loading="lazy" class="portfolio-cover">
-                        <video src="portfolio/amorfati-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
-                        <button class="portfolio-expand-btn" aria-label="放大">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                        </button>
-                        <div class="portfolio-play">
-                            <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-category">網紅業配</span>
-                            <h4>私密保養</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 作品 7 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="kol">
-                    <div class="portfolio-thumb">
-                        <img src="portfolio/huaner-yuan-cover.jpg" alt="華納婚紗" loading="lazy" class="portfolio-cover">
-                        <video src="portfolio/huaner-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
-                        <button class="portfolio-expand-btn" aria-label="放大">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                        </button>
-                        <div class="portfolio-play">
-                            <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-category">網紅業配</span>
-                            <h4>婚紗攝影</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 作品 8 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="kol">
-                    <div class="portfolio-thumb">
-                        <img src="portfolio/collagen-yuan-cover.jpg" alt="膠原蛋白" loading="lazy" class="portfolio-cover">
-                        <video src="portfolio/collagen-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
-                        <button class="portfolio-expand-btn" aria-label="放大">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                        </button>
-                        <div class="portfolio-play">
-                            <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-category">網紅業配</span>
-                            <h4>保健食品</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 作品 9 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="kol">
-                    <div class="portfolio-thumb">
-                        <img src="portfolio/sportswear-yuan-cover.jpg" alt="絕世好波健身服" loading="lazy" class="portfolio-cover">
-                        <video src="portfolio/sportswear-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
-                        <button class="portfolio-expand-btn" aria-label="放大">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                        </button>
-                        <div class="portfolio-play">
-                            <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-category">網紅業配</span>
-                            <h4>運動服飾</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 作品 10 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="kol">
-                    <div class="portfolio-thumb">
-                        <img src="portfolio/drmay-yuan-cover.jpg" alt="Dr May紅外泌膠原安瓶" loading="lazy" class="portfolio-cover">
-                        <video src="portfolio/drmay-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
-                        <button class="portfolio-expand-btn" aria-label="放大">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                        </button>
-                        <div class="portfolio-play">
-                            <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-category">網紅業配</span>
-                            <h4>保養品</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 作品 11 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="kol">
-                    <div class="portfolio-thumb">
-                        <img src="portfolio/unikcy-yuan-cover.jpg" alt="UNIKCY" loading="lazy" class="portfolio-cover">
-                        <video src="portfolio/unikcy-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
-                        <button class="portfolio-expand-btn" aria-label="放大">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                        </button>
-                        <div class="portfolio-play">
-                            <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-category">網紅業配</span>
-                            <h4>保養品</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 作品 12 -->
-                <div class="portfolio-item portfolio-video-inline" data-category="kol">
-                    <div class="portfolio-thumb">
-                        <img src="portfolio/galaxy-zflip-yuan-cover.jpg" alt="Galaxy Z Flip 7" loading="lazy" class="portfolio-cover">
-                        <video src="portfolio/galaxy-zflip-yuan.mp4" playsinline webkit-playsinline preload="none" class="portfolio-inline-video"></video>
-                        <button class="portfolio-expand-btn" aria-label="放大">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                        </button>
-                        <div class="portfolio-play">
-                            <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-category">網紅業配</span>
-                            <h4>3C 科技</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 要加更多作品？複製上面任一個 portfolio-item 區塊就好 -->
-
-            </div>
-
-            <div class="company-section">
-                <div class="company-section-header">
-                    <span class="company-section-tag">BRAND COLLABORATION</span>
-                    <h3 class="company-section-title">品牌合作與商業專案</h3>
-                    <p class="company-section-desc">以下作品涉及品牌方版權與合約規範，僅以<strong style="text-decoration:underline;">截圖方式</strong>呈現。如需觀看完整影片，歡迎透過下方聯絡方式與我聯繫。</p>
-                </div>
-                <div class="company-grid">
-                    <!-- 藝人 -->
-                    <div class="company-item">
-                        <img src="portfolio/company-01-cover.jpg" alt="門市介紹 王中平" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">門市介紹</span>
-                            <h4>王中平</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-02-cover.jpg" alt="門市介紹 王中平" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">門市介紹</span>
-                            <h4>王中平</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-06-cover.jpg" alt="產品介紹 李又汝" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">產品介紹</span>
-                            <h4>李又汝</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-16-cover.jpg" alt="門市介紹 陳宇風家人" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">門市介紹</span>
-                            <h4>宇風＆家妤</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-17-cover.jpg" alt="門市介紹 陳宇風家人" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">門市介紹</span>
-                            <h4>宇風＆家妤</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-20-cover.jpg" alt="門市介紹 江國賓" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">門市介紹</span>
-                            <h4>江國賓</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-21-cover.jpg" alt="門市介紹 顏曉筠" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">門市介紹</span>
-                            <h4>顏曉筠</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-22-cover.jpg" alt="門市介紹 吳皓昇＆文汶" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">門市介紹</span>
-                            <h4>吳皓昇＆文汶</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-23-cover.jpg" alt="門市介紹 林祐星" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">門市介紹</span>
-                            <h4>林祐星</h4>
-                        </div>
-                    </div>
-                    <!-- 網紅素人 -->
-                    <div class="company-item">
-                        <img src="portfolio/company-03-cover.jpg" alt="門市介紹" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">門市介紹</span>
-                            <h4>家庭組合</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-05-cover.jpg" alt="產品介紹" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">產品介紹</span>
-                            <h4>外國人</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-07-cover.jpg" alt="門市介紹 築夢者婷雅" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">門市介紹</span>
-                            <h4>築夢者婷雅</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-09-cover.jpg" alt="產品介紹 陳晨威" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">產品介紹</span>
-                            <h4>陳晨威</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-10-cover.jpg" alt="商品介紹 Joy" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">商品介紹</span>
-                            <h4>Joy</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-13-cover.jpg" alt="商品介紹 網紅" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">商品介紹</span>
-                            <h4>網紅</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-14-cover.jpg" alt="商品介紹 網紅" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">商品介紹</span>
-                            <h4>網紅</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-15-cover.jpg" alt="商品介紹 網紅" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">商品介紹</span>
-                            <h4>網紅</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-24-cover.jpg" alt="門市介紹 網紅" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">門市介紹</span>
-                            <h4>網紅</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-25-cover.jpg" alt="門市介紹 網紅" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">門市介紹</span>
-                            <h4>網紅</h4>
-                        </div>
-                    </div>
-                    <div class="company-item">
-                        <img src="portfolio/company-26-cover.jpg" alt="門市介紹 梓梓" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">門市介紹</span>
-                            <h4>梓梓</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="interview-section">
-                <div class="company-section-header">
-                    <span class="company-section-tag">QUALITY INTERVIEW</span>
-                    <h3 class="company-section-title">質感訪談</h3>
-                    <p class="company-section-desc">以下作品涉及品牌方版權與合約規範，僅以<strong style="text-decoration:underline;">截圖方式</strong>呈現。如需觀看完整影片，歡迎透過下方聯絡方式與我聯繫。</p>
-                </div>
-                <div class="interview-grid">
-                    <div class="interview-item">
-                        <img src="portfolio/company-18-cover.jpg" alt="品牌訪談 BaNAna 阿蕉" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">品牌訪談</span>
-                            <h4>BaNAna 阿蕉・林彥良</h4>
-                        </div>
-                    </div>
-                    <div class="interview-item">
-                        <img src="portfolio/company-19-cover.jpg" alt="質感訪談 王中平" loading="lazy">
-                        <div class="company-overlay">
-                            <span class="company-overlay-type">質感訪談</span>
-                            <h4>王中平</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <p class="section-sub"><span class="desktop-hint">滑鼠移上去預覽，點一下看完整影片。</span><span class="mobile-hint">點選作品，觀看完整影片。</span></p>
         </div>
-    </section>
-
-
-    <!-- Collaboration Section -->
-    <section class="section collab" id="collab">
-        <div class="container">
-            <h2 class="clients-title">合作藝人與網紅</h2>
-            <div class="celeb-grid">
-                <!-- 藝人 -->
-                <div class="celeb-card celeb-flip" data-images='["collab/wang-zhongping.jpg","collab/wang-hanjing.jpg","collab/wang-3rd.jpg","collab/wang-4th.jpg","collab/wang-5th.jpg"]' data-names='["王中平","王中平＆韓靖","王中平","王中平","王中平"]'>
-                    <div class="celeb-img-wrap">
-                        <img src="collab/wang-zhongping.jpg" alt="王中平" loading="lazy">
-                        <span class="flip-badge"><span class="badge-full">5 次合作</span><span class="badge-short">5次</span></span>
-                    </div>
-                    <span class="celeb-name">王中平</span>
-                    <small>藝人 / 演員 / 歌手</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/wu-wenwen.jpg" alt="吳皓昇＆文汶" loading="lazy"></div>
-                    <span>吳皓昇＆文汶</span>
-                    <small>藝人 / 演員夫妻檔</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/jiang-guobin.jpg" alt="江國賓" loading="lazy"></div>
-                    <span>江國賓</span>
-                    <small>藝人 / 演員 / 歌手</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/lin-youxing.jpg" alt="林祐星" loading="lazy"></div>
-                    <span>林祐星</span>
-                    <small>藝人 / 演員</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/lin-jingxiang.jpg" alt="林道遠＆靜香" loading="lazy"></div>
-                    <span>林道遠＆靜香</span>
-                    <small>藝人夫妻檔</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/yan-xiaojun.jpg" alt="顏曉筠" loading="lazy"></div>
-                    <span>顏曉筠</span>
-                    <small>藝人 / 演員</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/yufeng-jiayu.jpg" alt="宇風＆家妤" loading="lazy"></div>
-                    <span>宇風＆家妤</span>
-                    <small>藝人 / 演員夫妻檔</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/li-youru.jpg" alt="李又汝" loading="lazy"></div>
-                    <span>李又汝</span>
-                    <small>藝人</small>
-                </div>
-                <!-- 網紅 -->
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/xie-jingying.jpg" alt="謝京穎" loading="lazy"></div>
-                    <span>謝京穎</span>
-                    <small>藝人 / 啦啦隊</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/zhangyan-samsung.jpg" alt="張媛" loading="lazy"></div>
-                    <span>張媛</span>
-                    <small>網紅 / 三星拍攝</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/dong-zining.jpg" alt="董梓甯" loading="lazy"></div>
-                    <span>董梓甯（梓梓）</span>
-                    <small>網紅 / 啦啦隊</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/kuiding.jpg" alt="奎丁" loading="lazy"></div>
-                    <span>奎丁</span>
-                    <small>網紅</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/weige.jpg" alt="瑋哥" loading="lazy"></div>
-                    <span>瑋哥</span>
-                    <small>網紅</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/hulk-dad.jpg" alt="浩克爸爸" loading="lazy"></div>
-                    <span>浩克爸爸</span>
-                    <small>網紅 / 健身教練</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap">
-                        <img src="collab/xiao-zhiwei.jpg" alt="蕭志瑋" loading="lazy">
-                        <span class="flip-badge"><span class="badge-full">2 次合作</span><span class="badge-short">2次</span></span>
-                    </div>
-                    <span>蕭志瑋（八弟）</span>
-                    <small>網紅</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/chenyi.jpg" alt="陳伊" loading="lazy"></div>
-                    <span>陳伊</span>
-                    <small>網紅 / 啦啦隊</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/yurou.jpg" alt="魚肉" loading="lazy"></div>
-                    <span>任伃柔（魚肉）</span>
-                    <small>網紅 / 啦啦隊</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/baseball.jpg" alt="陳晨威" loading="lazy"></div>
-                    <span>陳晨威</span>
-                    <small>職棒選手</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/kda.jpg" alt="K大" loading="lazy"></div>
-                    <span>K大</span>
-                    <small>網紅 / 汽車美容</small>
-                </div>
-                <div class="celeb-card">
-                    <div class="celeb-img-wrap"><img src="collab/group.jpg" alt="網紅們" loading="lazy"></div>
-                    <span>網紅們</span>
-                    <small>多人合作拍攝</small>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Reviews Section -->
-    <section class="section reviews" id="reviews">
-        <div class="container">
-            <p class="section-tag">REVIEWS</p>
-            <h2 class="section-title">好評回饋</h2>
-        </div>
-        <div class="reviews-scroll">
-            <div class="reviews-track">
-                <img src="reviews/IMG_3252.jpg" alt="客戶好評" loading="lazy">
-                <img src="reviews/IMG_3253.jpg" alt="客戶好評" loading="lazy">
-                <img src="reviews/IMG_3254.jpg" alt="客戶好評" loading="lazy">
-
-                <img src="reviews/IMG_3256.jpg" alt="客戶好評" loading="lazy">
-                <img src="reviews/IMG_3257.jpg" alt="客戶好評" loading="lazy">
-                <img src="reviews/IMG_3258.jpg" alt="客戶好評" loading="lazy">
-                <img src="reviews/IMG_3259.jpg" alt="客戶好評" loading="lazy">
-                <img src="reviews/IMG_3260.jpg" alt="客戶好評" loading="lazy">
-                <img src="reviews/IMG_3261.jpg" alt="客戶好評" loading="lazy">
-                <img src="reviews/IMG_3262.jpg" alt="客戶好評" loading="lazy">
-                <img src="reviews/IMG_3263.jpg" alt="客戶好評" loading="lazy">
-                <img src="reviews/IMG_3264.jpg" alt="客戶好評" loading="lazy">
-                <!-- 複製一份讓滾動無縫（不用 lazy 避免黑畫面） -->
-                <img src="reviews/IMG_3252.jpg" alt="客戶好評">
-                <img src="reviews/IMG_3253.jpg" alt="客戶好評">
-                <img src="reviews/IMG_3254.jpg" alt="客戶好評">
-
-                <img src="reviews/IMG_3256.jpg" alt="客戶好評">
-                <img src="reviews/IMG_3257.jpg" alt="客戶好評">
-                <img src="reviews/IMG_3258.jpg" alt="客戶好評">
-                <img src="reviews/IMG_3259.jpg" alt="客戶好評">
-                <img src="reviews/IMG_3260.jpg" alt="客戶好評">
-                <img src="reviews/IMG_3261.jpg" alt="客戶好評">
-                <img src="reviews/IMG_3262.jpg" alt="客戶好評">
-                <img src="reviews/IMG_3263.jpg" alt="客戶好評">
-                <img src="reviews/IMG_3264.jpg" alt="客戶好評">
-            </div>
-        </div>
-    </section>
-
-    <!-- Pain Points Section — Chat Style -->
-    <section class="section painpoints" id="painpoints">
-        <div class="container">
-            <p class="section-tag">PROBLEMS</p>
-            <h2 class="section-title">你是不是也遇到這些問題？</h2>
-            <p class="section-desc">點擊看看我怎麼幫你解決</p>
-
-            <div class="chat-list">
-                <div class="chat-row">
-                    <div class="chat-bubble-left">
-                        <h4>沒人幫拍</h4>
-                        <p>自己架腳架，角度怎麼調都不對</p>
-                    </div>
-                    <div class="chat-arrow">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                    </div>
-                    <div class="chat-bubble-right">
-                        <strong>我到現場幫你拍</strong>
-                        <p>引導動作表情，你專心表現就好</p>
-                    </div>
-                </div>
-
-                <div class="chat-row">
-                    <div class="chat-bubble-left">
-                        <h4>剪片太花時間</h4>
-                        <p>一支短影音剪一整天，沒空做內容</p>
-                    </div>
-                    <div class="chat-arrow">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                    </div>
-                    <div class="chat-bubble-right">
-                        <strong>素材丟給我就好</strong>
-                        <p>約 3 個工作天交件</p>
-                    </div>
-                </div>
-
-                <div class="chat-row">
-                    <div class="chat-bubble-left">
-                        <h4>發片量跟不上</h4>
-                        <p>平台要常發，但一個人產量有限</p>
-                    </div>
-                    <div class="chat-arrow">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                    </div>
-                    <div class="chat-bubble-right">
-                        <strong>一次做 5-10 支</strong>
-                        <p>批量交付，發片節奏不斷</p>
-                    </div>
-                </div>
-
-                <div class="chat-row">
-                    <div class="chat-bubble-left">
-                        <h4>不知道拍什麼</h4>
-                        <p>看著鏡頭腦袋空白，不知道怎麼開場</p>
-                    </div>
-                    <div class="chat-arrow">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                    </div>
-                    <div class="chat-bubble-right">
-                        <strong>腳本我來寫</strong>
-                        <p>到現場直接帶你走流程</p>
-                    </div>
-                </div>
-
-                <div class="chat-row">
-                    <div class="chat-bubble-left">
-                        <h4>請不起團隊</h4>
-                        <p>影像公司報價好幾萬，剛起步負擔不了</p>
-                    </div>
-                    <div class="chat-arrow">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                    </div>
-                    <div class="chat-bubble-right">
-                        <strong>一個人幫你搞定</strong>
-                        <p>企劃到剪輯全包，省錢省溝通</p>
-                    </div>
-                </div>
-
-                <div class="chat-row">
-                    <div class="chat-bubble-left">
-                        <h4>剪出來差一點</h4>
-                        <p>看別人的很流暢，自己的就是少了感覺</p>
-                    </div>
-                    <div class="chat-arrow">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                    </div>
-                    <div class="chat-bubble-right">
-                        <strong>3 年剪輯經驗</strong>
-                        <p>節奏轉場我來，質感拉上來</p>
-                    </div>
-                </div>
-
-                <div class="chat-row">
-                    <div class="chat-bubble-left">
-                        <h4>素材做不完</h4>
-                        <p>廣告要測不同版本，內部人力不夠</p>
-                    </div>
-                    <div class="chat-arrow">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                    </div>
-                    <div class="chat-bubble-right">
-                        <strong>批量幫你做</strong>
-                        <p>一次交多版本，夠你測</p>
-                    </div>
-                </div>
-
-                <div class="chat-row">
-                    <div class="chat-bubble-left">
-                        <h4>尺寸改到崩潰</h4>
-                        <p>IG、Reels、YouTube 每個都要不同比例</p>
-                    </div>
-                    <div class="chat-arrow">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                    </div>
-                    <div class="chat-bubble-right">
-                        <strong>各平台一次輸出</strong>
-                        <p>不用自己一個個調</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pain-cta">
-                <p>看到你的狀況了嗎？</p>
-                <a href="#pricing" class="btn btn-primary">看看方案價格</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="section services" id="services">
-        <div class="container">
-            <p class="section-tag">SERVICES</p>
-            <h2 class="section-title">我可以幫你什麼</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                        </svg>
-                    </div>
-                    <h3>內容企劃</h3>
-                    <p>主題發想、腳本整理、影片結構規劃，幫你把想說的整理成觀眾想看的</p>
-                    <ul class="service-features">
-                        <li>主題發想與腳本整理</li>
-                        <li>影片結構與節奏規劃</li>
-                        <li>社群趨勢研究</li>
-                        <li>內容方向建議</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
-                            <circle cx="12" cy="13" r="3"/>
-                        </svg>
-                    </div>
-                    <h3>拍攝執行</h3>
-                    <p>現場鏡頭安排、拍攝協調、人物引導，從到場到收工都能獨立處理</p>
-                    <ul class="service-features">
-                        <li>鏡頭安排與現場協調</li>
-                        <li>人物肢體與表達引導</li>
-                        <li>素材完整度控管</li>
-                        <li>合作拍攝執行</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                        </svg>
-                    </div>
-                    <h3>剪輯後製</h3>
-                    <p>剪輯、字幕節奏、畫面包裝、音樂搭配，把素材變成可以直接發的成品</p>
-                    <ul class="service-features">
-                        <li>影片剪輯與節奏掌控</li>
-                        <li>字幕設計與音效搭配</li>
-                        <li>畫面包裝與後製處理</li>
-                        <li>多平台格式輸出</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- About Section -->
-    <section class="section about" id="about">
-        <div class="container">
-            <div class="about-grid">
-                <div class="about-image">
-                        <img src="profile.jpg" alt="Mochi" class="about-photo">
-                </div>
-                <div class="about-content">
-                    <p class="section-tag">ABOUT ME</p>
-                    <h2 class="section-title left">關於我</h2>
-                    <p>嗨，我是 Mochi<br>專做<strong>社群短影音</strong>，腳本、拍攝、剪輯<strong>一人全包</strong><br>3 年經驗，擅長<strong>網紅業配</strong>和<strong>批量短影音製作</strong></p>
-                    <div class="about-tags">
-                        <span class="tag">短影音</span>
-                        <span class="tag">腳本企劃</span>
-                        <span class="tag">拍攝跟拍</span>
-                        <span class="tag">剪輯後製</span>
-                        <span class="tag">網紅業配</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section class="section pricing" id="pricing">
-        <div class="container">
-            <p class="section-tag">PRICING</p>
-            <h2 class="section-title">方案價格</h2>
-            <p class="section-desc">以下為參考價格，實際依需求報價</p>
-            <!-- Mobile: compact 3-column cards -->
-            <div class="pricing-compact">
-                <div class="pricing-compact-card" data-plan="edit">
-                    <span class="pricing-compact-label">剪輯</span>
-                    <span class="pricing-compact-price">NT$<strong>2,000</strong></span>
-                    <span class="pricing-compact-sub">起 / 支</span>
-                    <div class="pricing-compact-detail">
-                        <p class="detail-desc">你提供素材，我來剪（30-60 秒）</p>
-                        <ul>
-                            <li>Reels / Shorts / 抖音</li>
-                            <li>字幕 + 音效 + 轉場</li>
-                            <li>免費修改 2 次</li>
-                            <li>各平台尺寸輸出</li>
-                            <li>交付時間約 1-3 天</li>
-                        </ul>
-                        <a href="#contact" class="btn btn-outline btn-full">聊聊需求</a>
-                    </div>
-                </div>
-                <div class="pricing-compact-card popular" data-plan="package">
-                    <span class="pricing-compact-badge">最受歡迎</span>
-                    <span class="pricing-compact-label">5 支套餐</span>
-                    <span class="pricing-compact-price">NT$<strong>9,000</strong></span>
-                    <span class="pricing-compact-sub"><span class="strikethrough">NT$10,000</span></span>
-                    <div class="pricing-compact-detail">
-                        <p class="detail-desc">批量製作 30-60 秒短影音，每支只要 NT$1,800</p>
-                        <ul>
-                            <li>批量短影音剪輯</li>
-                            <li>可加購拍攝、腳本企劃</li>
-                            <li>字幕 + 音效 + 轉場</li>
-                            <li>各平台尺寸輸出</li>
-                            <li>每支含 2 次修改</li>
-                            <li>量越多單價越優惠</li>
-                        </ul>
-                        <a href="#contact" class="btn btn-primary btn-full">聊聊需求</a>
-                    </div>
-                </div>
-                <div class="pricing-compact-card" data-plan="full">
-                    <span class="pricing-compact-label">全包方案</span>
-                    <span class="pricing-compact-price">NT$<strong>7,500</strong></span>
-                    <span class="pricing-compact-sub">起 / 支</span>
-                    <div class="pricing-compact-detail">
-                        <p class="detail-desc">30-60 秒短影音，腳本 + 拍攝 + 剪輯一條龍</p>
-                        <ul>
-                            <li>腳本企劃與內容方向</li>
-                            <li>現場拍攝（含演員引導）</li>
-                            <li>剪輯後製完整交付</li>
-                            <li>免費修改 2 次</li>
-                            <li>原始素材免費提供</li>
-                            <li>月度合作另有優惠</li>
-                        </ul>
-                        <a href="#contact" class="btn btn-outline btn-full">聊聊需求</a>
-                    </div>
-                </div>
-                <div class="pricing-swipe-hint">← 左右滑動切換方案 →</div>
-            </div>
-
-            <!-- Desktop: full cards -->
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>剪輯</h3>
-                        <p class="pricing-subtitle">你提供素材，我來剪</p>
-                    </div>
-                    <div class="pricing-price">
-                        <span class="currency">NT$</span>
-                        <span class="amount">2,000</span>
-                        <span class="period">起 / 支</span>
-                    </div>
-                    <p class="pricing-note">30-60 秒短影音</p>
-                    <ul class="pricing-features">
-                        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Reels / Shorts / 抖音</li>
-                        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>字幕 + 音效 + 轉場</li>
-                        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>免費修改 2 次</li>
-                        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>1-3 天交件</li>
-                        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>套餐另有優惠</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-outline btn-full">聊聊需求</a>
-                </div>
-
-                <div class="pricing-card popular">
-                    <div class="popular-badge">最受歡迎</div>
-                    <div class="pricing-header">
-                        <h3>短影音套餐</h3>
-                        <p class="pricing-subtitle">一次包 5 支，幫你省更多</p>
-                    </div>
-                    <div class="pricing-price">
-                        <span class="currency">NT$</span>
-                        <span class="amount">9,000</span>
-                        <span class="pricing-qty">/ 5 支</span>
-                    </div>
-                    <div class="pricing-compare">
-                        <span class="pricing-original">單買 5 支 = <span class="strikethrough">NT$10,000</span></span>
-                        <span class="pricing-saving">現省 NT$1,000</span>
-                    </div>
-                    <div class="pricing-unit">換算每支只要 <strong>NT$1,800</strong></div>
-                    <ul class="pricing-features">
-                        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>批量短影音剪輯</li>
-                        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>可加購拍攝、腳本</li>
-                        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>字幕 + 音效 + 轉場</li>
-                        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>各平台尺寸輸出</li>
-                        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>每支含 2 次修改</li>
-                        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>月度合作另有優惠</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-primary btn-full">聊聊需求</a>
-                </div>
-
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>全包方案</h3>
-                        <p class="pricing-subtitle">腳本 + 拍攝 + 剪輯一條龍</p>
-                    </div>
-                    <div class="pricing-price">
-                        <span class="currency">NT$</span>
-                        <span class="amount">7,500</span>
-                        <span class="period">起 / 支</span>
-                    </div>
-                    <p class="pricing-note">30-60 秒短影音</p>
-                    <ul class="pricing-features">
-                        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>腳本企劃</li>
-                        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>現場拍攝 + 演員引導</li>
-                        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>剪輯後製完整交付</li>
-                        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>免費修改 2 次</li>
-                        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>多支 / 月度合作另有優惠</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-outline btn-full">聊聊需求</a>
-                </div>
-            </div>
-
-            <!-- Shared features (mobile only) -->
-            <div class="pricing-shared-features">
-                <div class="pricing-shared-title">所有方案皆包含</div>
-                <ul class="pricing-shared-checklist">
-                    <li>字幕 + 音效</li>
-                    <li>免費修改 2 次</li>
-                    <li>各平台尺寸輸出</li>
-                </ul>
-                <a href="#contact" class="btn btn-primary btn-full" style="margin-top:16px;">私訊聊需求</a>
-            </div>
-
-            <!-- Add-ons -->
-            <div class="addons">
-                <h3>補充說明</h3>
-                <div class="addons-grid">
-                    <div class="addon-item">
-                        <span class="addon-name">免費修改 2 次</span>
-                        <span class="addon-price">第 3 次起 NT$500</span>
-                    </div>
-                    <div class="addon-item">
-                        <span class="addon-name">各平台尺寸輸出</span>
-                        <span class="addon-price">免費</span>
-                    </div>
-                    <div class="addon-item">
-                        <span class="addon-name">加急交件</span>
-                        <span class="addon-price">隔日 ×1.5 / 當日 ×2</span>
-                    </div>
-                    <div class="addon-item">
-                        <span class="addon-name">原始素材</span>
-                        <span class="addon-price">免費提供</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Process Section -->
-    <section class="section process" id="process">
-        <div class="container">
-            <p class="section-tag">PROCESS</p>
-            <h2 class="section-title">合作流程</h2>
-            <div class="process-timeline">
-                <div class="process-step" onclick="this.classList.toggle('open')">
-                    <div class="step-number">01</div>
-                    <div class="step-content">
-                        <h3>先聊聊</h3>
-                        <p>跟我說你想做什麼、幾支、有沒有素材，我會盡快回你</p>
-                    </div>
-                </div>
-                <div class="process-step" onclick="this.classList.toggle('open')">
-                    <div class="step-number">02</div>
-                    <div class="step-content">
-                        <h3>報價確認</h3>
-                        <p>根據你的需求報價，講清楚做什麼、多少錢、什麼時候交</p>
-                    </div>
-                </div>
-                <div class="process-step" onclick="this.classList.toggle('open')">
-                    <div class="step-number">03</div>
-                    <div class="step-content">
-                        <h3>付訂金、交素材</h3>
-                        <p>確認後先付 50% 訂金，提供素材或安排拍攝，收到後開始作業</p>
-                    </div>
-                </div>
-                <div class="process-step" onclick="this.classList.toggle('open')">
-                    <div class="step-number">04</div>
-                    <div class="step-content">
-                        <h3>製作</h3>
-                        <p>腳本、拍攝、剪輯，過程中會跟你確認方向</p>
-                    </div>
-                </div>
-                <div class="process-step" onclick="this.classList.toggle('open')">
-                    <div class="step-number">05</div>
-                    <div class="step-content">
-                        <h3>初稿 → 修改 → 完稿</h3>
-                        <p>先給你初稿，免費修改 2 次，確認沒問題就定稿</p>
-                    </div>
-                </div>
-                <div class="process-step" onclick="this.classList.toggle('open')">
-                    <div class="step-number">06</div>
-                    <div class="step-content">
-                        <h3>交件、付尾款</h3>
-                        <p>交付成品＋原始素材，付完 50% 尾款就完成，合作愉快</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- Contact Section -->
-    <section class="section contact" id="contact">
-        <div class="container">
-            <p class="section-tag">CONTACT</p>
-            <h2 class="section-title">直接私訊我</h2>
-            <p class="section-desc">有想法就直接丟訊息給我，不用想太多，聊了再說。</p>
-            <div class="contact-buttons">
-                <a href="https://www.instagram.com/mochi_flm/" target="_blank" rel="noopener" class="contact-btn ig-btn">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                    </svg>
-                    <div class="contact-btn-text">
-                        <span class="contact-btn-label">Instagram 私訊</span>
-                        <span class="contact-btn-id">@mochi_flm</span>
-                    </div>
-                </a>
-                <a href="https://line.me/ti/p/6ggHrSV_ZE" target="_blank" rel="noopener" class="contact-btn line-btn">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
-                    </svg>
-                    <div class="contact-btn-text">
-                        <span class="contact-btn-label">LINE 加好友</span>
-                        <span class="contact-btn-id">點擊直接加</span>
-                    </div>
-                </a>
-            </div>
-            <div class="contact-faq">
-                <h3>常見問題</h3>
-                <div class="faq-grid">
-                    <div class="faq-item">
-                        <strong>大概多久可以拿到？</strong>
-                        <p>看內容複雜度，通常 3-7 個工作天。很急的話可以討論。</p>
-                    </div>
-                    <div class="faq-item">
-                        <strong>要先付全額嗎？</strong>
-                        <p>不用，先付一半訂金就開工，滿意再付尾款。</p>
-                    </div>
-                    <div class="faq-item">
-                        <strong>素材要我自己拍嗎？</strong>
-                        <p>如果你選純剪輯就要提供素材；選全包的話我來拍。</p>
-                    </div>
-                    <div class="faq-item">
-                        <strong>可以遠端合作嗎？</strong>
-                        <p>可以，純剪輯的話不管你在哪都能合作。需要拍攝的話再討論地點。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <span class="footer-logo">MOCHI FILM</span>
-                <p>&copy; 2026 Mochi Film. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Floating Mobile CTA -->
-    <div class="mobile-cta">
-        <a href="https://www.instagram.com/mochi_flm/" target="_blank" rel="noopener" class="mobile-cta-btn ig">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-            </svg>
-            IG 私訊
-        </a>
-        <a href="https://line.me/ti/p/6ggHrSV_ZE" target="_blank" rel="noopener" class="mobile-cta-btn line">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-                <path d="M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
-            </svg>
-            LINE
-        </a>
+        <div class="filters reveal" id="filters" role="group" aria-label="作品分類"></div>
+        <div class="works-grid" id="worksGrid"></div>
     </div>
+</section>
 
-    <!-- Video Lightbox -->
-    <div class="lightbox" id="lightbox">
-        <button class="lightbox-close" id="lightboxClose">&#10005;</button>
-        <div class="lightbox-content" id="lightboxContent"></div>
+<!-- ============ 品牌合作（截圖） ============ -->
+<section class="section section-tint" id="brand">
+    <div class="container">
+        <div class="section-head reveal">
+            <p class="kicker">02 · Brand Projects</p>
+            <h2 class="section-title">品牌合作與商業專案</h2>
+            <p class="section-sub"><svg class="ic-inline" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>涉及品牌版權，僅以截圖呈現；完整影片歡迎私訊索取。</p>
+        </div>
+        <div class="brand-grid" id="brandGrid"></div>
+
+        <div class="section-head section-head-sm reveal">
+            <p class="kicker">Interview</p>
+            <h3 class="section-title-sm">質感訪談</h3>
+        </div>
+        <div class="interview-grid" id="interviewGrid"></div>
     </div>
+</section>
 
-    <script src="script.js"></script>
+<!-- ============ 合作藝人與網紅 ============ -->
+<section class="section" id="people">
+    <div class="container">
+        <div class="section-head reveal">
+            <p class="kicker">03 · Collaborations</p>
+            <h2 class="section-title">合作藝人與網紅</h2>
+        </div>
+        <div class="people-grid" id="peopleGrid"></div>
+    </div>
+</section>
+
+<!-- ============ 服務內容 ============ -->
+<section class="section" id="services">
+    <div class="container">
+        <div class="section-head reveal">
+            <p class="kicker">04 · Services</p>
+            <h2 class="section-title">服務內容</h2>
+            <p class="section-sub">從企劃到交件，一人完整負責。</p>
+        </div>
+        <div class="service-grid">
+            <article class="service-card reveal">
+                <span class="service-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/></svg></span>
+                <p class="service-no">01</p>
+                <h3>內容企劃</h3>
+                <ul><li>主題發想・腳本整理</li><li>影片結構與節奏規劃</li><li>社群趨勢研究</li></ul>
+            </article>
+            <article class="service-card reveal" style="--d:.08s">
+                <span class="service-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span>
+                <p class="service-no">02</p>
+                <h3>拍攝執行</h3>
+                <ul><li>鏡頭安排・現場協調</li><li>人物表情與動作引導</li><li>素材完整度控管</li></ul>
+            </article>
+            <article class="service-card reveal" style="--d:.16s">
+                <span class="service-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/></svg></span>
+                <p class="service-no">03</p>
+                <h3>剪輯後製</h3>
+                <ul><li>剪輯節奏・轉場</li><li>字幕設計・音樂音效</li><li>各平台尺寸輸出</li></ul>
+            </article>
+        </div>
+
+        <ol class="process reveal">
+            <li><span class="process-no">01</span><strong>聊需求</strong><small>內容、支數、時程</small></li>
+            <li><span class="process-no">02</span><strong>確認方向</strong><small>腳本與拍攝規劃</small></li>
+            <li><span class="process-no">03</span><strong>拍攝・剪輯</strong><small>過程中同步確認</small></li>
+            <li><span class="process-no">04</span><strong>修改・交件</strong><small>初稿確認後定稿</small></li>
+        </ol>
+    </div>
+</section>
+
+<!-- ============ 關於我 ============ -->
+<section class="section section-tint" id="about">
+    <div class="container about">
+        <div class="about-photo reveal">
+            <img src="profile.jpg" alt="Mochi 本人照片" loading="lazy" width="400" height="400">
+        </div>
+        <div class="about-copy reveal" style="--d:.08s">
+            <p class="kicker">05 · About</p>
+            <h2 class="section-title">嗨，我是 Mochi</h2>
+            <p class="about-position">專做社群短影音。現場能帶人，剪輯能把關。</p>
+            <p class="about-text">做短影音四年，品牌廣告、門市與商品介紹、網紅業配都拍過。也會依品牌和場合調整節奏。</p>
+            <dl class="about-creds">
+                <div><dt>4</dt><dd>年經驗</dd></div>
+                <div><dt>100+</dt><dd>位合作演出者</dd></div>
+                <div><dt class="about-creds-zh">一人</dt><dd>工作室</dd></div>
+            </dl>
+        </div>
+        <ul class="about-points reveal" style="--d:.16s">
+            <li>
+                <span class="about-point-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </span>
+                <h3>現場引導</h3>
+                <p>不管是藝人、網紅還是素人，都能在鏡頭前自然放鬆。</p>
+            </li>
+            <li>
+                <span class="about-point-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><circle cx="7" cy="12" r="4"/><circle cx="17" cy="12" r="4"/><path d="M11 12h2"/></svg>
+                </span>
+                <h3>兩邊都懂</h3>
+                <p>理解品牌要傳達的，也懂創作者怎麼拍才自然。</p>
+            </li>
+            <li>
+                <span class="about-point-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                </span>
+                <h3>看完為先</h3>
+                <p>內容圍繞「為什麼會看到最後」來規劃。</p>
+            </li>
+            <li>
+                <span class="about-point-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <h3>一人對接</h3>
+                <p>從企劃到交件，都直接跟同一個人溝通。</p>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<!-- ============ 聯絡 ============ -->
+<section class="section" id="contact">
+    <div class="container">
+        <div class="contact-card reveal">
+            <p class="kicker">Let's work together</p>
+            <h2 class="contact-title">有想拍的內容？<br><em>直接私訊我。</em></h2>
+            <div class="contact-actions">
+                <a href="https://www.instagram.com/mochi_flm/" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r=".6" fill="currentColor"/></svg>
+                    Instagram @mochi_flm</a>
+                <a href="https://line.me/ti/p/6ggHrSV_ZE" target="_blank" rel="noopener" class="btn btn-ghost btn-lg">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5c0-4.4-4-8-9-8s-9 3.6-9 8c0 4 3.2 7.2 7.6 7.9.3.1.7.2.8.5.1.3 0 .7 0 .9l-.1.8c0 .3-.2 1 .9.5s5.8-3.4 7.9-5.8c1.3-1.4 1.9-3 1.9-4.8z"/></svg>
+                    LINE 加好友</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer class="footer">
+    <div class="container footer-inner">
+        <span class="brand-text">Mochi <em>Film</em></span>
+        <span>© <span id="year">2026</span> Mochi Film</span>
+    </div>
+</footer>
+
+<!-- 手機底部快速聯絡 -->
+<div class="mobile-cta" id="mobileCta">
+    <a href="https://www.instagram.com/mochi_flm/" target="_blank" rel="noopener">IG 私訊</a>
+    <a href="https://line.me/ti/p/6ggHrSV_ZE" target="_blank" rel="noopener">LINE</a>
+</div>
+
+<!-- 影片燈箱 -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="影片播放" hidden>
+    <button class="lightbox-close" id="lightboxClose" aria-label="關閉">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <div class="lightbox-body" id="lightboxBody"></div>
+</div>
+
+<noscript><style>.reveal { opacity: 1; transform: none; }</style><p class="container">請開啟 JavaScript 觀看完整作品集，或直接到 <a href="https://www.instagram.com/mochi_flm/">Instagram @mochi_flm</a> 看作品。</p></noscript>
+<script src="works.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

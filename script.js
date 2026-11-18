@@ -1,652 +1,233 @@
-// 重新整理時回到頂部
-if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-}
-window.scrollTo(0, 0);
+/* Mochi Film — 互動與作品渲染（作品資料請改 works.js） */
+(function () {
+    'use strict';
+    var $ = function (s, r) { return (r || document).querySelector(s); };
+    var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+    var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Sound effects
-const SFX = {
-    click: null,
-    whoosh: null
-};
+    var works = typeof WORKS !== 'undefined' ? WORKS : [];
+    var brand = typeof BRAND_WORKS !== 'undefined' ? BRAND_WORKS : [];
+    var interviews = typeof INTERVIEWS !== 'undefined' ? INTERVIEWS : [];
+    var people = typeof PEOPLE !== 'undefined' ? PEOPLE : [];
+    var reviews = typeof REVIEWS !== 'undefined' ? REVIEWS : [];
 
-// Generate cinematic swoosh sound
-(function() {
-    var ctx = new (window.AudioContext || window.webkitAudioContext)();
-    var sr = ctx.sampleRate;
+    /* ---------- 數字 ---------- */
+    // 公開作品數已移除
+    // 合作人數改為固定顯示 100+（小琪 2026-11-18 指定）
+    var yr = $('#year'); if (yr) yr.textContent = new Date().getFullYear();
 
-    // Soft click
-    var clickLen = sr * 0.08;
-    var clickBuf = ctx.createBuffer(1, clickLen, sr);
-    var clickData = clickBuf.getChannelData(0);
-    for (var i = 0; i < clickLen; i++) {
-        var t = i / sr;
-        clickData[i] = Math.sin(t * 3200 * Math.PI) * Math.exp(-t * 60) * 0.3;
+    /* ---------- 跑馬燈：作品類型 ---------- */
+    var mt = $('#marqueeTrack');
+    if (mt) {
+        var types = [];
+        works.forEach(function (w) { if (w.type && types.indexOf(w.type) < 0) types.push(w.type); });
+        ['門市介紹', '產品介紹', '質感訪談'].forEach(function (t) { if (types.indexOf(t) < 0) types.push(t); });
+        var row = types.map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('');
+        mt.innerHTML = row + row;
     }
 
-    // Cinematic whoosh (low sweep)
-    var whooshLen = sr * 0.6;
-    var whooshBuf = ctx.createBuffer(1, whooshLen, sr);
-    var whooshData = whooshBuf.getChannelData(0);
-    for (var i = 0; i < whooshLen; i++) {
-        var t = i / sr;
-        var freq = 120 + t * 400;
-        var env = Math.sin(t * Math.PI / 0.6) * Math.exp(-t * 2.5);
-        var noise = (Math.random() * 2 - 1) * 0.15 * env;
-        whooshData[i] = (Math.sin(t * freq * Math.PI) * env * 0.4 + noise);
-    }
+    /* ---------- 作品卡片 ---------- */
+    var grid = $('#worksGrid');
+    if (grid) {
+        grid.innerHTML = works.map(function (w, i) {
+            var isLink = !w.video && w.link;
+            var tagName = isLink ? 'a' : 'button';
+            var attrs = isLink
+                ? 'href="' + esc(w.link) + '" target="_blank" rel="noopener"'
+                : 'type="button" data-video="' + esc(w.video) + '"';
+            return '<' + tagName + ' class="work reveal" ' + attrs + ' data-tag="' + esc(w.tag) + '" style="--d:' + (i % 4) * 0.06 + 's" aria-label="' + esc(w.title + '，' + (isLink ? '在 Instagram 開啟' : '播放影片')) + '">' +
+                '<img src="' + esc(w.cover) + '" alt="' + esc(w.title) + '" loading="lazy" width="406" height="720">' +
+                (w.video && canHover ? '<video muted loop playsinline preload="none" data-src="' + esc(w.video) + '"></video>' : '') +
+                '<span class="work-play" aria-hidden="true">' + (isLink
+                    ? '<svg viewBox="0 0 24 24" style="fill:none;stroke:currentColor;margin:0"><path d="M7 17 17 7M8 7h9v9"/></svg>'
+                    : '<svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20"/></svg>') + '</span>' +
+                '<span class="work-info"><small>' + esc(w.tag) + '</small><h3>' + esc(w.title) + '</h3><p>' + esc(w.type) + '</p></span>' +
+                '</' + tagName + '>';
+        }).join('');
 
-    SFX._ctx = ctx;
-    SFX._click = clickBuf;
-    SFX._whoosh = whooshBuf;
-})();
-
-function playSound(name) {
-    try {
-        var ctx = SFX._ctx;
-        if (!ctx) return;
-        var buf = name === 'click' ? SFX._click : SFX._whoosh;
-        if (!buf) return;
-        var source = ctx.createBufferSource();
-        source.buffer = buf;
-        var gain = ctx.createGain();
-        gain.gain.value = name === 'click' ? 0.2 : 0.3;
-        source.connect(gain);
-        gain.connect(ctx.destination);
-        if (ctx.state === 'suspended') ctx.resume();
-        source.start(0);
-    } catch(e) {}
-}
-
-// Opening animation
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        document.body.classList.add('loaded');
-        playSound('whoosh');
-    }, 200);
-
-    var curtain = document.getElementById('curtain');
-    if (curtain) {
-        var logo = curtain.querySelector('.curtain-logo');
-        // Logo glow
-        setTimeout(function() {
-            if (logo) logo.classList.add('glow');
-        }, 600);
-        // Fade out
-        setTimeout(function() {
-            curtain.classList.add('curtain-done');
-        }, 1000);
-        setTimeout(function() { curtain.remove(); }, 1800);
-    }
-});
-
-// Hero video controls
-const heroSoundBtn = document.getElementById('heroSoundBtn');
-const heroReplayBtn = document.getElementById('heroReplayBtn');
-const heroVideo = document.getElementById('heroVideo');
-
-if (heroSoundBtn && heroVideo) {
-    heroSoundBtn.addEventListener('click', function() {
-        if (heroVideo.muted) {
-            heroVideo.muted = false;
-            heroVideo.volume = 0.4;
-            heroSoundBtn.classList.add('playing');
-        } else {
-            heroVideo.muted = true;
-            heroSoundBtn.classList.remove('playing');
+        // 桌機：滑鼠移上去預覽（只在需要時才載入影片）
+        if (canHover) {
+            grid.querySelectorAll('.work video').forEach(function (v) {
+                var card = v.parentElement;
+                var timer = null;
+                card.addEventListener('mouseenter', function () {
+                    // 停留 250ms 才載入，避免滑過去就下載整支影片
+                    timer = setTimeout(function () {
+                        if (!v.src) v.src = v.dataset.src;
+                        var p = v.play(); if (p && p.catch) p.catch(function () {});
+                        card.classList.add('previewing');
+                    }, 250);
+                });
+                card.addEventListener('mouseleave', function () {
+                    clearTimeout(timer); v.pause(); card.classList.remove('previewing');
+                });
+            });
         }
-    });
-
-    heroVideo.addEventListener('ended', function() {
-        if (heroReplayBtn) {
-            heroReplayBtn.classList.add('show');
-        }
-    });
-
-    if (heroReplayBtn) {
-        heroReplayBtn.addEventListener('click', function() {
-            heroVideo.currentTime = 0;
-            heroVideo.play();
-            heroReplayBtn.classList.remove('show');
+        grid.addEventListener('click', function (e) {
+            var card = e.target.closest('.work[data-video]');
+            if (card) openLightbox(card.dataset.video, card);
         });
     }
-}
 
-// Blur background (desktop only — mobile uses HTML video)
-(function() {
-    var blurLayer = document.querySelector('.hero-video-blur-layer');
-    if (!blurLayer || !heroVideo || window.innerWidth <= 768) return;
-    var canvas = document.createElement('canvas');
-    canvas.width = 320;
-    canvas.height = 568;
-    blurLayer.appendChild(canvas);
-    var ctx = canvas.getContext('2d');
-    function drawFrame() {
-        if (!heroVideo.paused && !heroVideo.ended) {
-            ctx.drawImage(heroVideo, 0, 0, canvas.width, canvas.height);
-        }
-        requestAnimationFrame(drawFrame);
+    /* ---------- 篩選 ---------- */
+    var filters = $('#filters');
+    if (filters && grid) {
+        var tags = [];
+        works.forEach(function (w) { if (w.tag && tags.indexOf(w.tag) < 0) tags.push(w.tag); });
+        var count = function (t) { return works.filter(function (w) { return w.tag === t; }).length; };
+        if (tags.length > 1) {
+            filters.innerHTML = ['全部'].concat(tags).map(function (t, i) {
+                return '<button type="button" class="filter-btn" aria-pressed="' + (i === 0) + '" data-filter="' + esc(i === 0 ? '*' : t) + '">' + esc(t) + '<small>' + (i === 0 ? works.length : count(t)) + '</small></button>';
+            }).join('');
+            filters.addEventListener('click', function (e) {
+                var b = e.target.closest('.filter-btn'); if (!b) return;
+                filters.querySelectorAll('.filter-btn').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+                var f = b.dataset.filter;
+                grid.querySelectorAll('.work').forEach(function (c) { c.hidden = !(f === '*' || c.dataset.tag === f); });
+            });
+        } else { filters.remove(); }
     }
-    heroVideo.addEventListener('playing', drawFrame);
-})()
 
-// Navbar scroll effect
-const navbar = document.getElementById('navbar');
-let lastScroll = 0;
+    /* ---------- 品牌合作 / 訪談 ---------- */
+    var stillHTML = function (s) {
+        return '<figure class="still reveal"><img src="' + esc(s.cover) + '" alt="' + esc(s.type + ' ' + s.name) + '" loading="lazy">' +
+            '<figcaption><span>' + esc(s.type) + '</span><span>' + esc(s.name) + '</span></figcaption></figure>';
+    };
+    var bg = $('#brandGrid'); if (bg) bg.innerHTML = brand.map(stillHTML).join('');
+    var ig = $('#interviewGrid'); if (ig) ig.innerHTML = interviews.map(stillHTML).join('');
 
-window.addEventListener('scroll', () => {
-    const currentScroll = window.scrollY;
-    navbar.classList.toggle('scrolled', currentScroll > 50);
-
-    // Hide navbar on scroll down, show on scroll up
-    if (currentScroll > 100) {
-        if (currentScroll > lastScroll) {
-            navbar.classList.add('nav-hidden');
-        } else {
-            navbar.classList.remove('nav-hidden');
+    /* ---------- 合作藝人與網紅 ---------- */
+    var pg = $('#peopleGrid');
+    if (pg) {
+        pg.innerHTML = people.map(function (p, i) {
+            return '<div class="person reveal" style="--d:' + (i % 6) * 0.04 + 's"' + (p.photos ? ' data-i="' + i + '"' : '') + '>' +
+                '<div class="person-photo"><img src="' + esc(p.photo) + '" alt="' + esc(p.name) + '" loading="lazy" width="400" height="400">' +
+                (p.times ? '<span class="person-badge">' + esc(p.times) + '</span>' : '') + '</div>' +
+                '<h3>' + esc(p.name) + '</h3><p>' + esc(p.role) + '</p></div>';
+        }).join('');
+        // 多次合作：照片自動輪播
+        if (!reduceMotion) {
+            pg.querySelectorAll('.person[data-i]').forEach(function (el) {
+                var p = people[+el.dataset.i], img = el.querySelector('img'), k = 0;
+                p.photos.forEach(function (src) { var im = new Image(); im.src = src; });
+                setInterval(function () {
+                    k = (k + 1) % p.photos.length;
+                    img.style.opacity = 0;
+                    setTimeout(function () { img.src = p.photos[k]; img.alt = (p.names && p.names[k]) || p.name; img.style.opacity = 1; }, 350);
+                }, 2600);
+            });
         }
+    }
+
+    /* ---------- 好評跑馬燈：內容複製一份做無縫循環，點擊開燈箱 ---------- */
+    var rt = $('#reviewsTrack'), rs = $('#reviewsScroller');
+    if (rt && rs) {
+        var cardHTML = function (hidden) {
+            return reviews.map(function (src, i) {
+                var label = hidden ? '' : ' aria-label="查看客戶好評截圖 ' + (i + 1) + '"';
+                var hide = hidden ? ' tabindex="-1" aria-hidden="true"' : '';
+                var alt = hidden ? '' : '客戶好評截圖';
+                return '<button type="button" class="review-card" data-review="' + esc(src) + '"' + hide + label + '>' +
+                    '<img src="' + esc(src) + '" alt="' + alt + '" loading="lazy"></button>';
+            }).join('');
+        };
+        rt.innerHTML = '<div class="reviews-set">' + cardHTML(false) + '</div>' +
+            '<div class="reviews-set" aria-hidden="true">' + cardHTML(true) + '</div>';
+        rs.addEventListener('click', function (e) {
+            var card = e.target.closest('.review-card[data-review]');
+            if (card) openLightbox(card.dataset.review, card, 'image');
+        });
+    }
+
+    /* ---------- 燈箱 ---------- */
+    var lb = $('#lightbox'), lbBody = $('#lightboxBody'), lbClose = $('#lightboxClose'), lastFocus = null;
+    function openLightbox(src, from, kind) {
+        lastFocus = from || document.activeElement;
+        var isImage = kind === 'image';
+        lb.classList.toggle('is-image', isImage);
+        lb.setAttribute('aria-label', isImage ? '客戶好評截圖' : '影片播放');
+        lbBody.innerHTML = isImage
+            ? '<img src="' + esc(src) + '" alt="客戶好評截圖">'
+            : '<video src="' + esc(src) + '" controls autoplay playsinline></video>';
+        lb.hidden = false;
+        requestAnimationFrame(function () { lb.classList.add('open'); });
+        document.body.style.overflow = 'hidden';
+        if (heroVideo) heroVideo.pause();
+        lbClose.focus();
+    }
+    function closeLightbox() {
+        lb.classList.remove('open');
+        var v = lbBody.querySelector('video'); if (v) v.pause();
+        setTimeout(function () { lb.hidden = true; lbBody.innerHTML = ''; lb.classList.remove('is-image'); }, 250);
+        document.body.style.overflow = '';
+        if (heroVideo) { var p = heroVideo.play(); if (p && p.catch) p.catch(function () {}); }
+        if (lastFocus) lastFocus.focus();
+    }
+    lbClose.addEventListener('click', closeLightbox);
+    lb.addEventListener('click', function (e) { if (e.target === lb) closeLightbox(); });
+    document.addEventListener('keydown', function (e) {
+        if (lb.hidden) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'Tab') {
+            var v = lbBody.querySelector('video');
+            if (!v) { e.preventDefault(); lbClose.focus(); }
+            else if (e.shiftKey && document.activeElement === lbClose) { e.preventDefault(); v.focus(); }
+            else if (!e.shiftKey && document.activeElement === v) { e.preventDefault(); lbClose.focus(); }
+        }
+    });
+
+    /* ---------- 首頁影片聲音 ---------- */
+    var heroVideo = $('#heroVideo'), soundBtn = $('#soundBtn');
+    if (heroVideo && soundBtn) {
+        soundBtn.addEventListener('click', function () {
+            heroVideo.muted = !heroVideo.muted;
+            if (!heroVideo.muted) { heroVideo.volume = 0.6; heroVideo.play(); }
+            soundBtn.setAttribute('aria-pressed', String(!heroVideo.muted));
+            soundBtn.setAttribute('aria-label', heroVideo.muted ? '開啟聲音' : '關閉聲音');
+        });
+        // 畫面外暫停，省電省流量
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (en) {
+                en.forEach(function (x) {
+                    if (x.isIntersecting && lb.hidden) { var p = heroVideo.play(); if (p && p.catch) p.catch(function () {}); }
+                    else heroVideo.pause();
+                });
+            }, { threshold: 0.15 }).observe(heroVideo);
+        }
+    }
+
+    /* ---------- 導覽列 ---------- */
+    var nav = $('#nav'), toggle = $('#navToggle'), links = $('#navLinks'), cta = $('#mobileCta'), footer = $('.footer');
+    var setMenu = function (open) {
+        links.classList.toggle('open', open); nav.classList.toggle('menu-open', open);
+        toggle.setAttribute('aria-expanded', String(open)); toggle.setAttribute('aria-label', open ? '關閉選單' : '開啟選單');
+    };
+    toggle.addEventListener('click', function (e) { e.stopPropagation(); setMenu(!links.classList.contains('open')); });
+    links.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+    document.addEventListener('click', function (e) { if (!links.contains(e.target)) setMenu(false); });
+
+    var lastY = 0;
+    window.addEventListener('scroll', function () {
+        var y = window.scrollY;
+        nav.classList.toggle('scrolled', y > 20);
+        var down = y > lastY && y > 140;
+        if (!links.classList.contains('open')) nav.classList.toggle('hide', down);
+        if (cta) {
+            var nearFooter = footer && footer.getBoundingClientRect().top < window.innerHeight;
+            cta.classList.toggle('hide', nearFooter || down);
+        }
+        lastY = y;
+    }, { passive: true });
+
+    /* ---------- 進場動畫 ---------- */
+    var reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window && !reduceMotion) {
+        var io = new IntersectionObserver(function (en) {
+            en.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+        reveals.forEach(function (el) { io.observe(el); });
     } else {
-        navbar.classList.remove('nav-hidden');
+        reveals.forEach(function (el) { el.classList.add('in'); });
     }
-
-    // Hide/show floating CTA: hide on scroll down, show on scroll up
-    const mobileCta = document.querySelector('.mobile-cta');
-    if (mobileCta) {
-        const footer = document.querySelector('.footer');
-        var nearFooter = false;
-        if (footer) {
-            nearFooter = footer.getBoundingClientRect().top < window.innerHeight;
-        }
-
-        if (nearFooter) {
-            mobileCta.classList.add('cta-hidden');
-        } else if (currentScroll > lastScroll && currentScroll > 100) {
-            mobileCta.classList.add('cta-hidden');
-        } else {
-            mobileCta.classList.remove('cta-hidden');
-        }
-    }
-
-    lastScroll = currentScroll;
-}, { passive: true });
-
-// Mobile nav toggle
-const navToggle = document.getElementById('navToggle');
-const navLinks = document.querySelector('.nav-links');
-
-navToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    navLinks.classList.toggle('active');
-});
-
-navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-    });
-});
-
-// Close menu when tapping outside
-document.addEventListener('click', (e) => {
-    if (!navLinks.contains(e.target) && !navToggle.contains(e.target)) {
-        navLinks.classList.remove('active');
-    }
-});
-
-// Portfolio filter
-const filterBtns = document.querySelectorAll('.filter-btn');
-const portfolioItems = document.querySelectorAll('.portfolio-item');
-
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        const filter = btn.dataset.filter;
-        portfolioItems.forEach(item => {
-            if (filter === 'all' || item.dataset.category === filter) {
-                item.style.display = 'block';
-                item.style.animation = 'fadeIn 0.4s ease';
-            } else {
-                item.style.display = 'none';
-            }
-        });
-    });
-});
-
-
-// Portfolio videos: hover play (desktop) + tap to lightbox
-const isTouch = 'ontouchstart' in window;
-
-document.querySelectorAll('.portfolio-thumb video').forEach(video => {
-    const item = video.closest('.portfolio-item');
-
-    // Skip inline video items — handled separately
-    if (item.classList.contains('portfolio-video-inline')) return;
-
-    if (!isTouch) {
-        item.addEventListener('mouseenter', () => video.play());
-        item.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
-    }
-
-    item.addEventListener('click', () => {
-        openLightbox(video.src);
-    });
-});
-
-// Video Lightbox
-const lightbox = document.getElementById('lightbox');
-const lightboxContent = document.getElementById('lightboxContent');
-const lightboxClose = document.getElementById('lightboxClose');
-
-function openLightbox(videoSrc) {
-    lightboxContent.innerHTML = `<video src="${videoSrc}" controls autoplay playsinline webkit-playsinline></video>`;
-    lightbox.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeLightbox() {
-    lightbox.classList.remove('active');
-    lightboxContent.innerHTML = '';
-    document.body.style.overflow = '';
-}
-
-lightboxClose.addEventListener('click', closeLightbox);
-lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) closeLightbox();
-});
-
-// Close lightbox with back gesture / escape
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeLightbox();
-});
-
-// Portfolio YouTube videos — open in lightbox
-document.querySelectorAll('.portfolio-video[data-youtube]').forEach(function(item) {
-    item.style.cursor = 'pointer';
-    item.addEventListener('click', function() {
-        var id = item.getAttribute('data-youtube');
-        lightboxContent.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + '?rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:90vw; max-width:900px; height:50.6vw; max-height:506px; border-radius:12px;"></iframe>';
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
-});
-
-// Portfolio inline videos — play in grid
-document.querySelectorAll('.portfolio-video-inline').forEach(function(item) {
-    item.style.cursor = 'pointer';
-    var video = item.querySelector('.portfolio-inline-video');
-
-    // Click on video itself to pause/play
-    video.addEventListener('click', function() {
-        if (video.paused) {
-            video.play();
-        } else {
-            video.pause();
-        }
-    });
-
-    // Click on cover/play button to start, not on video or expand btn
-    item.addEventListener('click', function(e) {
-        if (e.target.closest('.portfolio-inline-video')) return;
-        if (e.target.closest('.portfolio-expand-btn')) return;
-        if (item.classList.contains('playing')) {
-            video.pause();
-            item.classList.remove('playing');
-        } else {
-            video.play();
-            item.classList.add('playing');
-        }
-    });
-
-    // Expand button — open in lightbox (portrait friendly)
-    var expandBtn = item.querySelector('.portfolio-expand-btn');
-    if (expandBtn) {
-        expandBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            var currentTime = video.currentTime;
-            video.pause();
-            item.classList.remove('playing');
-            lightboxContent.innerHTML = '<video src="' + video.src + '" controls autoplay playsinline webkit-playsinline style="max-width:90vw; max-height:85vh; border-radius:12px;"></video>';
-            lightboxContent.querySelector('video').currentTime = currentTime;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-    }
-
-    video.addEventListener('pause', function() {
-        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-            item.classList.remove('playing');
-        }
-    });
-    video.addEventListener('play', function() {
-        item.classList.add('playing');
-    });
-    video.addEventListener('ended', function() {
-        item.classList.remove('playing');
-    });
-});
-
-// Click sounds on buttons and interactive elements
-document.querySelectorAll('.btn, .filter-btn, .nav-links a, .contact-btn, .mobile-cta-btn').forEach(el => {
-    el.addEventListener('click', () => playSound('click'));
-});
-
-// Smooth scroll for anchor links (iOS-compatible)
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = anchor.getAttribute('href');
-        const target = document.querySelector(targetId);
-        if (target) {
-            const navHeight = navbar.offsetHeight;
-            const targetPos = target.getBoundingClientRect().top + window.scrollY - navHeight;
-            window.scrollTo({ top: targetPos, behavior: 'smooth' });
-        }
-    });
-});
-
-// Scroll reveal animations
-const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
-            revealObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-// Section titles - underline reveal
-document.querySelectorAll('.section-title').forEach(el => {
-    el.classList.add('scroll-reveal');
-    revealObserver.observe(el);
-});
-
-// Section tags
-document.querySelectorAll('.section-tag').forEach(el => {
-    el.classList.add('scroll-reveal');
-    revealObserver.observe(el);
-});
-
-// Service cards, pricing cards - stagger via parent
-document.querySelectorAll('.services-grid, .pricing-grid, .about-tags').forEach(grid => {
-    grid.classList.add('stagger-children');
-    revealObserver.observe(grid);
-});
-
-// Chat rows - stagger children
-document.querySelectorAll('.chat-list').forEach(grid => {
-    grid.classList.add('stagger-children');
-    revealObserver.observe(grid);
-});
-
-// Individual elements
-document.querySelectorAll('.process-step, .pricing-bottom-note, .contact-faq, .section-desc, .pain-cta, .addons').forEach(el => {
-    el.classList.add('scroll-reveal');
-    revealObserver.observe(el);
-});
-
-// Company and interview sections
-document.querySelectorAll('.company-section, .interview-section').forEach(el => {
-    el.classList.add('scroll-reveal-scale');
-    revealObserver.observe(el);
-});
-
-// Company grid, celeb grid, interview grid - stagger children
-document.querySelectorAll('.company-grid, .celeb-grid, .interview-grid').forEach(grid => {
-    grid.classList.add('stagger-children');
-    revealObserver.observe(grid);
-});
-
-// About section
-document.querySelectorAll('.about-image').forEach(el => {
-    el.classList.add('scroll-reveal-left');
-    revealObserver.observe(el);
-});
-document.querySelectorAll('.about-content').forEach(el => {
-    el.classList.add('scroll-reveal-right');
-    revealObserver.observe(el);
-});
-
-// Compact pricing card flip-to-expand
-(function() {
-    var compact = document.querySelector('.pricing-compact');
-    if (!compact) return;
-    var cards = compact.querySelectorAll('.pricing-compact-card');
-
-    cards.forEach(function(card) {
-        card.addEventListener('click', function(e) {
-            e.stopPropagation();
-            var wasExpanded = card.classList.contains('expanded');
-
-            // Close all
-            cards.forEach(function(c) { c.classList.remove('expanded'); });
-            compact.classList.remove('has-expanded');
-
-            if (!wasExpanded) {
-                // Expand this card
-                card.classList.add('expanded');
-                compact.classList.add('has-expanded');
-                playSound('click');
-            }
-        });
-    });
-
-    // Tap outside to close
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.pricing-compact')) {
-            cards.forEach(function(c) { c.classList.remove('expanded'); });
-            compact.classList.remove('has-expanded');
-        }
-    });
-
-    // Swipe left/right to switch plans when expanded
-    var swipeStartX = 0;
-    compact.addEventListener('touchstart', function(e) {
-        swipeStartX = e.touches[0].clientX;
-    }, { passive: true });
-
-    compact.addEventListener('touchend', function(e) {
-        if (!compact.classList.contains('has-expanded')) return;
-        var dx = e.changedTouches[0].clientX - swipeStartX;
-        if (Math.abs(dx) < 50) return; // too small
-
-        var currentIdx = -1;
-        cards.forEach(function(c, i) { if (c.classList.contains('expanded')) currentIdx = i; });
-        if (currentIdx === -1) return;
-
-        var nextIdx;
-        if (dx < 0) {
-            // swipe left → next
-            nextIdx = (currentIdx + 1) % cards.length;
-        } else {
-            // swipe right → prev
-            nextIdx = (currentIdx - 1 + cards.length) % cards.length;
-        }
-
-        cards.forEach(function(c) { c.classList.remove('expanded'); });
-        cards[nextIdx].classList.add('expanded');
-        playSound('click');
-    });
 })();
-
-// Contact buttons
-document.querySelectorAll('.contact-buttons').forEach(el => {
-    el.classList.add('stagger-children');
-    revealObserver.observe(el);
-});
-
-// Hero intro section
-document.querySelectorAll('.hero-intro-section .container').forEach(el => {
-    el.classList.add('scroll-reveal');
-    revealObserver.observe(el);
-});
-
-// Add fadeIn keyframe
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(16px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-`;
-document.head.appendChild(style);
-
-// Button ripple effect
-document.querySelectorAll('.btn').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-        var ripple = document.createElement('span');
-        ripple.classList.add('ripple');
-        var rect = this.getBoundingClientRect();
-        var size = Math.max(rect.width, rect.height);
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
-        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
-        this.appendChild(ripple);
-        setTimeout(function() { ripple.remove(); }, 600);
-    });
-});
-
-// Celebrity photo flip (multiple collab)
-document.querySelectorAll('.celeb-flip').forEach(card => {
-    const images = JSON.parse(card.dataset.images);
-    const names = card.dataset.names ? JSON.parse(card.dataset.names) : null;
-    if (images.length <= 1) return;
-    const img = card.querySelector('img');
-    const nameEl = card.querySelector('.celeb-name');
-    let idx = 0;
-
-    // Smooth transition style
-    img.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-
-    setInterval(() => {
-        idx = (idx + 1) % images.length;
-        // Fade out
-        img.style.opacity = '0';
-        img.style.transform = 'scale(0.97)';
-        setTimeout(() => {
-            img.src = images[idx];
-            if (names && nameEl) nameEl.textContent = names[idx];
-            // Fade in
-            img.style.opacity = '1';
-            img.style.transform = 'scale(1)';
-        }, 500);
-    }, 3000);
-});
-
-// Reviews infinite auto-scroll (CSS transform based, works on mobile)
-(function() {
-    var scroll = document.querySelector('.reviews-scroll');
-    var track = document.querySelector('.reviews-track');
-    if (!scroll || !track) return;
-
-    var pos = 0;
-    var speed = 1.2;
-    var paused = false;
-    var halfWidth = 0;
-
-    // Calculate half width after images load
-    function calcHalf() {
-        halfWidth = track.scrollWidth / 2;
-    }
-    window.addEventListener('load', calcHalf);
-    setTimeout(calcHalf, 2000);
-
-    // Disable native scroll, use transform instead
-    scroll.style.overflow = 'hidden';
-
-    function animate() {
-        if (!paused && halfWidth > 0) {
-            pos += speed;
-            if (pos >= halfWidth) pos = 0;
-            track.style.transform = 'translateX(' + (-pos) + 'px)';
-        }
-        requestAnimationFrame(animate);
-    }
-    requestAnimationFrame(animate);
-
-    // Pause on hover (desktop)
-    scroll.addEventListener('mouseenter', function() { paused = true; });
-    scroll.addEventListener('mouseleave', function() { paused = false; });
-
-    // Touch drag to scroll with momentum
-    var touchStartX = 0;
-    var touchStartPos = 0;
-    var touchLastX = 0;
-    var touchLastTime = 0;
-    var velocity = 0;
-    var isDragging = false;
-    var momentumId = null;
-
-    scroll.addEventListener('touchstart', function(e) {
-        paused = true;
-        isDragging = true;
-        if (momentumId) cancelAnimationFrame(momentumId);
-        touchStartX = e.touches[0].clientX;
-        touchLastX = touchStartX;
-        touchLastTime = Date.now();
-        touchStartPos = pos;
-    }, { passive: true });
-
-    scroll.addEventListener('touchmove', function(e) {
-        if (!isDragging) return;
-        var now = Date.now();
-        var currentX = e.touches[0].clientX;
-        var dt = now - touchLastTime;
-        if (dt > 0) velocity = (touchLastX - currentX) / dt;
-        touchLastX = currentX;
-        touchLastTime = now;
-        var dx = touchStartX - currentX;
-        pos = touchStartPos + dx;
-        if (pos < 0) pos += halfWidth;
-        if (halfWidth > 0 && pos >= halfWidth) pos -= halfWidth;
-        track.style.transform = 'translateX(' + (-pos) + 'px)';
-    }, { passive: true });
-
-    scroll.addEventListener('touchend', function() {
-        isDragging = false;
-        // Momentum
-        function momentum() {
-            if (Math.abs(velocity) < 0.01) {
-                setTimeout(function() { paused = false; }, 1500);
-                return;
-            }
-            pos += velocity * 16;
-            velocity *= 0.95;
-            if (pos < 0) pos += halfWidth;
-            if (halfWidth > 0 && pos >= halfWidth) pos -= halfWidth;
-            track.style.transform = 'translateX(' + (-pos) + 'px)';
-            momentumId = requestAnimationFrame(momentum);
-        }
-        momentum();
-    });
-})();
-
-// Review screenshots click to enlarge
-document.querySelectorAll('.reviews-track img').forEach(img => {
-    img.style.cursor = 'pointer';
-    img.addEventListener('click', () => {
-        const lightbox = document.getElementById('lightbox');
-        const lightboxContent = document.getElementById('lightboxContent');
-        lightboxContent.innerHTML = `<img src="${img.src}" style="max-width:90vw; max-height:85vh; border-radius:12px;">`;
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
-});
-
-// Lazy load images
-if ('IntersectionObserver' in window) {
-    const imgObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                if (img.dataset.src) {
-                    img.src = img.dataset.src;
-                    img.removeAttribute('data-src');
-                }
-                imgObserver.unobserve(img);
-            }
-        });
-    });
-
-    document.querySelectorAll('img[data-src]').forEach(img => imgObserver.observe(img));
-}
