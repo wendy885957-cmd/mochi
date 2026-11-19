@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="退稅小幫手">
+<title>日本退稅小幫手</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{
+  --bg:#FFFFFF; --surface:#F7F5F2; --line:#E8E3DE;
+  --ink:#2E2A27; --ink2:#57504A; --ink3:#6B635C;
+  --blue:#46576B; --blue-bg:#E4E9EF; --blue-mid:#7D8DA0; --btn:#C9D4E0; --btn-h:#BCC8D6; --btn-down:#AEBCCB; --btn-ink:#24303C;
+  --sand:#6A5535; --sand-bg:#F1E8DA; --sand-mid:#B08F5E;
+  --rose:#8E4F4B; --rose-bg:#F5E6E4; --rose-mid:#E2B9B5;
+  --ok:#3E5A78; --ok-bg:#E5ECF3; --ok-mid:#9DB0C6;
+  --warn:#8B4639; --warn-bg:#F6E6E1; --warn-mid:#D9A79C;
+  --r:18px; --r-sm:12px;
+  --shadow:0 1px 2px rgba(46,42,39,.05),0 4px 14px rgba(46,42,39,.07);
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font-family:-apple-system,"PingFang TC","Noto Sans TC","Noto Sans CJK TC","Microsoft JhengHei",sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+.app{max-width:480px;margin:0 auto;min-height:100vh;padding:0 16px calc(100px + env(safe-area-inset-bottom))}
+header.top{padding:calc(14px + env(safe-area-inset-top)) 2px 8px;display:flex;align-items:center;gap:8px;color:var(--blue)}
+header.top h1{font-size:20px;margin:0;font-weight:800;color:var(--ink)}
+.view{display:none;animation:fadeUp .35s var(--ease)}
+.view.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes draw{from{stroke-dashoffset:30}to{stroke-dashoffset:0}}
+h2{font-size:18px;margin:22px 2px 10px;font-weight:700}
+.muted{color:var(--ink3)} .small{font-size:13px}
+.num{font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.ico{display:grid;place-items:center;flex:none}
+.wrap-pretty{text-wrap:pretty}
+
+/* info blocks: flat, no shadow */
+.card{background:var(--surface);border:none;border-radius:var(--r);padding:14px 16px;box-shadow:none}
+
+/* buttons: tappable = shadow or fill; feedback = color only */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:14px;padding:10px 18px;min-height:52px;font-weight:700;font-size:16px;transition:background .15s,box-shadow .15s,color .15s}
+.btn.pri{background:var(--btn);color:var(--btn-ink);box-shadow:0 2px 8px rgba(70,87,107,.16)}
+.btn.pri:hover{background:var(--btn-h)} .btn.pri:active{background:var(--btn-down)}
+.btn.sec{background:var(--bg);color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow)}
+.btn.sec:active{background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.btn.ghost{background:none;color:var(--warn);font-weight:700;box-shadow:none}
+.btn.ghost:active{background:var(--warn-bg)}
+.btn.text{background:none;color:var(--blue);font-weight:700;box-shadow:none;padding:0 6px;min-height:44px;text-decoration:underline;text-underline-offset:3px}
+.btn.text:active{background:var(--blue-bg)}
+.btn.block{width:100%}
+.btn:disabled{background:transparent;color:#6E6862;border:1px dashed #C9C2BA;box-shadow:none;cursor:not-allowed}
+.btn.sm{min-height:44px;padding:6px 14px;font-size:14px;border-radius:12px}
+
+/* summary */
+.summary{background:var(--surface);border-radius:var(--r);padding:14px 16px}
+.summary .lbl{font-size:14px;color:var(--ink2)}
+.big{font-size:44px;font-weight:800;letter-spacing:-.01em;line-height:1.1;margin:4px 0 0}
+.big small{font-size:22px;font-weight:700;margin-right:2px}
+.twd{font-size:15px;color:var(--ink2);font-weight:600;min-height:1em}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:10px}
+.stat{text-align:center;border-left:1px solid var(--line);padding:2px 4px}
+.stat:first-child{border-left:none}
+.stat b{display:block;font-size:20px;line-height:1.3;font-weight:700}
+.stat span{font-size:12px;color:var(--ink3)}
+
+/* airport hero */
+.hero{margin-top:10px;width:100%;border:none;border-radius:20px;background:var(--btn);color:var(--btn-ink);display:flex;align-items:center;gap:14px;padding:14px 16px;min-height:76px;text-align:left;box-shadow:0 6px 18px rgba(70,87,107,.18);transition:background .15s}
+.hero:hover{background:var(--btn-h)} .hero:active{background:var(--btn-down)}
+.hero .ico{width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.6)}
+.hero b{display:block;font-size:20px;line-height:1.25;font-weight:800}
+.hero span{font-size:14px;font-weight:600;color:#33414F}
+.hero .go{margin-left:auto}
+
+/* add buttons */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+#v-home h2{margin-top:16px}
+
+/* countdown: one line */
+.cd{margin-top:14px;display:flex;align-items:center;gap:8px;padding:8px 8px 8px 14px}
+.cd-main{flex:1;min-width:0}
+.cd-line{font-weight:700;font-size:16px;line-height:1.35}
+.cd-line .n{font-size:22px;font-weight:800;color:var(--blue);margin-right:2px}
+.cd-date{display:inline-flex;align-items:center;min-height:44px;padding:0;border:none;background:none;color:var(--blue);font-weight:700;font-size:14px;text-decoration:underline;text-underline-offset:3px}
+.cd-date:active{background:var(--blue-bg)}
+.cd-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;min-width:56px;min-height:52px;padding:4px 8px;border:1px solid var(--line);background:var(--bg);border-radius:12px;font-size:12px;font-weight:700;color:var(--ink2);box-shadow:var(--shadow);transition:background .15s}
+.cd-btn:active{background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.cd-btn[aria-pressed=true]{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-mid)}
+.cd-note{font-size:13px;color:var(--ink3);margin:6px 2px 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* chips & list */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+.chip{border:1px solid var(--line);background:var(--bg);border-radius:99px;padding:6px 16px;font-size:14px;min-height:44px;transition:background .15s,color .15s}
+.chip:active{background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.chip[aria-pressed=true]{background:var(--blue-bg);border-color:var(--blue-mid);color:var(--blue);font-weight:700}
+.list{display:grid;gap:10px;grid-template-columns:minmax(0,1fr)}
+.rc{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:var(--r);padding:12px 14px;box-shadow:var(--shadow);transition:background .15s;animation:fadeUp .3s var(--ease) both}
+.rc:active{background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.rc-top{display:flex;gap:12px;align-items:center}
+.thumb{width:44px;height:44px;border-radius:12px;background:var(--surface);flex:none;display:grid;place-items:center;overflow:hidden;color:var(--ink3)}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.rc-main{flex:1;min-width:0}
+.rc-name,.apr-name b{font-weight:700;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35}
+.rc-meta{font-size:13px;color:var(--ink3)}
+.rc-amt{text-align:right;flex:none}
+.rc-amt b{display:block;font-weight:700}
+.rc-amt span{font-size:12px;color:var(--ink3)}
+.rc-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:12px;padding:3px 8px;border-radius:8px;font-weight:700}
+.tag.c{background:var(--sand-bg);color:var(--sand)} .tag.w{background:var(--warn-bg);color:var(--warn)} .tag.ok{background:var(--ok-bg);color:var(--ok)}
+.chev{color:var(--ink3);flex:none}
+.empty{text-align:center;padding:20px 16px;border:1.5px dashed var(--line);border-radius:var(--r);color:var(--ink2)}
+
+/* tabbar */
+nav.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabbar .in{max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.tab{background:none;border:none;padding:8px 0 10px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;color:var(--ink3);min-height:60px;position:relative;transition:color .15s}
+.tab:active{color:var(--blue)}
+.tab[aria-selected=true]{color:var(--blue);font-weight:700}
+.tab[aria-selected=true]::before{content:"";position:absolute;top:0;width:28px;height:3px;border-radius:0 0 3px 3px;background:var(--rose-mid)}
+
+/* segmented */
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:var(--surface);border-radius:14px;padding:3px;position:relative}
+.seg button{border:none;background:none;border-radius:11px;padding:6px 0;min-height:44px;font-weight:700;color:var(--ink2);position:relative;z-index:1;transition:color .2s}
+.seg button[aria-pressed=true]{color:var(--ink)}
+.seg .knob{position:absolute;top:3px;bottom:3px;left:3px;border-radius:11px;background:var(--bg);box-shadow:0 1px 4px rgba(46,42,39,.14);transition:transform .28s var(--ease)}
+
+/* calculator */
+.calc-top{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.target{display:flex;align-items:center;gap:8px;margin-bottom:8px;color:var(--ink3)}
+.target select{flex:1;min-height:48px;border:1px solid var(--line);border-radius:14px;padding:0 12px;background:var(--bg);font-weight:700;min-width:0;color:var(--ink);box-shadow:var(--shadow)}
+.disp{margin-top:8px;background:var(--surface);border-radius:var(--r);padding:6px 14px}
+.disp-in{display:flex;align-items:baseline;justify-content:space-between;gap:4px;font-size:36px;font-weight:800;line-height:1.2}
+.disp-in .lbl{font-size:13px;font-weight:500;color:var(--ink3);align-self:center}
+.disp-in small{font-size:18px;color:var(--ink3);margin-right:2px}
+.res{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.res > div{border-radius:var(--r-sm);padding:6px 12px}
+.res > div:first-child{background:var(--blue-bg)}
+.res > div:last-child{background:var(--surface)}
+.res span{font-size:12px;font-weight:700;color:var(--blue)}
+.res > div:last-child span{color:var(--ink2)}
+.res b{display:block;font-size:22px;line-height:1.25;font-weight:800}
+.fx{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;color:var(--ink3);min-height:44px}
+.fx-edit{display:flex;gap:8px;margin-bottom:6px}
+.fx-edit input{flex:1;min-height:44px;border:1px solid var(--line);border-radius:12px;padding:0 12px;min-width:0}
+.ringbox{display:flex;align-items:center;gap:12px;padding:6px 2px}
+.ring{width:60px;height:60px;flex:none;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:9}
+.ring .bg{stroke:#ECE9E5}
+.ring .base{stroke:var(--blue-mid);transition:stroke-dashoffset .8s var(--ease)}
+.ring .add{stroke:var(--sand-mid);transition:stroke-dashoffset .8s var(--ease)}
+.ring .pct{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:15px}
+.ring-txt{flex:1;min-width:0}
+.ring-txt b{display:block;font-size:17px;line-height:1.35}
+.dot-l{display:inline-block;width:8px;height:8px;border-radius:99px;background:var(--c);margin-right:4px;vertical-align:1px}
+.legend{font-size:13px;color:var(--ink2)}
+.legend span+span{margin-left:10px}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.key{min-height:50px;border:none;border-radius:14px;background:var(--surface);font-size:24px;font-weight:600;transition:background .12s;color:var(--ink)}
+.key:active{background:var(--btn)}
+.key.fn{font-size:16px;color:var(--ink2)}
+
+/* packing */
+.pk-sum{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pk-box{border-radius:var(--r);padding:10px;text-align:center}
+.pk-box b{display:block;font-size:36px;font-weight:800;line-height:1.1}
+.pk-box span{font-weight:700;font-size:14px}
+.pk-box.carry{background:var(--blue-bg);color:var(--blue)} .pk-box.check{background:var(--sand-bg);color:var(--sand)}
+.pk-group{margin-top:12px;border:1px solid var(--line);border-radius:var(--r);padding:4px 14px}
+.pk-group h3{font-size:14px;color:var(--ink3);margin:8px 0 0;font-weight:700}
+.pk{border-top:1px solid var(--line);padding:10px 0;transition:background .2s}
+.pk:first-of-type{border-top:none}
+.pk.bad{background:#FCF9F4;margin:0 -14px;padding:10px 14px}
+.pk-row{display:flex;align-items:center;gap:10px}
+.pk-name{flex:1;min-width:0;font-weight:700;line-height:1.35}
+.pk-meta{flex:1;min-width:0;font-size:12px;color:var(--ink3)}
+.pk .seg{width:140px;flex:none}
+.pk .seg button{font-size:14px}
+.pk-row2{display:flex;align-items:center;gap:10px;margin-top:2px}
+.tog{border:1px solid var(--line);background:var(--bg);border-radius:99px;padding:4px 12px;min-height:44px;font-size:13px;font-weight:700;color:var(--ink2);display:inline-flex;align-items:center;gap:6px;transition:background .15s,color .15s;flex:none}
+.tog:active{background:var(--surface)}
+.tog[aria-pressed=true]{background:var(--blue-bg);border-color:var(--blue-mid);color:var(--blue)}
+.pk-warn{margin-top:6px;padding-top:4px;border-top:1px dashed var(--warn-mid);color:var(--warn);font-size:14px;font-weight:700;display:flex;gap:8px;align-items:center;animation:pop .3s var(--ease)}
+.pk-warn span{flex:1;text-wrap:pretty}
+.pk-warn .btn.ghost{min-height:44px;padding:0 8px;text-decoration:underline;text-underline-offset:3px}
+.pk-tip{margin-top:4px;color:var(--ink3);font-size:13px;animation:pop .3s var(--ease)}
+.pk-gone{font-size:13px;color:var(--warn);padding:8px 0;border-top:1px solid var(--line);display:flex;gap:6px;align-items:center}
+
+/* guide: flat list */
+.rules{border-top:1px solid var(--line)}
+.rule{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:12px 2px;border-bottom:1px solid var(--line)}
+.rule .n{width:28px;height:28px;border-radius:99px;background:var(--blue-bg);color:var(--blue);display:grid;place-items:center;font-size:14px;font-weight:700}
+.rule.hot .n{background:var(--rose-bg);color:var(--rose)}
+.rule b{font-size:16px;display:block;line-height:1.4}
+.rule p{margin:2px 0 0;font-size:14px;color:var(--ink2)}
+.lnks{display:flex;flex-wrap:wrap;column-gap:14px}
+a.lnk{color:var(--blue);font-weight:700;font-size:13px;text-underline-offset:3px;display:inline-flex;min-height:44px;align-items:center}
+a.lnk:active{background:var(--blue-bg)}
+
+/* editor */
+.sheet{position:fixed;inset:0;z-index:50;background:var(--bg);overflow-y:auto;transform:translateY(100%);transition:transform .38s var(--ease),visibility 0s .38s;visibility:hidden}
+.sheet.on{transform:none;visibility:visible;transition:transform .38s var(--ease)}
+.sheet .in{max-width:480px;margin:0 auto;padding:0 16px calc(190px + env(safe-area-inset-bottom))}
+.sheet-head{position:sticky;top:0;background:#FFFFFF;z-index:2;display:flex;align-items:center;gap:8px;padding:calc(8px + env(safe-area-inset-top)) 16px 8px 8px;border-bottom:1px solid var(--line);margin:0 -16px}
+.sheet-head h3{margin:0;font-size:17px;flex:1}
+.back{background:none;border:none;display:flex;align-items:center;gap:2px;color:var(--blue);font-weight:700;padding:8px;min-height:44px;border-radius:10px}
+.back:active{background:var(--surface)}
+.ocr-btns{display:grid;grid-template-columns:1.3fr 1fr;gap:10px;margin-top:14px}
+.ocr-btns .btn{min-height:56px}
+.ocr-bar{margin-top:12px;border-radius:var(--r);padding:12px 14px;background:var(--sand-bg);color:var(--sand);font-size:14px;animation:pop .3s var(--ease)}
+.ocr-bar b{display:block;font-size:15px}
+.ocr-bar .track{margin-top:8px;background:rgba(255,255,255,.7);height:8px;border-radius:99px;overflow:hidden}
+.ocr-bar .fill{height:100%;background:var(--sand-mid);transition:width .3s}
+.field{display:block;margin-top:14px}
+.field > span{display:block;font-size:14px;color:var(--ink2);margin-bottom:6px;font-weight:700}
+.inp{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 12px;min-height:48px;background:var(--bg);transition:border-color .2s,box-shadow .2s}
+.inp:focus{outline:none;border-color:var(--blue-mid);box-shadow:0 0 0 3px var(--blue-bg)}
+.inp.auto{border-color:var(--sand-mid);background:#FCF8F1}
+.autotag{font-size:12px;font-weight:700;font-style:normal;color:var(--sand);background:var(--sand-bg);padding:2px 6px;border-radius:6px;margin-left:6px}
+.row2{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+.row2 .field:last-child .inp{max-width:220px}
+.photo-prev{margin-top:10px;position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.photo-prev img{display:block;width:100%;max-height:220px;object-fit:contain;background:var(--surface)}
+.photo-prev .rm{position:absolute;top:6px;right:6px;background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:99px;padding:4px 14px;font-size:13px;font-weight:700;min-height:44px;color:var(--warn)}
+.photo-prev .rm:active{background:var(--warn-bg)}
+.items{display:grid;gap:12px;margin-top:8px;grid-template-columns:minmax(0,1fr)}
+.item{border:1px solid var(--line);border-radius:var(--r);padding:12px;background:var(--bg);animation:fadeUp .3s var(--ease)}
+.item.is-c{border-color:var(--sand-mid)}
+.item.is-gone{border-color:var(--warn-mid)}
+.item-head{display:flex;gap:8px;align-items:center}
+.item-head .inp{flex:1;min-width:0}
+.x{flex:none;width:44px;height:44px;border-radius:12px;border:none;background:var(--surface);display:grid;place-items:center;color:var(--ink2);transition:background .15s}
+.x:active{background:var(--line)}
+.item-grid{display:grid;grid-template-columns:136px 1fr;gap:10px;margin-top:10px;align-items:end}
+.mini{font-size:12px;color:var(--ink3);display:block;margin-bottom:4px;font-weight:700}
+.stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:12px;height:48px;overflow:hidden}
+.stepper button{width:44px;height:100%;border:none;background:var(--surface);font-size:20px;transition:background .12s}
+.stepper button:active{background:var(--btn)}
+.stepper output{flex:1;text-align:center;font-weight:700}
+.item .tog{margin-top:10px}
+.dont{display:none;margin-top:4px;padding:6px 0;color:var(--sand);font-size:14px;gap:6px;align-items:center;font-weight:700}
+.item.is-c .dont{display:flex;animation:pop .3s var(--ease)}
+.chk{display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;min-height:44px}
+.chk input{width:22px;height:22px;accent-color:var(--blue);flex:none;margin:0}
+.food{display:none} .item.is-c .food{display:flex}
+.gone-warn{display:none;padding:2px 0 4px;color:var(--warn);font-size:14px;font-weight:700;gap:6px;align-items:center}
+.item.is-gone .gone-warn{display:flex;animation:pop .3s var(--ease)}
+.add-item{margin-top:12px;width:100%;border:1.5px dashed var(--blue-mid);background:var(--bg);color:var(--blue);border-radius:var(--r);min-height:52px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .15s}
+.add-item:active{background:var(--blue-bg)}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:55;background:#FFFFFF;border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-area-inset-bottom));transform:translateY(110%);visibility:hidden;transition:transform .38s var(--ease),visibility 0s .38s}
+.sheet.on ~ .dock{transform:none;visibility:visible;transition:transform .38s var(--ease)}
+.dock .in2{max-width:448px;margin:0 auto}
+.dock .sum{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:14px;color:var(--ink2)}
+.dock .sum b{font-size:20px;color:var(--ink)}
+.thr{font-size:13px;margin:2px 0 8px;display:flex;align-items:center;gap:6px;font-weight:700}
+.thr.ok{color:var(--ok)} .thr.no{color:var(--warn)}
+
+/* airport mode */
+.ap{position:fixed;inset:0;z-index:70;background:var(--bg);display:flex;flex-direction:column;transform:translateY(100%);visibility:hidden;transition:transform .4s var(--ease),visibility 0s .4s}
+.ap.on{transform:none;visibility:visible;transition:transform .4s var(--ease)}
+.ap-head{max-width:480px;width:100%;margin:0 auto;display:flex;align-items:center;gap:8px;padding:calc(8px + env(safe-area-inset-top)) 12px 6px}
+.dots{flex:1;display:flex;justify-content:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:99px;background:#DEDAD5;transition:background .3s,width .3s var(--ease)}
+.dot.done{background:var(--blue-mid)}
+.dot.cur{width:24px;background:var(--blue)}
+.ap-body{flex:1;overflow-y:auto;max-width:480px;width:100%;margin:0 auto;padding:6px 16px 20px}
+.ap-step{animation:slideIn .35s var(--ease)}
+@keyframes slideIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+.ap-no{font-size:13px;font-weight:700;color:var(--blue);letter-spacing:.04em}
+.ap-step h2{font-size:26px;line-height:1.3;margin:4px 0 6px;font-weight:800;outline:none}
+.ap-sub{color:var(--ink2);margin:0 0 16px;font-size:15px}
+.ap-foot{max-width:480px;width:100%;margin:0 auto;padding:10px 16px calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--line);display:flex;gap:10px}
+.ap-foot .btn.pri,.ap-foot .btn:disabled{flex:1;min-height:56px;font-size:18px}
+.bigopt{color:var(--ink);width:100%;display:flex;align-items:center;gap:14px;text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:20px;padding:14px 16px;min-height:80px;margin-bottom:12px;box-shadow:var(--shadow);transition:background .15s,border-color .15s;position:relative}
+.bigopt:active{background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.bigopt b{display:block;font-size:17px;font-weight:700}
+.bigopt span{font-size:14px;color:var(--ink3)}
+.bigopt .ico{width:48px;height:48px;border-radius:14px;background:var(--surface);color:var(--ink2)}
+.bigopt[aria-pressed=true]{border-color:var(--blue);background:#F4F7FA}
+.bigopt[aria-pressed=true] .ico{background:var(--btn);color:var(--btn-ink)}
+.bigopt .sel{position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:99px;background:var(--btn);color:var(--btn-ink);display:none;place-items:center}
+.bigopt[aria-pressed=true] .sel{display:grid}
+.light{width:22px;height:22px;border-radius:99px}
+.light.g{background:#A9B8A6} .light.r{background:var(--warn-mid)}
+.apr{border:2px solid var(--line);border-radius:20px;margin-bottom:10px;overflow:hidden;transition:border-color .25s,background .25s}
+.apr.ok{border-color:var(--ok-mid);background:#F5F8FB}
+.apr.gone{border-color:var(--warn-mid);background:#FDF8F6}
+.apr-row{display:flex;align-items:center;gap:10px;padding:12px 12px 6px 14px}
+.apr-name{flex:1;min-width:0}
+.apr-name span{font-size:13px;color:var(--ink3)}
+.onme{border:none;border-radius:14px;min-height:48px;padding:0 14px;font-weight:700;background:var(--btn);color:var(--btn-ink);display:inline-flex;align-items:center;gap:6px;flex:none;box-shadow:0 2px 8px rgba(70,87,107,.16);transition:background .15s}
+.onme:active{background:var(--btn-down)}
+.apr.ok .onme{background:var(--bg);color:var(--ok);border:1.5px solid var(--ok-mid);box-shadow:none}
+.apr.ok .onme svg path{stroke-dasharray:30;animation:draw .35s var(--ease)}
+.exp{border:none;background:none;width:100%;display:flex;align-items:center;gap:6px;padding:0 14px;font-size:13px;font-weight:700;color:var(--blue);min-height:44px;transition:background .15s}
+.exp:active{background:var(--surface)}
+.exp svg{transition:transform .25s}
+.exp[aria-expanded=true] svg{transform:rotate(90deg)}
+.apr-items{padding:0 14px 12px;font-size:14px;color:var(--ink2);animation:fadeUp .25s var(--ease)}
+.apr-items div{display:flex;justify-content:space-between;padding:4px 0;border-top:1px dashed var(--line)}
+.box-note{border-radius:var(--r);padding:12px 14px;background:var(--surface);font-size:15px;color:var(--ink2);margin-bottom:12px}
+.box-note.w{background:var(--warn-bg);color:var(--warn)}
+.steps{display:grid;gap:10px}
+.steps .s{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:16px;background:var(--surface);font-weight:700}
+.steps .s i{font-style:normal;width:30px;height:30px;border-radius:99px;background:var(--bg);display:grid;place-items:center;color:var(--blue);flex:none}
+.apts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.apts span{background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:2px 10px;font-size:13px;font-weight:700}
+.done-hero{text-align:center;padding:28px 0 8px}
+.done-hero .ring2{width:96px;height:96px;border-radius:99px;background:var(--ok-bg);color:var(--ok);display:grid;place-items:center;margin:0 auto 14px;animation:fadeUp .4s var(--ease)}
+.done-hero .ring2 path{stroke-dasharray:30;animation:draw .5s .15s var(--ease) both}
+canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:90}
+
+.toast{position:fixed;left:50%;top:calc(14px + env(safe-area-inset-top));transform:translate(-50%,-160%);visibility:hidden;background:#EEF1F5;color:#24303C;border:1px solid #C9D4E0;box-shadow:var(--shadow);padding:10px 16px;border-radius:14px;font-size:14px;font-weight:700;z-index:99;transition:transform .35s var(--ease);max-width:90vw}
+.toast.on{transform:translate(-50%,0);visibility:visible}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---- v4: departure airport ---- */
+.aprow{margin-top:10px;width:100%;display:flex;align-items:center;gap:12px;text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:var(--r);padding:10px 12px 10px 14px;min-height:64px;box-shadow:var(--shadow);transition:background .15s}
+.aprow:active{background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.aprow .ico{width:40px;height:40px;border-radius:12px;background:var(--blue-bg);color:var(--blue)}
+.aprow .t{flex:1;min-width:0}
+.aprow .t span{display:block;font-size:13px;color:var(--ink3)}
+.aprow .t b{display:block;font-size:16px;line-height:1.35}
+.apk{z-index:80}
+.apk .in{padding-bottom:calc(40px + env(safe-area-inset-bottom))}
+.pk-h{font-size:14px;font-weight:700;color:var(--ink2);margin:18px 2px 8px}
+.pk-list{display:grid;gap:8px}
+.pk{width:100%;display:flex;align-items:center;gap:12px;text-align:left;border:1.5px solid var(--line);background:var(--bg);border-radius:16px;padding:8px 14px;min-height:56px;box-shadow:var(--shadow);transition:background .15s,border-color .15s;color:var(--ink)}
+.pk:active{background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.pk b{font-size:16px;display:block;line-height:1.3}
+.pk span{font-size:13px;color:var(--ink3)}
+.pk .t{flex:1;min-width:0}
+.pk[aria-pressed=true]{border-color:var(--blue);background:#F4F7FA}
+.pk .ck{width:26px;height:26px;border-radius:99px;background:var(--btn);color:var(--btn-ink);display:none;place-items:center;flex:none}
+.pk[aria-pressed=true] .ck{display:grid}
+.more{margin-top:12px}
+.acard{background:var(--surface);border-radius:var(--r);padding:16px;margin-top:12px}
+.acard .nm{display:flex;align-items:flex-start;gap:8px}
+.acard .nm b{font-size:20px;line-height:1.3;flex:1}
+.fl{display:flex;align-items:baseline;gap:10px;margin-top:10px}
+.fl .f{font-size:34px;font-weight:800;color:var(--blue);line-height:1}
+.fl .lm{font-size:16px;font-weight:700;line-height:1.45}
+.mtags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.mtag{font-size:13px;font-weight:700;padding:3px 10px;border-radius:8px;background:var(--blue-bg);color:var(--blue)}
+.mtag.off{background:transparent;color:var(--ink3);border:1px dashed var(--line);font-weight:500;text-decoration:line-through}
+.tbc{display:inline-block;font-size:12px;font-weight:700;padding:1px 7px;border-radius:7px;background:var(--sand-bg);color:var(--sand);margin:0 2px;vertical-align:1px;white-space:nowrap;text-decoration:none}
+.walk{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
+.walk li{display:flex;gap:12px;align-items:flex-start;background:var(--bg);border-radius:14px;padding:12px 14px;font-size:18px;font-weight:700;line-height:1.4}
+.walk li i{font-style:normal;width:30px;height:30px;border-radius:99px;background:var(--blue-bg);color:var(--blue);display:grid;place-items:center;flex:none;font-size:15px;margin-top:-1px}
+.walk li.first i{background:var(--rose-bg);color:var(--rose)}
+.walk li small{display:block;font-size:14px;font-weight:500;color:var(--ink2);margin-top:2px}
+.walk li.opt{background:transparent;border:1px dashed var(--line)}
+.cash{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.cash h4{margin:0 0 6px;font-size:15px}
+.cash .pt{display:flex;gap:8px;align-items:flex-start;padding:6px 0;font-size:15px}
+.cash .pt b{font-weight:700}
+.when{flex:none;font-size:12px;font-weight:700;padding:2px 8px;border-radius:8px;background:var(--ok-bg);color:var(--ok);margin-top:2px;white-space:nowrap}
+.when.pre{background:var(--sand-bg);color:var(--sand)}
+.cash ul{margin:6px 0 0;padding-left:18px;font-size:14px;color:var(--ink2)}
+.hrs{margin-top:10px;font-size:14px;color:var(--ink2)}
+.mapbtn{margin-top:14px;text-decoration:none;width:100%;min-height:56px;font-size:17px}
+.msrc{font-size:13px;color:var(--ink3);margin-top:6px;text-align:center}
+.msrc a{color:var(--blue);font-weight:700;display:inline-flex;align-items:center;min-height:44px;padding:0 4px}
+.apbox{border-radius:var(--r);padding:12px 14px;background:var(--surface);margin-bottom:12px}
+.apbox .k{font-size:13px;font-weight:700;color:var(--blue)}
+.apbox .v{font-size:18px;font-weight:800;line-height:1.4;margin-top:2px}
+.apbox .mapbtn{margin-top:10px}
+/* ---- v5 ---- */
+.prog{margin-top:10px;width:100%;display:flex;align-items:center;gap:10px;text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:var(--r);padding:8px 12px 8px 14px;min-height:52px;box-shadow:var(--shadow);transition:background .15s;color:var(--ink)}
+.prog:active{background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.prog .t{flex:1;min-width:0;font-size:15px;line-height:1.4}
+.prog .t b{font-weight:800}
+.prog .t span{display:block;font-size:13px;color:var(--warn);font-weight:700}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tool{display:flex;align-items:center;gap:10px;text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:16px;padding:10px 12px;min-height:64px;box-shadow:var(--shadow);transition:background .15s;color:var(--ink)}
+.tool:active{background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.tool .ico{width:36px;height:36px;border-radius:10px;background:var(--sand-bg);color:var(--sand)}
+.tool b{display:block;font-size:15px;line-height:1.3}
+.tool span.s{display:block;font-size:12px;color:var(--ink3);line-height:1.3}
+.tag.st1{background:var(--blue-bg);color:var(--blue)} .tag.st2{background:var(--ok-bg);color:var(--ok)} .tag.own{background:var(--rose-bg);color:var(--rose)}
+.tl{z-index:60}
+.tl .in{padding-bottom:calc(40px + env(safe-area-inset-bottom))}
+.pc{background:var(--surface);border-radius:var(--r);padding:12px 14px;margin-top:12px}
+.pc-h{display:flex;gap:10px;align-items:flex-start}
+.pc-h .n{flex:1;min-width:0}
+.pc-h .n b{display:block;font-size:16px;line-height:1.35}
+.pc-h .n span{font-size:13px;color:var(--ink3)}
+.lab{display:block;font-size:13px;font-weight:700;color:var(--ink2);margin:10px 0 4px}
+.inp2{width:100%;min-height:44px;border:1px solid var(--line);border-radius:12px;padding:0 12px;background:var(--bg);min-width:0}
+.row{display:flex;gap:8px;align-items:center}
+.row > *{min-width:0}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{border:1px solid var(--line);background:var(--bg);border-radius:99px;padding:6px 14px;font-size:14px;min-height:44px;font-weight:700;color:var(--ink2);box-shadow:var(--shadow);transition:background .15s}
+.pill:active{background:var(--surface)}
+.pill[aria-pressed=true]{background:var(--blue-bg);border-color:var(--blue-mid);color:var(--blue);box-shadow:none}
+.stseg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+.stseg button{min-height:44px;border:1px solid var(--line);background:var(--bg);border-radius:12px;font-weight:700;font-size:14px;color:var(--ink2);box-shadow:var(--shadow);transition:background .15s}
+.stseg button[aria-pressed=true]{background:var(--btn);border-color:var(--btn);color:var(--btn-ink);box-shadow:none}
+.due{margin-top:10px;background:var(--warn-bg);color:var(--warn);border-radius:14px;padding:10px 12px;font-size:14px}
+.due b{font-size:15px}
+.tpl{white-space:pre-wrap;background:var(--bg);color:var(--ink);border-radius:10px;padding:10px;margin:8px 0;font-size:14px;line-height:1.6;font-family:"Hiragino Sans","Noto Sans JP","Noto Sans CJK JP",sans-serif}
+.kv{display:flex;justify-content:space-between;gap:8px;font-size:15px;padding:4px 0}
+.kv b{font-weight:800}
+/* timeline */
+.tline{list-style:none;margin:12px 0 0;padding:0;position:relative}
+.tline li{display:grid;grid-template-columns:64px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.tline li .tm{font-size:22px;font-weight:800;color:var(--blue);font-variant-numeric:tabular-nums}
+.tline li b{font-size:17px;display:block;line-height:1.35}
+.tline li span{font-size:13px;color:var(--ink3)}
+.tline li.hot .tm{color:var(--rose)}
+.tline li.past{opacity:.55}
+.tline li.now{background:var(--blue-bg);border-radius:12px;padding-left:8px;padding-right:8px}
+.live{margin-top:12px;background:var(--blue-bg);border-radius:var(--r);padding:12px 14px;color:var(--blue)}
+.live .big2{font-size:34px;font-weight:800;line-height:1.15;font-variant-numeric:tabular-nums;color:var(--ink)}
+.stp{display:flex;align-items:center;border:1px solid var(--line);border-radius:12px;height:48px;overflow:hidden;background:var(--bg)}
+.stp button{width:48px;height:100%;border:none;background:var(--surface);font-size:20px;font-weight:700;transition:background .12s}
+.stp button:active{background:var(--btn)}
+.stp output{flex:1;text-align:center;font-weight:800;font-size:16px}
+.ours{display:inline-block;font-size:12px;font-weight:700;padding:1px 7px;border-radius:7px;background:var(--sand-bg);color:var(--sand)}
+/* customs view */
+.cv{position:fixed;inset:0;z-index:90;background:#FFFFFF;color:#000;overflow-y:auto;visibility:hidden;opacity:0;transition:opacity .2s,visibility 0s .2s}
+.cv.on{visibility:visible;opacity:1;transition:opacity .2s}
+.cv .in{max-width:560px;margin:0 auto;padding:calc(8px + env(safe-area-inset-top)) 16px calc(40px + env(safe-area-inset-bottom));font-family:"Hiragino Sans","Noto Sans JP","Noto Sans CJK JP","PingFang TC","Noto Sans TC",sans-serif}
+.cv-top{display:flex;align-items:center;gap:8px;position:sticky;top:0;background:#fff;padding:6px 0;z-index:2;border-bottom:2px solid #000}
+.cv-top h3{flex:1;margin:0;font-size:22px;font-weight:900;line-height:1.2}
+.cv-top h3 small{display:block;font-size:13px;font-weight:600;color:#333}
+.cv-x{min-height:48px;min-width:64px;border:2px solid #000;background:#fff;border-radius:12px;font-weight:800;font-size:16px;color:#000}
+.cv-x:active{background:#eee}
+.cv-pass{margin-top:12px;border:2px solid #000;border-radius:14px;padding:10px 12px}
+.cv-pass label{font-size:14px;font-weight:700;display:block}
+.cv-pass input{width:100%;border:none;border-bottom:2px solid #000;font-size:26px;font-weight:900;min-height:48px;padding:0;background:transparent;text-transform:uppercase;letter-spacing:.03em;color:#000;border-radius:0}
+.cv-r{margin-top:16px;border:2px solid #000;border-radius:14px;overflow:hidden}
+.cv-rh{background:#000;color:#fff;padding:10px 12px}
+.cv-rh b{display:block;font-size:22px;line-height:1.3}
+.cv-rh span{font-size:16px;font-weight:700}
+.cv table{width:100%;border-collapse:collapse;font-size:18px}
+.cv th{font-size:13px;text-align:left;padding:6px 10px;border-bottom:2px solid #000;font-weight:800}
+.cv td{padding:10px;border-bottom:1px solid #999;vertical-align:top;font-weight:700}
+.cv td.q,.cv th.q{text-align:center;width:52px;white-space:nowrap}
+.cv td.p,.cv th.p{text-align:right;width:112px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.cv .gone td{background:#F6E6E1}
+.cv .gtag{display:inline-block;margin-top:4px;background:#7A2E22;color:#fff;font-size:14px;font-weight:800;padding:2px 8px;border-radius:6px}
+.cv .tot td{font-size:18px;border-bottom:none}
+.cv .zh{font-size:13px;color:#333;font-weight:600}
+.cv .who{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.cv .who button{min-height:48px;padding:0 16px;border:2px solid #000;border-radius:12px;background:#fff;font-weight:800;font-size:16px;color:#000}
+.cv .who button[aria-pressed=true]{background:#000;color:#fff}
+.cv .note{margin-top:16px;font-size:16px;font-weight:700;border-top:2px solid #000;padding-top:12px}
+.cv .wl{font-size:13px;color:#333;margin-top:6px}
+/* share */
+.qr{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:12px;display:grid;place-items:center;margin-top:12px;min-height:120px}
+.qr svg{width:100%;max-width:280px;height:auto}
+.lnkbox{width:100%;min-height:88px;border:1px solid var(--line);border-radius:12px;padding:10px;font-size:12px;word-break:break-all;background:var(--surface);color:var(--ink2);resize:none;font-family:ui-monospace,Menlo,monospace}
+/* shop */
+.cat{display:grid;gap:8px}
+.ci{display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);padding:8px 2px}
+.ci .n{flex:1;min-width:0}
+.ci .n b{display:block;font-size:15px;line-height:1.35}
+.ci .n span{display:block;font-size:12px;color:var(--ink3);line-height:1.4}
+.ci .n a{color:var(--blue);font-weight:700;display:inline-flex;align-items:center;min-height:44px}
+.ci .pr{font-weight:800;font-size:15px;white-space:nowrap}
+.add1{flex:none;min-width:64px;min-height:44px;border:1px solid var(--line);background:var(--bg);border-radius:12px;font-weight:800;color:var(--blue);box-shadow:var(--shadow);transition:background .15s}
+.add1:active{background:var(--surface)}
+.add1[aria-pressed=true]{background:var(--blue-bg);border-color:var(--blue-mid);box-shadow:none}
+.sl{background:var(--surface);border-radius:var(--r);padding:12px 14px;margin-top:12px}
+.sli{display:grid;grid-template-columns:1fr 92px 84px 44px;gap:6px;align-items:center;padding:6px 0;border-bottom:1px dashed var(--line)}
+.sli .nm{font-size:14px;font-weight:700;line-height:1.3;overflow-wrap:anywhere}
+.sli input{width:100%;min-height:44px;border:1px solid var(--line);border-radius:10px;padding:0 8px;text-align:right;background:var(--bg)}
+.sli .stp{height:44px}.sli .stp button{width:36px}
+.rmx{width:44px;height:44px;border:none;background:none;color:var(--ink3);border-radius:10px;font-size:20px}
+.rmx:active{background:var(--line)}
+.bar{height:10px;border-radius:99px;background:#ECE9E5;overflow:hidden;margin:6px 0 2px}
+.bar i{display:block;height:100%;background:var(--blue-mid);border-radius:99px;transition:width .4s var(--ease)}
+.disc{font-size:13px;font-weight:700;color:var(--sand);background:var(--sand-bg);border-radius:12px;padding:8px 12px;margin-top:10px}
+/* ===== v6 ===== */
+.tools .tool:last-child:nth-child(odd){grid-column:1/-1}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;flex:none;margin-right:6px;vertical-align:-1px}
+.dot.big{width:18px;height:18px;margin:3px 0 0}
+.mp-at{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--ink2);margin:10px 0 6px}
+.mp-at svg{width:18px;height:18px;color:var(--rose)}
+.mp-wrap{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.mp-map{height:340px;width:100%;background:#EEEAE5}
+.mp-st{position:absolute;left:10px;right:10px;bottom:10px;z-index:500;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;font-size:14px}
+.mp-st span{font-size:12px;color:var(--ink3)}
+.mp-st.err,.mp-st.off{border-color:var(--rose-mid);background:var(--rose-bg)}
+.mp-st.err b,.mp-st.off b{color:var(--rose)}
+.mp-st.none{background:var(--sand-bg);border-color:#E3D3B9}
+.mp-st.inline{position:static;margin-top:10px;flex-direction:row;align-items:center}
+.spin{width:18px;height:18px;border-radius:50%;border:2.5px solid var(--blue-bg);border-top-color:var(--blue);animation:spin 1s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation-duration:3s}}
+.mp-pin{display:flex!important;align-items:center;justify-content:center;background:transparent;border:0}
+.mp-pin span{display:block;width:18px;height:18px;border-radius:50%;border:2.5px solid #fff;box-shadow:0 1px 3px rgba(46,42,39,.35)}
+.mp-pin.tax span{width:22px;height:22px;border:3px solid #2E2A27}
+.mp-pin.sel span{width:26px;height:26px;border:3px solid #2E2A27;box-shadow:0 0 0 4px rgba(255,255,255,.9),0 1px 4px rgba(46,42,39,.4)}
+.mp-me{background:transparent;border:0}
+.mp-me span{display:block;width:16px;height:16px;margin:4px;border-radius:50%;background:#46576B;border:3px solid #fff;box-shadow:0 0 0 6px rgba(70,87,107,.22)}
+.leaflet-control-zoom a{width:44px!important;height:44px!important;line-height:44px!important;font-size:22px!important;color:var(--ink)!important}
+.leaflet-container{font-family:inherit}
+.leaflet-control-attribution{font-size:11px}
+.mp-row{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:14px;padding:8px 10px 8px 12px;margin-top:8px;min-height:56px;box-shadow:var(--shadow);transition:background .15s}
+.mp-row:active{background:var(--surface)}
+.mp-row .n{flex:1;min-width:0}
+.mp-row .n b{display:block;font-size:15px;line-height:1.35;overflow-wrap:anywhere}
+.mp-row .n span{display:block;font-size:12px;color:var(--ink3);line-height:1.4;overflow-wrap:anywhere}
+.mp-row .chev{color:var(--ink3);display:flex}
+.mp-row em.ok,.mp-ok{font-style:normal;color:var(--ok);font-weight:800}
+.mp-ok,.mp-maybe{margin-top:10px;font-size:14px;border-radius:10px;padding:8px 10px;font-weight:700}
+.mp-ok{background:var(--ok-bg)}
+.mp-maybe{background:var(--sand-bg);color:var(--sand)}
+.mp-card{border:1px solid var(--blue-mid);background:#fff}
+.mp-card .btn svg{width:18px;height:18px;margin-right:4px}
+.mp-osm{display:inline-flex;align-items:center;min-height:44px;font-size:13px;color:var(--blue);font-weight:700}
+.mp-off{display:grid;gap:8px}
+.mp-off .btn{justify-content:flex-start;text-align:left;font-size:14px}
+.mp-src{font-size:12px;color:var(--ink3);line-height:1.6;margin:10px 0 0}
+.mp-src a{color:var(--blue);font-weight:700;display:inline-flex;align-items:center;min-height:44px}
+.fx-now{background:var(--surface);border-radius:var(--r);padding:14px;margin-top:12px;display:flex;flex-direction:column;gap:2px}
+.fx-now span{font-size:13px;color:var(--ink3)}
+.fx-now b{font-size:24px;font-weight:900}
+.fx-verdict{margin-top:8px;font-weight:800;font-size:15px;border-radius:10px;padding:8px 10px;background:#ECE9E5;color:var(--ink2)}
+.fx-verdict.good{background:var(--blue-bg);color:var(--blue)}
+.fx-verdict.bad{background:var(--rose-bg);color:var(--rose)}
+.fx-chart{margin-top:12px;border:1px solid var(--line);border-radius:14px;padding:6px;background:#fff}
+.fx-svg{display:block;width:100%;height:auto}
+.fx-leg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--ink3);margin-top:6px}
+.fx-leg span{display:inline-flex;align-items:center;gap:4px}
+.fx-leg i{display:inline-block;width:16px;height:3px;border-radius:2px}
+.fx-leg i.dash{height:0;border-top:2px dashed;background:none}
+.fx-leg i.c{width:9px;height:9px;border-radius:50%}
+.sp-hero{background:var(--surface);border-radius:var(--r);padding:16px;margin-top:4px;display:flex;flex-direction:column;gap:2px}
+.sp-hero span{font-size:13px;color:var(--ink3);line-height:1.5}
+.sp-hero b{font-size:40px;font-weight:900;letter-spacing:-.01em;line-height:1.15}
+.sp-real{border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:4px 0;padding:8px 0!important}
+.sp-real b{font-size:18px}
+.sp-stack{display:flex;height:18px;border-radius:99px;overflow:hidden;background:#ECE9E5}
+.sp-stack i{display:block;height:100%}
+.sp-leg{margin-top:8px}
+.sp-leg div{display:grid;grid-template-columns:14px 1fr auto 44px;gap:8px;align-items:center;font-size:14px;padding:5px 0;border-bottom:1px solid var(--line)}
+.sp-leg div i{width:12px;height:12px;border-radius:4px}
+.sp-leg em{font-style:normal;color:var(--ink3);text-align:right;font-weight:700}
+.sp-day{display:grid;grid-template-columns:48px 1fr 92px;gap:8px;align-items:center;font-size:14px;padding:4px 0}
+.sp-day b{text-align:right}
+.sp-b{height:10px;background:#ECE9E5;border-radius:99px;overflow:hidden}
+.sp-b i{display:block;height:100%;background:var(--blue-mid);border-radius:99px}
+.sp-li{display:grid;grid-template-columns:10px 1fr auto 44px;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+.sp-li>i{width:10px;height:10px;border-radius:50%}
+.sp-li .n{min-width:0}
+.sp-li .n b{display:block;font-size:15px;overflow-wrap:anywhere}
+.sp-li .n span{display:block;font-size:12px;color:var(--ink3)}
+.sp-cur button{min-height:44px}
+.btn svg{flex:none}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top"><span data-ic="receipt" aria-hidden="true"></span><h1>日本退稅小幫手</h1></header>
+
+  <!-- HOME -->
+  <section class="view on" id="v-home" role="tabpanel" aria-labelledby="tab-home">
+    <div class="summary">
+      <div class="lbl">預估可退</div>
+      <div class="big num"><small>¥</small><span id="sumRefund">0</span></div>
+      <div class="twd num" id="sumTwd"></div>
+      <div class="stats">
+        <div class="stat"><b class="num" id="stR">0</b><span>收據</span></div>
+        <div class="stat"><b class="num" id="stI">0</b><span>件商品</span></div>
+        <div class="stat"><b class="num" id="stW">0</b><span>張要注意</span></div>
+      </div>
+    </div>
+
+    <button class="prog" id="progBtn" hidden><span class="t" id="progT"></span><span class="chev" data-ic="chev"></span></button>
+    <button class="hero" id="goAirport"><span class="ico" data-ic="plane28"></span><span><b>我在機場了</b><span>照步驟帶你辦</span></span><span class="go" data-ic="chev"></span></button>
+    <button class="aprow" id="apRow"><span class="ico" data-ic="pin"></span><span class="t" id="apRowT"></span><span class="chev" data-ic="chev"></span></button>
+
+    <div class="tiles">
+      <button class="btn pri" id="tOcr"><span data-ic="camera"></span>拍收據</button>
+      <button class="btn sec" id="tAdd"><span data-ic="plus"></span>手動新增</button>
+    </div>
+
+    <h2>我的收據</h2>
+    <div class="chips" role="group" aria-label="篩選">
+      <button class="chip" data-f="all" aria-pressed="true">全部</button>
+      <button class="chip" data-f="c" aria-pressed="false">要別用掉</button>
+      <button class="chip" data-f="w" aria-pressed="false">要注意</button>
+    </div>
+    <div class="list" id="list"></div>
+
+    <div class="card cd">
+      <div class="cd-main">
+        <div class="cd-line" id="cdLine">還沒設定出境日</div>
+        <button class="cd-date" id="cdDate">設定出境日</button>
+        <input type="date" id="depDate" class="sr" aria-label="出境日期" tabindex="-1">
+      </div>
+      <button class="cd-btn" id="btnNotify" aria-pressed="false"><span data-ic="bell"></span><span id="notifyLbl">提醒</span></button>
+      <button class="cd-btn" id="btnIcs"><span data-ic="cal"></span>行事曆</button>
+    </div>
+    <div class="cd-note" id="cdNote" hidden></div>
+
+    <h2>工具</h2>
+    <div class="tools">
+      <button class="tool" data-tool="map"><span class="ico" data-ic="map"></span><span><b>退稅商店地圖</b><span class="s">附近藥妝、百貨、電器行</span></span></button>
+      <button class="tool" data-tool="time"><span class="ico" data-ic="clock"></span><span><b>搭機時間倒推</b><span class="s">幾點出門才來得及</span></span></button>
+      <button class="tool" data-tool="cv"><span class="ico" data-ic="doc"></span><span><b>給海關看</b><span class="s">日文大字清單</span></span></button>
+      <button class="tool" data-tool="share"><span class="ico" data-ic="share"></span><span><b>旅伴共用</b><span class="s">用連結或 QR 分享</span></span></button>
+      <button class="tool" data-tool="shop"><span class="ico" data-ic="bagx"></span><span><b>藥妝必買試算</b><span class="s">算可退、差多少到門檻</span></span></button>
+      <button class="tool" data-tool="fx"><span class="ico" data-ic="fx"></span><span><b>匯率走勢</b><span class="s">30／90 天、目標提醒</span></span></button>
+      <button class="tool" data-tool="spend"><span class="ico" data-ic="wallet"></span><span><b>旅行花費總表</b><span class="s">總花費、分類、每天、匯出 CSV</span></span></button>
+    </div>
+  </section>
+
+  <!-- CALC -->
+  <section class="view" id="v-calc" role="tabpanel" aria-labelledby="tab-calc">
+    <div class="target"><span data-ic="receipt" aria-hidden="true"></span><select id="cTarget" aria-label="比對收據"></select></div>
+    <div class="calc-top">
+      <div class="seg" id="segTax"><span class="knob"></span><button data-v="in" aria-pressed="true">含稅價</button><button data-v="ex" aria-pressed="false">未稅價</button></div>
+      <div class="seg" id="segRate"><span class="knob"></span><button data-v="10" aria-pressed="true">10%</button><button data-v="8" aria-pressed="false">8% 食品</button></div>
+    </div>
+    <div class="disp"><div class="disp-in num"><span class="lbl" id="dispLbl">含稅價</span><span><small>¥</small><span id="cVal">0</span></span></div></div>
+    <div class="res">
+      <div><span>可退</span><b class="num" id="cRefund">¥0</b></div>
+      <div><span>約台幣</span><b class="num" id="cTwd">NT$0</b></div>
+    </div>
+    <div class="fx"><span id="fxTxt">匯率讀取中…</span><button class="btn text" id="fxEditBtn">手動輸入</button></div>
+    <div class="fx-edit" id="fxEdit" hidden><input type="number" inputmode="decimal" step="0.0001" id="fxIn" placeholder="1 日圓＝? 台幣，例 0.21"><button class="btn sm pri" id="fxSave">套用</button></div>
+    <div class="ringbox" id="ringBox">
+      <div class="ring"><svg width="60" height="60" viewBox="0 0 76 76" aria-hidden="true"><circle class="bg" cx="38" cy="38" r="32"/><circle class="add" id="rAdd" cx="38" cy="38" r="32"/><circle class="base" id="rBase" cx="38" cy="38" r="32"/></svg><div class="pct num" id="rPct">0%</div></div>
+      <div class="ring-txt"><b id="rTxt">未稅還差 ¥5,000</b><div class="legend num" id="rSub"></div></div>
+    </div>
+    <button class="btn pri block" id="cAdd">加購</button>
+    <div class="keypad" id="keypad">
+      <button class="key">1</button><button class="key">2</button><button class="key">3</button>
+      <button class="key">4</button><button class="key">5</button><button class="key">6</button>
+      <button class="key">7</button><button class="key">8</button><button class="key">9</button>
+      <button class="key fn" data-k="clr">清除</button><button class="key">0</button><button class="key" data-k="del" aria-label="刪除一位"><span data-ic="del"></span></button>
+    </div>
+  </section>
+
+  <!-- PACK -->
+  <section class="view" id="v-pack" role="tabpanel" aria-labelledby="tab-pack">
+    <div class="pk-sum">
+      <div class="pk-box carry"><b class="num" id="pkCarry">0</b><span>隨身</span></div>
+      <div class="pk-box check"><b class="num" id="pkCheck">0</b><span>託運</span></div>
+    </div>
+    <div id="pkList"></div>
+  </section>
+
+  <!-- GUIDE -->
+  <section class="view" id="v-guide" role="tabpanel" aria-labelledby="tab-guide">
+    <h2 style="margin-top:6px">新制 8 件事</h2>
+    <div class="rules" id="rules"></div>
+    <!-- 之後有真的 Klook／KKday 連結時，在這裡放「出發前用得到」：整列用 <a> 加 chevron。 -->
+    <p class="small muted" style="margin-top:14px">非官方工具，資料只存在這支手機</p>
+  </section>
+</div>
+
+<nav class="tabbar"><div class="in" role="tablist">
+  <button class="tab" role="tab" id="tab-home" aria-controls="v-home" data-v="home" aria-selected="true"><span data-ic="receipt"></span>收據</button>
+  <button class="tab" role="tab" id="tab-calc" aria-controls="v-calc" data-v="calc" aria-selected="false"><span data-ic="calc"></span>湊單</button>
+  <button class="tab" role="tab" id="tab-pack" aria-controls="v-pack" data-v="pack" aria-selected="false"><span data-ic="bag"></span>打包</button>
+  <button class="tab" role="tab" id="tab-guide" aria-controls="v-guide" data-v="guide" aria-selected="false"><span data-ic="book"></span>懶人包</button>
+</div></nav>
+
+<!-- EDITOR -->
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="edTitle">
+  <div class="in">
+    <div class="sheet-head"><button class="back" id="edBack"><span data-ic="back"></span>返回</button><h3 id="edTitle">新增收據</h3></div>
+    <div class="ocr-btns">
+      <label class="btn pri"><span data-ic="camera"></span>拍收據自動讀<input type="file" accept="image/*" capture="environment" id="ocrCam" hidden></label>
+      <label class="btn sec"><span data-ic="image"></span>從相簿讀<input type="file" accept="image/*" id="ocrFile" hidden></label>
+    </div>
+    <div class="ocr-bar" id="ocrBar" hidden></div>
+    <div class="photo-prev" id="pPrev" hidden><img id="pImg" alt="收據照片"><button class="rm" id="pRm">移除照片</button></div>
+    <div class="row2">
+      <label class="field"><span>店名<em class="autotag" id="atStore" hidden>自動</em></span><input class="inp" id="fStore" placeholder="例：松本清 心齋橋店" autocomplete="off"></label>
+      <label class="field"><span>日期<em class="autotag" id="atDate" hidden>自動</em></span><input class="inp" type="date" id="fDate"></label>
+    </div>
+    <h2 style="margin-top:20px">品項 <span class="small muted" style="font-weight:500">填含稅價</span></h2>
+    <div class="items" id="items"></div>
+    <button class="add-item" id="addItem"><span data-ic="plus"></span>再加一個品項</button>
+    <div style="margin-top:20px;text-align:center"><button class="btn ghost" id="edDel" hidden>刪除這張收據</button></div>
+  </div>
+</div>
+<div class="dock" id="dock"><div class="in2">
+  <div class="sum"><span>合計 <b class="num" id="dTotal">¥0</b></span><span>可退 <b class="num" id="dRefund">¥0</b></span></div>
+  <div class="thr" id="dThr"></div>
+  <button class="btn pri block" id="edSave">儲存收據</button>
+</div></div>
+
+<!-- TOOLS -->
+<div class="sheet tl" id="tl" role="dialog" aria-modal="true" aria-labelledby="tlTitle">
+  <div class="in">
+    <div class="sheet-head"><button class="back" id="tlBack"><span data-ic="back"></span>返回</button><h3 id="tlTitle">工具</h3></div>
+    <div id="tlBody"></div>
+  </div>
+</div>
+<!-- CUSTOMS VIEW -->
+<div class="cv" id="cv" role="dialog" aria-modal="true" aria-labelledby="cvTitle" lang="ja">
+  <div class="in">
+    <div class="cv-top"><h3 id="cvTitle">免税品一覧<small>税関確認用 ／ 給海關看的免稅品清單</small></h3><button class="cv-x" id="cvX">閉じる<br><span style="font-size:12px">關閉</span></button></div>
+    <div id="cvBody"></div>
+  </div>
+</div>
+
+<!-- AIRPORT PICKER / CARD -->
+<div class="sheet apk" id="apk" role="dialog" aria-modal="true" aria-label="出境機場">
+  <div class="in">
+    <div class="sheet-head"><button class="back" id="apkBack"><span data-ic="back"></span>返回</button><h3 id="apkTitle">出境機場</h3></div>
+    <div id="apkBody"></div>
+  </div>
+</div>
+
+<!-- AIRPORT -->
+<div class="ap" id="ap" role="dialog" aria-modal="true" aria-label="機場模式">
+  <div class="ap-head"><button class="back" id="apBack"><span data-ic="back"></span>上一步</button><div class="dots" id="apDots"></div><button class="x" id="apClose" aria-label="關閉"><span data-ic="x"></span></button></div>
+  <div class="ap-body" id="apBody"></div>
+  <div class="ap-foot" id="apFoot"></div>
+</div>
+<canvas id="conf" hidden></canvas>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(() => {
+const KEY='jtf_v1';
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>Math.round(n).toLocaleString('ja-JP');
+const yen=n=>'¥'+fmt(n);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const iso=d=>{d=new Date(d);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)};
+const today=()=>iso(new Date());
+const addDays=(s,n)=>{const d=new Date(s+'T00:00:00');d.setDate(d.getDate()+n);return iso(d)};
+const dayDiff=(a,b)=>Math.round((new Date(b+'T00:00:00')-new Date(a+'T00:00:00'))/864e5);
+const md=s=>{if(!s)return'';const [,m,d]=s.split('-');return `${+m} 月 ${+d} 日`};
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- icons ---------- */
+const sv=(p,w=22,sw=2)=>`<svg width="${w}" height="${w}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+const I={
+ receipt:sv('<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/>'),
+ plane28:sv('<path d="M2 16l20-6-3-3-6 2-6-5-2 1 4 6-4 1-2-2-1 1z"/><path d="M3 21h18"/>',28),
+ plane:sv('<path d="M2 16l20-6-3-3-6 2-6-5-2 1 4 6-4 1-2-2-1 1z"/><path d="M3 21h18"/>'),
+ chev:sv('<path d="M9 5l7 7-7 7"/>',20,2.4),
+ back:sv('<path d="M15 5l-7 7 7 7"/>',20,2.4),
+ bell:sv('<path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7"/><path d="M10 20a2 2 0 0 0 4 0"/>',18),
+ cal:sv('<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',18),
+ camera:sv('<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>'),
+ image:sv('<rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/>'),
+ plus:sv('<path d="M12 5v14M5 12h14"/>',22,2.4),
+ calc:sv('<rect x="5" y="3" width="14" height="18" rx="3"/><path d="M8 7h8M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/>'),
+ bag:sv('<rect x="4" y="7" width="16" height="13" rx="3"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/>'),
+ book:sv('<path d="M4 5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M9 8h7"/>'),
+ lock:sv('<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',14,2.6),
+ lock18:sv('<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',18,2.4),
+ warn:sv('<path d="M12 3l10 18H2z"/><path d="M12 10v4M12 18h.01"/>',14,2.6),
+ warn22:sv('<path d="M12 3l10 18H2z"/><path d="M12 10v4M12 18h.01"/>',22,2.2),
+ check:sv('<path d="M5 12l5 5 9-10"/>',18,3),
+ check44:sv('<path d="M5 12l5 5 9-10"/>',44,2.6),
+ x:sv('<path d="M6 6l12 12M18 6L6 18"/>',18,2.4),
+ del:sv('<path d="M9 5h11v14H9l-6-7z"/><path d="M12 9l5 6M17 9l-5 6"/>',26,2),
+ phone:sv('<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>',20),
+ train:sv('<rect x="4" y="3" width="16" height="15" rx="3"/><path d="M4 11h16M8 21l2-3M16 21l-2-3"/>',20),
+ suitcase:sv('<rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V4h6v3M9 20v1M15 20v1"/>',26),
+ passport:sv('<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="11" r="3"/><path d="M9 17h6"/>',26),
+ kiosk:sv('<rect x="6" y="3" width="12" height="11" rx="2"/><path d="M9 14v7M15 14v7M7 21h10"/>',26),
+ wifi:sv('<path d="M2 9a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M12 19.5h.01"/>',26),
+ desk:sv('<path d="M3 10h18v3H3zM5 13v8M19 13v8"/><circle cx="12" cy="5" r="2.5"/>',26),
+ drop:sv('<path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/>',14,2.4),
+ bag26:sv('<rect x="4" y="7" width="16" height="13" rx="3"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/>',26),
+};
+const paintIcons=root=>(root||document).querySelectorAll('[data-ic]').forEach(e=>{if(!e.dataset.done){e.innerHTML=I[e.dataset.ic]||'';e.dataset.done=1}});
+
+/* ---------- state ---------- */
+let S=load();
+function load(){const d={receipts:[],dep:'',airport:'',pass:'',me:'',flt:null,shop:[],exp:[],fxT:null,fxLog:[],mapAt:null,fx:null,notify:false,notified:{}};try{return Object.assign(d,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){return d}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));return true}catch(e){toast('手機空間不夠，先移除幾張照片');return false}}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),2200)}
+function buzz(){try{if(navigator.userActivation&&!navigator.userActivation.hasBeenActive)return;navigator.vibrate&&navigator.vibrate(12)}catch(e){}}
+
+/* ---------- money rules ---------- */
+const rateOf=it=>(it.type==='c'&&it.food)?8:10;
+const itemTax=it=>{const p=(+it.price||0)*(+it.qty||1),r=rateOf(it);return p*r/(100+r)};
+const itemExcl=it=>(+it.price||0)*(+it.qty||1)-itemTax(it);
+const rTotal=r=>r.items.reduce((s,it)=>s+(+it.price||0)*(+it.qty||1),0);
+const rTax=r=>r.items.reduce((s,it)=>s+itemTax(it),0);
+const rCount=r=>r.items.reduce((s,it)=>s+(+it.qty||1),0);
+const rGone=r=>r.items.some(it=>it.gone);
+const rHasC=r=>r.items.some(it=>it.type==='c');
+const gkey=r=>(r.store||'').trim()+'|'+r.date+'|'+(r.owner||'');
+const groupExcl=(k,skipId)=>S.receipts.filter(x=>gkey(x)===k&&x.id!==skipId).reduce((s,x)=>s+x.items.reduce((a,it)=>a+itemExcl(it),0),0);
+function status(r){const w=[];if(rGone(r))w.push('少品項，整張不退');if(groupExcl(gkey(r))<5000)w.push('未滿 ¥5,000');if(S.dep&&r.date&&dayDiff(r.date,S.dep)>90)w.push('超過 90 天');return w}
+const ok=r=>!status(r).length;
+function totals(){let g=0,c=0,items=0;S.receipts.filter(r=>!r.owner).forEach(r=>{items+=rCount(r);if(!ok(r))return;r.items.forEach(it=>{const t=itemTax(it);it.type==='c'?c+=t:g+=t})});return{g,c,sum:g+c,items,warn:S.receipts.filter(r=>!r.owner&&!ok(r)).length}}
+const twd=y=>S.fx&&S.fx.rate?'NT$'+Math.round(y*S.fx.rate).toLocaleString('zh-TW'):'';
+
+function countUp(el,to,pre='',post=''){
+  const from=+el.dataset.v||0;el.dataset.v=to;
+  if(reduce||from===to){el.textContent=pre+fmt(to)+post;return}
+  const t0=performance.now(),d=650;cancelAnimationFrame(el._raf);
+  const step=t=>{const k=Math.min(1,(t-t0)/d),e=1-Math.pow(1-k,3);el.textContent=pre+fmt(from+(to-from)*e)+post;if(k<1)el._raf=requestAnimationFrame(step)};
+  el._raf=requestAnimationFrame(step);
+}
+function segSet(seg,val){const bs=[...seg.querySelectorAll('button')],i=bs.findIndex(b=>b.dataset.v===val||b.dataset.act===val);bs.forEach((b,j)=>b.setAttribute('aria-pressed',j===i));const k=seg.querySelector('.knob');k.style.width=`calc(${100/bs.length}% - ${6/bs.length}px)`;k.style.transform=`translateX(${i*100}%)`}
+
+/* ---------- HOME ---------- */
+let filter='all';
+function renderHome(){
+  const T=totals();
+  countUp($('#sumRefund'),T.sum);countUp($('#stR'),S.receipts.filter(r=>!r.owner).length);countUp($('#stI'),T.items);countUp($('#stW'),T.warn);
+  $('#sumTwd').textContent=S.fx&&T.sum?`約 ${twd(T.sum)}`:'';
+  renderCountdown();renderApRow();renderProg();
+  const L=$('#list');
+  let rs=[...S.receipts].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  if(filter==='c')rs=rs.filter(rHasC);if(filter==='w')rs=rs.filter(r=>!ok(r));
+  if(!S.receipts.length){L.innerHTML=`<div class="empty"><b style="color:var(--ink)">還沒有收據</b><div style="margin-top:10px"><button class="btn sec sm" id="demo">放範例資料看看</button></div></div>`;$('#demo').onclick=loadDemo;return}
+  if(!rs.length){L.innerHTML=`<div class="empty small">${filter==='w'?'沒有要注意的收據':'沒有要別用掉的商品'}</div>`;return}
+  L.innerHTML=rs.map((r,i)=>{const w=status(r),nc=r.items.filter(i=>i.type==='c'&&!i.gone).reduce((s,i)=>s+(+i.qty||1),0);
+    return `<button class="rc" data-id="${r.id}" style="animation-delay:${reduce?0:i*60}ms"><div class="rc-top"><div class="thumb">${r.photo?`<img src="${r.photo}" alt="">`:I.receipt}</div>
+    <div class="rc-main"><div class="rc-name">${esc(r.store)||'未命名店家'}</div><div class="rc-meta">${md(r.date)}・${rCount(r)} 件</div></div>
+    <div class="rc-amt"><b class="num">${yen(rTotal(r))}</b><span>${ok(r)?'可退 '+yen(rTax(r)):'不算入'}</span></div><span class="chev">${I.chev}</span></div>
+    ${(()=>{const st=r.st||'none',od=overdue(r),tg=(r.owner?`<span class="tag own">旅伴：${esc(r.owner)}</span>`:'')+(od?`<span class="tag w">${I.warn}該去問店家了</span>`:st==='paid'?`<span class="tag st2">已入帳</span>`:st==='conf'?`<span class="tag st1">已確認，等入帳</span>`:'')+(nc?`<span class="tag c">${I.lock}${nc} 件別用掉</span>`:'')+w.map(x=>`<span class="tag w">${I.warn}${x}</span>`).join('');return tg?`<div class="rc-tags">${tg}</div>`:''})()}</button>`}).join('');
+  L.querySelectorAll('.rc').forEach(b=>b.onclick=()=>openEditor(b.dataset.id));
+}
+$$('.chip').forEach(c=>c.onclick=()=>{filter=c.dataset.f;$$('.chip').forEach(x=>x.setAttribute('aria-pressed',x===c));renderHome()});
+$('#depDate').onchange=e=>{S.dep=e.target.value;save();syncSW();renderHome();checkRemind()};
+function pickDate(){const d=$('#depDate');try{d.showPicker();return}catch(e){}d.removeAttribute('tabindex');d.focus();d.click()}
+$('#cdDate').onclick=pickDate;
+$('#goAirport').onclick=openAirport;
+$('#tAdd').onclick=()=>openEditor(null);
+$('#tOcr').onclick=()=>{openEditor(null);setTimeout(()=>$('#ocrCam').click(),50)};
+
+function loadDemo(){
+  const d=n=>addDays(today(),-n);
+  S.receipts=[
+    {id:uid(),store:'松本清 心齋橋店',date:d(2),photo:null,items:[{name:'面膜 10 入',type:'c',food:false,qty:3,price:1650},{name:'合利他命 EX Plus',type:'c',food:false,qty:1,price:6380},{name:'白色戀人 24 入',type:'c',food:true,qty:1,price:3240}]},
+    {id:uid(),store:'Bic Camera 難波店',date:d(1),photo:null,items:[{name:'拍立得相機',type:'g',food:false,qty:1,price:16500},{name:'底片 2 盒',type:'g',food:false,qty:1,price:2970}]},
+    {id:uid(),store:'唐吉訶德 道頓堀店',date:d(1),photo:null,items:[{name:'抹茶 KitKat',type:'c',food:true,qty:2,price:1078},{name:'卸妝油',type:'c',food:false,qty:1,price:1980,gone:true}]},
+    {id:uid(),store:'UNIQLO 心齋橋店',date:d(0),photo:null,items:[{name:'T 恤',type:'g',food:false,qty:2,price:1990}]}
+  ];
+  S.dep=addDays(today(),3);save();syncSW();renderHome();toast('已放入 4 張範例收據');
+}
+
+/* ---------- countdown & reminders ---------- */
+const isIOS=/iP(hone|ad|od)/.test(navigator.userAgent),isStandalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+function renderCountdown(){
+  const dep=S.dep;$('#depDate').value=dep||'';
+  if(!dep){$('#cdLine').textContent='還沒設定出境日';$('#cdDate').textContent='設定出境日'}
+  else{const n=dayDiff(today(),dep);
+    $('#cdLine').innerHTML=n>0?`<span class="n num">${n}</span> 天後出境`:n===0?'今天出境':'出境日已過';
+    $('#cdDate').textContent=md(dep);$('#cdDate').setAttribute('aria-label','改出境日：'+md(dep));}
+  const can='Notification' in window,perm=can?Notification.permission:'unsupported',on=S.notify&&perm==='granted';
+  $('#notifyLbl').textContent=on?'已開':'提醒';$('#btnNotify').setAttribute('aria-pressed',on);
+  let note='';
+  if(!can) note=isIOS&&!isStandalone?'iPhone 請先加入主畫面':'不支援通知，請用行事曆';
+  else if(perm==='denied') note='通知已關，請用行事曆';
+  else if(on) note='出境前一天和當天提醒';
+  $('#cdNote').textContent=note;$('#cdNote').hidden=!note;
+}
+$('#btnNotify').onclick=async()=>{
+  buzz();
+  if(!S.dep){toast('先設定出境日');pickDate();return}
+  if(!('Notification' in window)){renderCountdown();toast(isIOS&&!isStandalone?'分享 → 加入主畫面，從主畫面打開才收得到；最穩是加到行事曆':'這裡收不到通知，用行事曆吧');return}
+  if(S.notify&&Notification.permission==='granted'){S.notify=false;save();renderCountdown();toast('提醒已關閉');return}
+  const p=await Notification.requestPermission();
+  if(p==='granted'){S.notify=true;save();syncSW();try{const reg=await navigator.serviceWorker?.ready;if(reg&&'periodicSync' in reg)await reg.periodicSync.register('jtf-remind',{minInterval:6*3600e3})}catch(e){}
+    toast('提醒已開啟；App 沒開時不一定收得到，行事曆最可靠');checkRemind()}
+  else toast('沒有開通知權限');
+  renderCountdown();
+};
+async function notify(title,body){
+  try{const reg=await navigator.serviceWorker?.getRegistration();if(reg){await reg.showNotification(title,{body,icon:'icon-192.png',tag:'jtf'});return true}}catch(e){}
+  try{new Notification(title,{body,icon:'icon-192.png'});return true}catch(e){return false}
+}
+function remindMsg(n){return n===1?['明天出境','退稅品別先託運：到機場先過海關確認，再託運。']:['今天出境','先到退稅機器掃護照（託運前），所有退稅品帶在身上。']}
+async function checkRemind(){
+  if(!S.notify||!S.dep||!('Notification' in window)||Notification.permission!=='granted')return;
+  const n=dayDiff(today(),S.dep);if(n!==1&&n!==0)return;
+  const k=S.dep+':'+n;if(S.notified[k])return;
+  const [t,b]=remindMsg(n);if(await notify(t,b)){S.notified[k]=1;save();try{const c=await caches.open('jtf-data');await c.put('./__jtf_sent_'+S.dep+'_'+n,new Response('1'))}catch(e){}}
+}
+async function syncSW(){try{const c=await caches.open('jtf-data');await c.put('./__jtf_dep',new Response(JSON.stringify({dep:S.dep,notify:S.notify})))}catch(e){}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){renderCountdown();checkRemind()}});
+setInterval(checkRemind,15*60e3);
+
+const icsEsc=s=>s.replace(/\\/g,'\\\\').replace(/[,;]/g,m=>'\\'+m).replace(/\n/g,'\\n');
+function buildICS(dep){
+  const c=s=>s.replace(/-/g,''),stamp=new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d+/,'');
+  const prev=c(addDays(dep,-1)),day=c(dep);
+  const ev=(id,d,h,sum,desc)=>['BEGIN:VEVENT',`UID:${id}-${day}@jtf.local`,`DTSTAMP:${stamp}`,`DTSTART:${d}T${h}0000`,`DTEND:${d}T${h}3000`,`SUMMARY:${icsEsc(sum)}`,`DESCRIPTION:${icsEsc(desc)}`,'BEGIN:VALARM','ACTION:DISPLAY',`DESCRIPTION:${icsEsc(sum)}`,'TRIGGER:-PT0M','END:VALARM','END:VEVENT'];
+  return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//JTF//Tax Refund Helper//ZH-TW','CALSCALE:GREGORIAN',
+    ...ev('eve',prev,'20','明天出境：退稅品別先託運','到機場先在託運前過海關退稅確認（掃護照），所有退稅品都要帶在身上。用掉的消耗品那張收據要跟海關櫃台說明。'),
+    ...ev('day',day,'07','今天出境：先退稅確認再託運','提早到機場。到退稅機器（KIOSK）掃護照或用 Visit Japan Web，綠燈完成、紅燈去海關檢查處，之後才去報到託運。'),
+    'END:VCALENDAR'].join('\r\n')+'\r\n';
+}
+$('#btnIcs').onclick=()=>{buzz();if(!S.dep){toast('先選出境日');$('#depDate').focus();return}
+  const blob=new Blob([buildICS(S.dep)],{type:'text/calendar;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`出境提醒-${S.dep}.ics`;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);toast('已下載，打開就能加到行事曆')};
+
+/* ---------- exchange rate ---------- */
+async function loadFx(force){
+  const fresh=S.fx&&S.fx.src==='api'&&Date.now()-S.fx.fetched<6*3600e3;
+  if(S.fx&&S.fx.src==='manual'&&!force){renderFx();return}
+  if(fresh&&!force){renderFx();return}
+  try{const r=await fetch('https://open.er-api.com/v6/latest/JPY',{cache:'no-store'});const j=await r.json();
+    if(j.result==='success'&&j.rates&&j.rates.TWD){S.fx={rate:j.rates.TWD,date:iso(new Date(j.time_last_update_unix*1000)),src:'api',fetched:Date.now()};save();try{fxLogPush(S.fx.date,S.fx.rate,'er');fxCheck(S.fx.rate,S.fx.date)}catch(_){}}}
+  catch(e){}
+  renderFx();renderHome();calcRender();
+}
+function renderFx(){
+  const f=S.fx;
+  $('#fxTxt').textContent=!f?'抓不到匯率，請手動輸入':`1 日圓 = ${f.rate.toFixed(4)} 台幣・${f.src==='manual'?'手動輸入':'open.er-api.com'}・${md(f.date)}${f.src==='api'&&Date.now()-f.fetched>6*3600e3?'（快取）':''}`;
+}
+$('#fxEditBtn').onclick=()=>{$('#fxEdit').hidden=!$('#fxEdit').hidden;if(!$('#fxEdit').hidden){$('#fxIn').value=S.fx?S.fx.rate:'';$('#fxIn').focus()}};
+$('#fxSave').onclick=()=>{const v=parseFloat($('#fxIn').value);if(!(v>0&&v<10)){toast('匯率格式不對，例 0.21');return}S.fx={rate:v,date:today(),src:'manual',fetched:Date.now()};save();$('#fxEdit').hidden=true;renderFx();calcRender();toast('已套用手動匯率')};
+
+/* ---------- calculator ---------- */
+const C={val:'',tax:'in',rate:10,target:''};
+function calcTargets(){
+  const groups={};S.receipts.forEach(r=>{const k=gkey(r);(groups[k]=groups[k]||[]).push(r)});
+  const sel=$('#cTarget'),cur=C.target;
+  sel.innerHTML='<option value="">不比對收據（只算可退）</option>'+Object.entries(groups).sort((a,b)=>b[0].split('|')[1].localeCompare(a[0].split('|')[1])).map(([k,rs])=>`<option value="${esc(k)}">${esc(rs[0].store)}・${md(rs[0].date)}</option>`).join('');
+  sel.value=groups[cur]?cur:'';C.target=sel.value;
+}
+function calcNums(){const p=+C.val||0,r=C.rate;let tax,ex,inc;if(C.tax==='in'){tax=p*r/(100+r);ex=p-tax;inc=p}else{tax=p*r/100;ex=p;inc=p+tax}return{p,tax,ex,inc}}
+const CIRC=2*Math.PI*32;
+function calcRender(){
+  const n=calcNums();
+  $('#cVal').textContent=fmt(n.p);$('#dispLbl').textContent=C.tax==='in'?'含稅價':'未稅價';
+  countUp($('#cRefund'),n.tax,'¥');
+  const t=$('#cTwd');if(S.fx){countUp(t,n.tax*S.fx.rate,'NT$')}else t.textContent='—';
+  const box=$('#ringBox'),add=$('#cAdd');
+  if(!C.target){box.hidden=true;add.textContent=n.p?'存成新收據':'先輸入價格';add.disabled=!n.p;return}
+  box.hidden=false;
+  const base=groupExcl(C.target),tot=base+n.ex,need=Math.max(0,5000-tot);
+  const pb=Math.min(1,base/5000),pt=Math.min(1,tot/5000);
+  $('#rBase').style.strokeDasharray=CIRC;$('#rAdd').style.strokeDasharray=CIRC;
+  $('#rBase').style.strokeDashoffset=CIRC*(1-pb);$('#rAdd').style.strokeDashoffset=CIRC*(1-pt);
+  countUp($('#rPct'),Math.round(pt*100),'','%');
+  $('#rTxt').innerHTML=need>0?`未稅還差 <span class="num">${yen(need)}</span>`:'已到 ¥5,000 門檻';
+  $('#rSub').innerHTML=`<span><span class="dot-l" style="--c:var(--blue-mid)"></span>已買 ${yen(base)}</span>${n.p?`<span><span class="dot-l" style="--c:var(--sand-mid)"></span>這筆 ${yen(n.ex)}</span>`:''}`;
+  add.textContent=n.p?'加購：加進這家':'先輸入價格';add.disabled=!n.p;
+}
+$('#keypad').onclick=e=>{const k=e.target.closest('.key');if(!k)return;buzz();
+  if(k.dataset.k==='del')C.val=C.val.slice(0,-1);else if(k.dataset.k==='clr')C.val='';else if(C.val.length<8)C.val=(C.val+k.textContent).replace(/^0+/,'');
+  calcRender()};
+$('#segTax').onclick=e=>{const b=e.target.closest('button');if(!b)return;C.tax=b.dataset.v;segSet($('#segTax'),C.tax);calcRender()};
+$('#segRate').onclick=e=>{const b=e.target.closest('button');if(!b)return;C.rate=+b.dataset.v;segSet($('#segRate'),b.dataset.v);calcRender()};
+$('#cTarget').onchange=e=>{C.target=e.target.value;calcRender()};
+$('#cAdd').onclick=()=>{const n=calcNums();if(!n.p)return;buzz();
+  const item={name:'加購品',type:C.rate===8?'c':'g',food:C.rate===8,qty:1,price:Math.round(n.inc),gone:false};
+  if(!C.target){openEditor(null,{items:[item]});return}
+  const r=S.receipts.find(x=>gkey(x)===C.target);r.items.push(item);save();C.val='';
+  calcRender();toast(`已加進 ${r.store}`);
+};
+
+/* ---------- packing ---------- */
+const LIQ=/化妝水|化粧水|乳液|卸妝|精華|洗髮|潤髮|沐浴|噴霧|香水|飲料|酒|醬|油|凝膠|液|ローション|スプレー|ミスト|オイル/;
+function renderPack(){
+  let carry=0,check=0;const W=$('#pkList');
+  if(!S.receipts.length){W.innerHTML='<div class="empty" style="margin-top:14px">先新增收據，品項會出現在這裡</div>';countUp($('#pkCarry'),0);countUp($('#pkCheck'),0);return}
+  W.innerHTML=S.receipts.map(r=>{
+    const gone=r.items.filter(it=>it.gone);
+    const rows=r.items.map((it,i)=>{if(it.gone)return'';
+      if(it.liquid===undefined)it.liquid=LIQ.test(it.name);const pack=it.pack||'carry';const q=+it.qty||1;pack==='carry'?carry+=q:check+=q;
+      return `<div class="pk ${pack==='check'?'bad':''}" data-r="${r.id}" data-i="${i}">
+        <div class="pk-row"><div class="pk-name">${esc(it.name)||'未命名'}</div><div class="seg"><span class="knob"></span><button data-v="carry" aria-pressed="${pack==='carry'}">隨身</button><button data-v="check" aria-pressed="${pack==='check'}">託運</button></div></div>
+        <div class="pk-row2"><div class="pk-meta">×${q}${it.type==='c'?'・別用掉':''}</div><button class="tog" data-t="liquid" aria-pressed="${!!it.liquid}">${I.drop}液體／噴霧</button></div>
+        ${pack==='check'?`<div class="pk-warn">${I.warn}<span>先過海關才能託運</span><button class="btn ghost" data-fix>改放隨身</button></div>`:''}
+        ${it.liquid&&pack==='carry'?`<div class="pk-tip">隨身液體每瓶 100ml 以下；超過的，過海關後再託運</div>`:''}</div>`}).join('');
+    return `<div class="pk-group"><h3>${esc(r.store)}・${md(r.date)}</h3>${rows}${gone.length?`<div class="pk-gone">${I.warn}已用掉：${gone.map(g=>esc(g.name)).join('、')}（不用打包，出境找海關櫃台說明）</div>`:''}</div>`}).join('');
+  W.querySelectorAll('.seg').forEach(s=>segSet(s,s.querySelector('[aria-pressed=true]').dataset.v));
+  countUp($('#pkCarry'),carry);countUp($('#pkCheck'),check);
+}
+$('#pkList').onclick=e=>{const card=e.target.closest('.pk');if(!card)return;const r=S.receipts.find(x=>x.id===card.dataset.r),it=r.items[+card.dataset.i];
+  const b=e.target.closest('button');if(!b)return;buzz();
+  if(b.dataset.v){if((it.pack||'carry')===b.dataset.v)return;it.pack=b.dataset.v}
+  else if(b.dataset.t==='liquid')it.liquid=!it.liquid;
+  else if('fix' in b.dataset){it.pack='carry';toast('已改放隨身')}
+  save();const y=scrollY;renderPack();scrollTo(0,y)};
+
+/* ---------- editor ---------- */
+let E=null;
+const newItem=()=>({name:'',type:'g',food:false,qty:1,price:'',gone:false});
+function openEditor(id,preset){
+  const r=id?S.receipts.find(x=>x.id===id):null;
+  E=r?JSON.parse(JSON.stringify(r)):Object.assign({id:null,store:'',date:today(),photo:null,items:[newItem()]},preset||{});
+  $('#edTitle').textContent=r?'編輯收據':'新增收據';$('#edDel').hidden=!r;
+  $('#fStore').value=E.store;$('#fDate').value=E.date;$('#ocrBar').hidden=true;markAuto({});showPhoto();renderItems();
+  $('#sheet').classList.add('on');$('#sheet').scrollTop=0;document.body.style.overflow='hidden';history.pushState({ov:'ed'},'');
+}
+function closeEditor(fromPop){if(!E)return;$('#sheet').classList.remove('on');document.body.style.overflow='';E=null;if(!fromPop&&history.state&&history.state.ov==='ed')history.back()}
+function renderItems(){
+  $('#items').innerHTML=E.items.map((it,i)=>`<div class="item ${it.type==='c'?'is-c':''} ${it.gone?'is-gone':''}" data-i="${i}">
+    <div class="item-head"><input class="inp ${it.auto?'auto':''}" data-k="name" value="${esc(it.name)}" placeholder="品項名稱" aria-label="品項名稱">
+    ${E.items.length>1?`<button class="x" data-act="del" aria-label="刪除品項">${I.x}</button>`:''}</div>
+    <div class="item-grid"><div><span class="mini">數量</span><div class="stepper"><button data-act="minus" aria-label="減少">−</button><output class="num">${it.qty}</output><button data-act="plus" aria-label="增加">+</button></div></div>
+    <label><span class="mini">單價（含稅 ¥）${it.auto?'<em class="autotag">自動</em>':''}</span><input class="inp num ${it.auto?'auto':''}" data-k="price" type="text" inputmode="numeric" value="${esc(it.price)}" placeholder="0"></label></div>
+    <button class="tog" data-act="c" aria-pressed="${it.type==='c'}">${I.lock}食品・飲料・化妝品</button>
+    <div class="dont">${I.lock}別拆、別吃、別用到出境</div>
+    <label class="chk food"><input type="checkbox" data-k="food" ${it.food?'checked':''}>是食品飲料（稅率 8%）</label>
+    <label class="chk"><input type="checkbox" data-k="gone" ${it.gone?'checked':''}>已用掉／不在身上</label>
+    <div class="gone-warn">${I.warn}這張整張不能退，出境找海關櫃台說明</div></div>`).join('');
+  updateDock();
+}
+$('#items').addEventListener('input',e=>{const el=e.target,i=+el.closest('.item').dataset.i,k=el.dataset.k;if(!k)return;
+  if(el.type==='checkbox'){E.items[i][k]=el.checked;el.closest('.item').classList.toggle('is-gone',!!E.items[i].gone)}
+  else if(k==='price'){const v=el.value.replace(/[^\d]/g,'');if(v!==el.value)el.value=v;E.items[i].price=v}
+  else E.items[i][k]=el.value;updateDock()});
+$('#items').addEventListener('click',e=>{const b=e.target.closest('button[data-act]');if(!b)return;const card=b.closest('.item'),i=+card.dataset.i,it=E.items[i],a=b.dataset.act;buzz();
+  if(a==='del'){E.items.splice(i,1);renderItems();return}
+  if(a==='plus'||a==='minus'){it.qty=Math.max(1,Math.min(99,it.qty+(a==='plus'?1:-1)));card.querySelector('output').textContent=it.qty;updateDock();return}
+  if(a==='c'){it.type=it.type==='c'?'g':'c';if(it.type==='g')it.food=false;card.classList.toggle('is-c',it.type==='c');b.setAttribute('aria-pressed',it.type==='c');card.querySelector('[data-k=food]').checked=it.food;updateDock()}});
+$('#addItem').onclick=()=>{E.items.push(newItem());renderItems();const last=$('#items').lastElementChild;last.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});setTimeout(()=>last.querySelector('input').focus({preventScroll:true}),300)};
+$('#fStore').oninput=e=>{E.store=e.target.value;updateDock()};
+$('#fDate').onchange=e=>{E.date=e.target.value;updateDock()};
+function updateDock(){
+  if(!E)return;const tot=rTotal(E),tax=rTax(E),gone=rGone(E);
+  const ex=E.items.reduce((s,it)=>s+itemExcl(it),0)+groupExcl((E.store||'').trim()+'|'+E.date,E.id);
+  $('#dTotal').textContent=yen(tot);$('#dRefund').textContent=gone?'¥0':yen(tax);
+  const t=$('#dThr');
+  if(gone){t.className='thr no';t.innerHTML=I.warn+'有品項不在身上，整張不退'}
+  else if(ex>=5000){t.className='thr ok';t.innerHTML=I.check.replace('width="18" height="18"','width="14" height="14"')+`同店同日未稅 ${yen(ex)}，有到門檻`}
+  else{t.className='thr no';t.innerHTML=`${I.warn}未稅 ${yen(ex)}，還差 ${yen(5000-ex)}`}
+}
+$('#edBack').onclick=()=>closeEditor();
+$('#edSave').onclick=()=>{
+  E.store=$('#fStore').value.trim();E.date=$('#fDate').value;
+  E.items=E.items.filter(it=>it.name.trim()||+it.price).map(it=>{delete it.auto;return it});
+  if(!E.store){toast('先填店名');$('#fStore').focus();return}
+  if(!E.date){toast('先填日期');return}
+  if(!E.items.length){E.items=[newItem()];renderItems();toast('至少填一個品項');return}
+  const isNew=!E.id;if(isNew){E.id=uid();S.receipts.push(E)}else S.receipts[S.receipts.findIndex(x=>x.id===E.id)]=E;
+  if(!save()){if(isNew)S.receipts.pop();return}
+  closeEditor();renderHome();calcTargets();toast(isNew?'收據已存好':'已更新');
+};
+$('#edDel').onclick=()=>{if(!confirm('刪除這張收據？'))return;S.receipts=S.receipts.filter(x=>x.id!==E.id);save();closeEditor();renderHome();calcTargets();toast('已刪除')};
+function showPhoto(){const on=!!(E&&E.photo);$('#pPrev').hidden=!on;if(on)$('#pImg').src=E.photo}
+$('#pRm').onclick=()=>{E.photo=null;showPhoto()};
+function compress(file,M=1000,q=.68){return new Promise((res,rej)=>{const img=new Image(),url=URL.createObjectURL(file);img.onload=()=>{const s=Math.min(1,M/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);res(c.toDataURL('image/jpeg',q))};img.onerror=rej;img.src=url})}
+
+/* ---------- OCR ---------- */
+function loadTesseract(){return window.Tesseract?Promise.resolve():new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';s.onload=res;s.onerror=()=>rej(new Error('net'));document.head.appendChild(s)})}
+function ocrBar(html){const b=$('#ocrBar');b.hidden=false;b.innerHTML=html}
+async function runOCR(file){
+  if(!E)return;
+  try{E.photo=await compress(file);showPhoto()}catch(e){toast('讀不到這張照片');return}
+  if(!navigator.onLine){ocrBar('<b>沒有網路，無法自動辨識</b>照片已存，請手動填。');return}
+  ocrBar('<b>載入辨識工具…</b>第一次要下載約幾 MB<div class="track"><div class="fill" id="ocrFill" style="width:5%"></div></div>');
+  try{
+    await loadTesseract();
+    const big=await compress(file,1800,.9);
+    const res=await Tesseract.recognize(big,'jpn+eng',{logger:m=>{if(m.status==='recognizing text'){const f=$('#ocrFill');if(f)f.style.width=(10+m.progress*90)+'%';const b=$('#ocrBar b');if(b)b.textContent=`辨識中 ${Math.round(m.progress*100)}%`}}});
+    window.__lastOCR=res.data.text;
+    applyOCR(parseReceipt(res.data.text));
+  }catch(e){ocrBar('<b>自動辨識失敗</b>需要連網；照片已存，請手動填。')}
+}
+['#ocrCam','#ocrFile'].forEach(s=>$(s).onchange=e=>{const f=e.target.files[0];if(f)runOCR(f);e.target.value=''});
+const Z=s=>s.replace(/[０-９Ａ-Ｚａ-ｚ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0)).replace(/￥/g,'¥').replace(/，/g,',').replace(/．/g,'.');
+const CJK='\u3040-\u30ff\u3400-\u9fff\uff66-\uff9f';
+function parseReceipt(text){
+  const lines=Z(text).split(/\n/).map(l=>l.replace(new RegExp(`([${CJK}])\\s+(?=[${CJK}])`,'g'),'$1').replace(/\s+/g,' ').trim()).filter(l=>l.length>1);
+  const out={store:'',date:'',total:0,items:[]};
+  for(const l of lines){const m=l.match(/(20\d{2})\s*[年\/.\-]\s*(\d{1,2})\s*[月\/.\-]\s*(\d{1,2})/);if(m){out.date=`${m[1]}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`;break}}
+  const money=l=>{const m=l.match(/[¥\\]?\s*(\d{1,3}(?:[,.]\d{3})+|\d{2,7})\s*[※*軽]?\s*$/);return m?+m[1].replace(/[,.]/g,''):0};
+  const tl=lines.find(l=>/(合計|総合計|お買上|総額|TOTAL)/i.test(l)&&!/小計/.test(l)&&money(l));if(tl)out.total=money(tl);
+  const skip=/(小計|合計|計|税|対象|預|釣|現金|クレジット|カード|点数|TEL|電話|レジ|担当|No\.|領収|免税|TAX|お買上|割引|値引)/i;
+  const dateish=/(20\d{2}\s*[年\/.\-])|(\d{1,2}:\d{2})/;
+  for(const l of lines){if(skip.test(l)||dateish.test(l))continue;const p=money(l);if(!p||p>2000000)continue;
+    const name=l.replace(/[¥\\]?\s*(\d{1,3}(?:[,.]\d{3})+|\d{2,7})\s*[※*軽]?\s*$/,'').replace(/^[\s*※・\-]+/,'').trim();
+    if(name.length<2||!new RegExp(`[${CJK}A-Za-z]`).test(name))continue;out.items.push({name,price:p})}
+  const head=lines.slice(0,5).filter(l=>!/(TEL|電話|領収|レシート|レジ|担当|No\.|^[\d\s\-:()]+$)/i.test(l)&&!dateish.test(l)&&new RegExp(`[${CJK}A-Za-z]`).test(l)&&!money(l));
+  out.store=(head[0]||'');if(head[1]&&!/店/.test(out.store)&&/店$/.test(head[1]))out.store+=' '+head[1];out.store=out.store.slice(0,30);
+  return out;
+}
+function markAuto(f){$('#atStore').hidden=!f.store;$('#atDate').hidden=!f.date;$('#fStore').classList.toggle('auto',!!f.store);$('#fDate').classList.toggle('auto',!!f.date)}
+function applyOCR(o){
+  const got=[];
+  if(o.store){E.store=o.store;$('#fStore').value=o.store;got.push('店名')}
+  if(o.date){E.date=o.date;$('#fDate').value=o.date;got.push('日期')}
+  if(o.items.length){E.items=o.items.map(x=>({name:x.name,type:'g',food:false,qty:1,price:String(x.price),gone:false,auto:true}));got.push(`${o.items.length} 個品項`)}
+  else if(o.total){E.items=[{name:'收據合計',type:'g',food:false,qty:1,price:String(o.total),gone:false,auto:true}];got.push('合計')}
+  markAuto({store:!!o.store,date:!!o.date});renderItems();
+  const sum=rTotal(E);let chk='';
+  if(o.total)chk=Math.abs(sum-o.total)<1?`收據合計 ${yen(o.total)}，和品項加總一致`:`收據合計 ${yen(o.total)}，品項加總 ${yen(sum)}，<b style="display:inline">不一致，請檢查</b>`;
+  ocrBar(got.length?`<b>自動辨識・請確認</b>讀到：${got.join('、')}。${chk?'<br>'+chk:''}<br>食品・化妝品和 8% 請自己點選。`:'<b>沒讀到可用的內容</b>照片已存，請手動填。');
+}
+
+/* ---------- airport mode ---------- */
+
+/* ---------- v4: departure airports (data: research/airports.json, 2026-11-19) ---------- */
+const CMAP='https://www.customs.go.jp/kaigairyoko/taxrefund/map/',CMAPP='https://www.customs.go.jp/kaigairyoko/taxrefund/map.htm';
+const Q='{?}';
+// m: k=機器 v=Visit Japan Web c=人工櫃台(紅燈)；cash p: pre=出境審查前 post=出境審查後 null=待確認；null 值一律顯示「待確認」
+const AP=[
+ {id:'NRT-T1',g:'m',a:'成田機場',t:'第1航廈',fl:'4F',lm:'中央棟，走進「SHOPPING & DINING」入口',m:'kvc',hrs:'05:30–23:00',svg:'AIR_01_01_01',src:['https://www.narita-airport.jp/ja/service/exchange/taxrefund/','成田機場官網'],
+  cash:[{n:'Self Tax Refund',w:'4F 中央棟（往郵局、置物櫃方向）',p:'pre',h:'06:00–24:00'},{n:'Cash Japan 機器',w:'北翼、南翼 3F',p:'post',h:'24 小時'}]},
+ {id:'NRT-T2',g:'m',a:'成田機場',t:'第2航廈',fl:'3F',lm:'本館出境大廳（靠近哪個報到島'+Q+'）',m:'kvc',hrs:'05:30–23:00',svg:'AIR_01_01_02',src:['https://www.narita-airport.jp/ja/service/exchange/taxrefund/','成田機場官網'],
+  cash:[{n:'Self Tax Refund',w:'本館 3F',p:'pre',h:'06:00–24:00'},{n:'Cash Japan 機器',w:'本館 3F 兩處、衛星航廈 3F',p:'post',h:'24 小時'}]},
+ {id:'NRT-T3',g:'m',a:'成田機場',t:'第3航廈',fl:'2F',lm:'本館出境樓層（確切位置'+Q+'）',m:'kvc',hrs:'05:30–23:00',svg:'AIR_01_01_03',src:['https://www.narita-airport.jp/ja/service/exchange/taxrefund/','成田機場官網'],
+  cash:[{n:'Cash Japan 機器',w:'本館 3F',p:'post',h:'24 小時'}]},
+ {id:'HND-T3',g:'m',a:'羽田機場',t:'第3航廈',fl:'3F',lm:'出境大廳，共 13 台（確切位置'+Q+'）',m:'kvc',hrs:'24 小時',svg:'AIR_01_02_02',src:['https://www.tokyo-haneda.com/text/service/facilities/tax_refund.html','羽田機場官網'],
+  cash:[{n:'Self Tax Refund',w:'3F',p:'post',h:'24 小時'}]},
+ {id:'KIX-T1',g:'m',a:'關西機場',t:'第1航廈',fl:'4F',lm:'報到大廳靠入口側兩處（靠近哪個報到島'+Q+'）',m:'kvc',hrs:'機器 24 小時；海關人員：報到開始到安檢關閉',svg:'AIR_04_03_01',src:['https://www.kansai-airport.or.jp/tax-refund','關西機場官網'],
+  cash:[{n:'Cash Japan 機器＋櫃台',w:'出境後區域（樓層'+Q+'）',p:'post',h:'07:00–24:00'}]},
+ {id:'KIX-T2',g:'m',a:'關西機場',t:'第2航廈（廉航）',fl:'1F',lm:'報到大廳靠安檢那一端',m:'kvc',hrs:'機器 24 小時；海關人員：報到開始到安檢關閉',svg:'AIR_04_03_02',src:['https://www.kansai-airport.or.jp/tax-refund','關西機場官網'],
+  cash:[{n:'Cash Japan',w:'1F',p:'post',h:'05:30–末班機'}]},
+ {id:'FUK',g:'m',a:'福岡機場',t:'國際線',fl:'3F',lm:'南側 J～M 報到櫃台前，共 12 台',m:'kvc',hrs:'06:00–21:00',svg:'AIR_06_01',src:['https://www.fukuoka-airport.jp/taxrefund.html','福岡機場官網'],
+  cash:[{n:'Cash Japan',w:'3F 免稅店區「HAKATA FOOD HALL」入口旁',p:'post',h:'機器 06:00–21:00、櫃台 07:00–21:00'}]},
+ {id:'CTS',g:'m',a:'新千歲機場',t:'國際線',fl:'3F',lm:'出境大廳，共 10 台',m:'kvc',hrs:null,svg:'AIR_08_01',src:['https://www.hokkaido-airports.com/ja/new-chitose/service/money/cash-japan-tax-refund/','新千歲機場官網'],
+  cash:[{n:'Cash Japan',w:'國際線 3F',p:null,h:'櫃台 07:00–20:00'}]},
+ {id:'OKA',g:'m',a:'那霸機場',t:'國際線',fl:'3F',lm:'報到大廳內，靠近服務台',m:'kvc',hrs:null,svg:'AIR_09_01',src:['https://www.naha-airport.co.jp/news/22570/','那霸機場官網'],
+  cash:[{n:'Self Tax Refund',w:'2F',p:'post',h:'06:45–21:30'}]},
+ {id:'NGO-T1',g:'m',a:'中部機場',t:'第1航廈',fl:'3F',lm:'國際線報到櫃台前',m:'kvc',hrs:'依航班開放',svg:'AIR_05_02_01',src:['https://www.centrair.jp/taxrefund/index.html','中部機場官網'],
+  cash:[{n:'Cash Japan 機器',w:'出境審查處附近',p:'post',h:'依航班'},{n:'Cash Japan 櫃台',w:'20 號登機門附近',p:'post',h:'依航班'}]},
+ {id:'NGO-T2',g:'m',a:'中部機場',t:'第2航廈（廉航）',fl:'2F',lm:'報到櫃台旁的「CIQ 資訊角」',m:'kvc',hrs:'依航班開放',svg:'AIR_05_02_02',src:['https://www.centrair.jp/taxrefund/index.html','中部機場官網'],
+  cash:[{n:'Cash Japan 機器',w:'出境審查一出來',p:'post',h:'依航班'}]},
+ {id:'HND-T2',g:'o',a:'羽田機場',t:'第2航廈 國際線區',fl:'3F',lm:'國際線區，安檢前，共 8 台',m:'kvc',hrs:'06:00–26:00',svg:'AIR_01_02_01',src:['https://www.tokyo-haneda.com/text/service/facilities/tax_refund.html','羽田機場官網'],
+  cash:[{n:'Self Tax Refund',w:'3F',p:'post',h:'06:45–25:30'}]},
+ {id:'SDJ',g:'o',a:'仙台機場',fl:'1F',lm:'國際線入境大廳附近',svg:'AIR_02_01',src:['https://www.sendai-airport.co.jp/service/tax-refund.html','仙台機場官網']},
+ {id:'KMJ',g:'o',a:'熊本機場',fl:'1F',lm:'國際線報到大廳，派出所旁',svg:'AIR_07_03',src:['https://www.kumamoto-airport.co.jp/facilities/customs-kiosk/','熊本機場官網']},
+ {id:'KOJ',g:'o',a:'鹿兒島機場',fl:'1F',lm:'國際線航廈（確切位置'+Q+'）',svg:'AIR_07_04',src:['https://www.koj-ab.co.jp/ap-information/2026/10/-tax-exemption-refund-program-for-foreign-visitors.html','鹿兒島機場官網']},
+ {id:'TAK',g:'o',a:'高松機場',fl:'1F',lm:'打包區，共 2 台',svg:'AIR_03_05',src:['https://www.takamatsu-airport.com/guide/tax-refund-kiosk/','高松機場官網']},
+ {id:'HIJ',g:'o',a:'廣島機場',fl:null,lm:'確切位置'+Q+'，請看官方地圖',svg:'AIR_03_04'},
+ {id:'OKJ',g:'o',a:'岡山機場',fl:'1F',lm:'確切位置'+Q+'，請看官方地圖',svg:'AIR_03_03'},
+ {id:'KMQ',g:'o',a:'小松機場',fl:'1F',lm:'確切位置'+Q+'，請看官方地圖',svg:'AIR_04_02'},
+ {id:'MYJ',g:'o',a:'松山機場',fl:'1F',lm:'確切位置'+Q+'，請看官方地圖',svg:'AIR_03_06'},
+ {id:'FSZ',g:'o',a:'靜岡機場',fl:'1F',lm:'確切位置'+Q+'，請看官方地圖',svg:'AIR_05_01'},
+ {id:'HKD',g:'o',a:'函館機場',fl:'1F',lm:'共 1 台（確切位置'+Q+'）',svg:'AIR_08_03'},
+ {id:'AKJ',g:'o',a:'旭川機場',fl:'1F',lm:'共 1 台（確切位置'+Q+'）',svg:'AIR_08_02'},
+ {id:'HNA',g:'o',a:'花卷機場',fl:'1F',lm:'確切位置'+Q+'，請看官方地圖',svg:'AIR_08_05'},
+ {id:'IBR',g:'o',a:'茨城機場',fl:'1F',lm:'確切位置'+Q+'，請看官方地圖',svg:'AIR_02_03'}
+].map(x=>Object.assign({t:'',m:'kc',hrs:null,cash:[]},x));
+const TBC='<span class="tbc">待確認</span>';
+const tx=v=>v==null?TBC:esc(v).split(Q).join(TBC);
+const apGet=id=>AP.find(x=>x.id===id)||null;
+const apName=x=>x.a+(x.t?' '+x.t:'');
+const apSub=x=>(x.fl||'樓層待確認')+'・'+x.lm.split(Q).join('待確認');
+const PIN='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+const EXT='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
+const CK='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
+function renderApRow(){const x=apGet(S.airport),T=$('#apRowT');if(!T)return;
+  T.innerHTML=x?`<span>出境機場</span><b>${esc(apName(x))}</b><span>${esc(apSub(x))}</span>`:`<span>出境機場</span><b>還沒選，點這裡選</b><span>看退稅機器在幾樓、怎麼走</span>`;
+  const ic=$('#apRow .ico');if(ic)ic.innerHTML=PIN}
+function pickList(cur,showMore){
+  const btn=x=>`<button class="pk" data-pick="${x.id}" aria-pressed="${x.id===cur}"><span class="t"><b>${esc(apName(x))}</b><span>${esc(apSub(x))}</span></span><span class="ck">${CK}</span></button>`;
+  const others=AP.filter(x=>x.g==='o'),curOther=others.some(x=>x.id===cur);
+  return `<div class="pk-h">台灣人最常用</div><div class="pk-list">${AP.filter(x=>x.g==='m').map(btn).join('')}</div>`+
+   ((showMore||curOther)?`<div class="pk-h">更多機場</div><div class="pk-list">${others.map(btn).join('')}</div>`:
+   `<button class="btn sec block more" data-more>更多機場（${others.length} 個）</button>`);
+}
+function mapBtn(x){return `<a class="btn pri mapbtn" href="${CMAP}${x.svg}.svg" target="_blank" rel="noopener">${PIN}打開官方地圖${EXT}</a>
+  <div class="msrc">來源：日本海關官方位置圖（藍色圖示＝機器，紅框＝人工檢查處）<br><a href="${CMAPP}" target="_blank" rel="noopener">日本海關所有機場列表 ↗</a>${x.src?`<a href="${x.src[0]}" target="_blank" rel="noopener">${esc(x.src[1])} ↗</a>`:''}</div>`}
+function cashHtml(x){
+  if(!x.cash.length)return `<div class="cash"><h4>現金退款</h4><div class="pt">這個機場沒有找到現金退稅點。退款會在事後退回你購買時登記的卡或電子支付。</div></div>`;
+  return `<div class="cash"><h4>想領現金？</h4>${x.cash.map(c=>`<div class="pt"><span class="when ${c.p==='pre'?'pre':''}">${c.p==='pre'?'出境審查前':c.p==='post'?'出境審查後':'出境前或後'+TBC}</span><span><b>${esc(c.n)}</b>：${tx(c.w)}<br><span class="small muted">${c.h?esc(c.h):'時間'+TBC}</span></span></div>`).join('')}
+   <ul><li>只有日圓，會扣手續費</li><li>能不能領，要看購買店家用的退稅業者</li><li>不領現金的話，事後退回你登記的卡</li></ul></div>`}
+function walkHtml(x){
+  const post=x.cash.filter(c=>c.p==='post');
+  const st=[[`海關退稅確認：到 ${x.fl||'樓層'+Q}`,tx(x.lm)+'，掃護照'+(x.m.includes('v')?'或用 Visit Japan Web':''),'first'],['報到、託運行李','確認完才能託運'],['過安檢',''],['出境審查','']];
+  if(post.length)st.push(['要現金的話：出境審查後領',post.map(c=>tx(c.w)).join('；'),'opt']);
+  return `<ol class="walk">${st.map(([a,b,c],i)=>`<li class="${c||''}"><i>${i+1}</i><span>${tx(a)}${b?`<small>${b}</small>`:''}</span></li>`).join('')}</ol>`}
+function tagsHtml(x){const L=[['k','退稅機器'],['v','Visit Japan Web'],['c','人工櫃台（紅燈時）']];
+  return `<div class="mtags">${L.map(([k,n])=>`<span class="mtag ${x.m.includes(k)?'':'off'}">${n}</span>`).join('')}</div>`}
+function apCard(x){return `<div class="acard"><div class="nm"><b>${esc(apName(x))}</b><button class="btn text" data-change style="min-height:44px">換機場</button></div>
+  <div class="fl"><span class="f">${x.fl?esc(x.fl):TBC}</span><span class="lm">${tx(x.lm)}</span></div>
+  ${tagsHtml(x)}${walkHtml(x)}
+  <div class="hrs">開放時間：${tx(x.hrs)}</div>
+  ${cashHtml(x)}${mapBtn(x)}</div>
+  <p class="small muted" style="margin:12px 2px">資料查證日 2026/11/19。現場以機場指標為準。</p>`}
+let K=null,skipPop=0;
+function openApk(mode){buzz();K={mode:mode||(S.airport?'card':'list'),more:false};$('#apk').classList.add('on');document.body.style.overflow='hidden';history.pushState({ov:'apk'},'');apkRender()}
+function closeApk(fromPop){if(!K)return;$('#apk').classList.remove('on');if(!A&&!T)document.body.style.overflow='';K=null;if(!fromPop&&history.state&&history.state.ov==='apk'){skipPop++;history.back()}renderHome();if(A)apRender();if(T)tlRender(true)}
+function apkRender(){const x=apGet(S.airport);
+  $('#apkTitle').textContent=K.mode==='card'&&x?'退稅點在哪裡':'選出境機場';
+  $('#apkBody').innerHTML=K.mode==='card'&&x?apCard(x):pickList(S.airport,K.more);
+  $('#apk').scrollTop=K._keep||0;K._keep=0}
+$('#apRow').onclick=()=>openApk();
+$('#apk').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||!K)return;
+  if(b.id==='apkBack'){if(K.mode==='list'&&S.airport&&K.from==='card'){K.mode='card';return apkRender()}return closeApk()}
+  if('more' in b.dataset){buzz();K.more=true;K._keep=$('#apk').scrollTop;return apkRender()}
+  if('change' in b.dataset){buzz();K.mode='list';K.from='card';return apkRender()}
+  if(b.dataset.pick){buzz();S.airport=b.dataset.pick;save();K.mode='card';$('#apk').scrollTop=0;apkRender();toast('已選：'+apName(apGet(S.airport)))}
+});
+
+const AIRPORTS=['成田','羽田','關西','中部','福岡','新千歲','那霸'];
+let A=null;
+const SEL=`<span class="sel" aria-hidden="true">${I.check.replace('width="18" height="18"','width="14" height="14"')}</span>`;
+function openAirport(){buzz();A={i:0,bag:null,conf:{},open:{},method:null,result:null,red:{},needPick:!apGet(S.airport),more:false};$('#ap').classList.add('on');document.body.style.overflow='hidden';history.pushState({ov:'ap'},'');apRender()}
+function closeAirport(fromPop){if(!A)return;$('#ap').classList.remove('on');document.body.style.overflow='';A=null;if(!fromPop&&history.state&&history.state.ov==='ap')history.back();renderHome()}
+const goneRs=()=>S.receipts.filter(rGone), goodRs=()=>S.receipts.filter(r=>!rGone(r));
+function apSteps(){return[...(A.needPick?['pick']:[]),'bag','rcpt',...(goneRs().length?['counter']:[]),'kiosk','result','checkin']}
+function apRender(){
+  const steps=apSteps(),st=steps[A.i],B=$('#apBody'),F=$('#apFoot');
+  $('#apDots').innerHTML=steps.map((_,j)=>`<span class="dot ${j<A.i?'done':''} ${j===A.i?'cur':''}" style="transition-delay:${reduce?0:j*40}ms"></span>`).join('');
+  $('#apBack').style.visibility=A.i?'visible':'hidden';
+  const no=`<div class="ap-no">第 ${A.i+1} 步</div>`;let h='',f='';
+  if(st==='pick'){
+    h=`${no}<h2>你從哪個機場出境？</h2><p class="ap-sub">選了才知道退稅機器在哪裡。之後可以在首頁換。</p>${pickList(S.airport,A.more)}`;
+    f=`<button class="btn pri" data-next ${S.airport?'':'disabled'}>${S.airport?'下一步':'先選機場'}</button>`;
+  }
+  if(st==='bag'){
+    h=`${no}<h2>退稅品都還沒託運？</h2><p class="ap-sub">要在託運行李「之前」辦。</p>
+    <button class="bigopt" data-bag="yes" aria-pressed="${A.bag==='yes'}">${SEL}<span class="ico">${I.bag26}</span><span><b>都在我身邊</b><span>還沒去報到託運</span></span></button>
+    <button class="bigopt" data-bag="no" aria-pressed="${A.bag==='no'}">${SEL}<span class="ico">${I.suitcase}</span><span><b>有些已經託運了</b><span>行李已交給航空公司</span></span></button>
+    ${A.bag==='no'?`<div class="box-note w">已託運的那些不能退，也不能要回行李。<br>還在身上的收據可以照樣辦。</div>`:''}`;
+    f=`<button class="btn pri" data-next ${A.bag?'':'disabled'}>${A.bag?'下一步':'先選一個'}</button>`;
+  }
+  if(st==='rcpt'){
+    const g=goodRs(),left=g.filter(r=>!A.conf[r.id]).length,os=owners(),multi=os.length>1;
+    const card=r=>{const gone=rGone(r),c=A.conf[r.id],who=r.owner?r.owner+'身上':'我身上';return `<div class="apr ${gone?'gone':c?'ok':''}"><div class="apr-row"><div class="apr-name"><b>${esc(r.store)}</b><span>${md(r.date)}・${rCount(r)} 件・${yen(rTotal(r))}</span></div>
+      ${gone?`<span class="tag w">${I.warn}去櫃台說明</span>`:`<button class="onme" data-conf="${r.id}">${c?I.check+'在'+esc(who):'在'+esc(who)}</button>`}</div>
+      <button class="exp" data-exp="${r.id}" aria-expanded="${!!A.open[r.id]}">${I.chev.replace('width="20" height="20"','width="14" height="14"')}看品項</button>
+      ${A.open[r.id]?`<div class="apr-items">${r.items.map(it=>`<div><span>${esc(it.name)} ×${it.qty}${it.gone?'（用掉）':''}</span><span class="num">${yen((+it.price||0)*(+it.qty||1))}</span></div>`).join('')}</div>`:''}</div>`};
+    h=`${no}<h2>每張收據的東西都在身上？</h2><p class="ap-sub">少一件，整張不退。${multi?'每個人的收據要在自己身上。':''}</p>`+
+    (S.receipts.length?os.map(o=>{const rs=S.receipts.filter(r=>(r.owner||'')===o);return (multi?`<div class="pk-h">${o?esc(o)+' 的收據':'我的收據'}（${rs.length}）</div>`:'')+rs.map(card).join('')}).join(''):'<div class="box-note">還沒有收據，可以直接下一步。</div>');
+    f=`<button class="btn pri" data-next ${left?'disabled':''}>${left?`還有 ${left} 張沒確認`:'都在身上，下一步'}</button>`;
+  }
+  if(st==='counter'){
+    h=`${no}<h2>先去海關櫃台說明</h2><p class="ap-sub">這幾張有東西用掉或不在身上，<b>別用機器辦</b>。</p>`+
+    goneRs().map(r=>`<div class="apr gone"><div class="apr-row"><div class="apr-name"><b>${esc(r.store)}</b><span>${r.items.filter(i=>i.gone).map(i=>esc(i.name)).join('、')} 不在身上</span></div><span class="ico" style="color:var(--warn)">${I.desk}</span></div></div>`).join('')+
+    `<div class="box-note">跟海關說「這張收據的東西用掉了」。這幾張不會退，其他照常辦。</div><button class="btn sec block" data-cv>打開給海關看的日文清單</button>`;
+    f=`<button class="btn pri" data-next>說明完了，下一步</button>`;
+  }
+  if(st==='kiosk'){
+    const x=apGet(S.airport),hasV=x?x.m.includes('v'):true;
+    if(A.method==='vjw'&&!hasV)A.method=null;
+    h=`${no}<h2>掃護照</h2><p class="ap-sub">所有退稅品帶在身邊，託運之前辦。</p>
+    ${x?`<div class="apbox"><div class="k">${esc(apName(x))}・退稅機器在</div><div class="v">${x.fl?esc(x.fl):TBC} ${tx(x.lm)}</div>${mapBtn(x)}<div style="text-align:center"><button class="btn text" data-apchg>換機場</button></div></div>`:`<div class="apbox"><button class="btn sec block" data-apchg>先選出境機場</button></div>`}
+    <button class="bigopt" data-m="kiosk" aria-pressed="${A.method==='kiosk'}">${SEL}<span class="ico">${I.kiosk}</span><span><b>退稅機器 KIOSK</b><span>${x?'位置看上面，託運櫃台之前':'在出境大廳、託運櫃台前'}</span></span></button>
+    ${hasV?`<button class="bigopt" data-m="vjw" aria-pressed="${A.method==='vjw'}">${SEL}<span class="ico">${I.wifi}</span><span><b>Visit Japan Web 線上辦</b><span>${x?'這個機場可以用':'只限 7 個機場'}</span></span></button>`:`<div class="box-note">這個機場不能用 Visit Japan Web，請用退稅機器。</div>`}
+    ${A.method==='vjw'?`<div class="box-note">連專用 Wi-Fi（安檢前才連得到）<br>名稱：<b>Customs_WiFi_For_TaxRefund</b><br>密碼：<b>jcustoms</b>${x?'':`<div class="apts">${AIRPORTS.map(a=>`<span>${a}</span>`).join('')}</div>`}</div>`:''}
+    ${A.method==='kiosk'?`<div class="box-note">把護照放上去掃描，看螢幕結果。</div>`:''}${owners().length>1?`<div class="box-note">每個人都要用<b>自己的護照</b>掃，旅伴的收據掃旅伴的護照。</div>`:''}`;
+    f=`<button class="btn pri" data-next ${A.method?'':'disabled'}>${A.method?'掃完了，看結果':'先選一種'}</button>`;
+  }
+  if(st==='result'){
+    if(A.result==='green'){h=`<div class="done-hero"><div class="ring2">${I.check44}</div><h2>確認完成！</h2><p class="ap-sub">店家會依你登記的方式退款。</p></div>`;f=`<button class="btn pri" data-next>下一步：去託運</button>`}
+    else if(A.result==='red'){const n=Object.values(A.red).filter(Boolean).length;
+      h=`${no}<h2>紅燈：去海關檢查處</h2><p class="ap-sub">完成一步就點一下。</p><div class="steps">${['帶著所有退稅品去海關檢查處','打開包包，給海關看商品','海關說可以了'].map((t,j)=>`<button class="bigopt" data-red="${j}" aria-pressed="${!!A.red[j]}" style="min-height:64px;padding:12px 14px"><span class="ico">${A.red[j]?I.check:`<b style="font-size:16px;display:inline">${j+1}</b>`}</span><b style="font-size:17px">${t}</b></button>`).join('')}</div><button class="btn pri block" data-cv style="margin-top:12px">${II.doc}給海關看的日文清單</button>`;
+      f=`<button class="btn sec" data-reset style="flex:none">重選</button><button class="btn pri" data-next ${n<3?'disabled':''}>${n<3?`還有 ${3-n} 步`:'檢查完了，下一步'}</button>`}
+    else{h=`${no}<h2>螢幕顯示什麼？</h2><p class="ap-sub">點你看到的結果。</p>
+      <button class="bigopt green" data-res="green"><span class="ico"><span class="light g"></span></span><span><b>綠燈</b><span>不用檢查，完成</span></span></button>
+      <button class="bigopt red" data-res="red"><span class="ico"><span class="light r"></span></span><span><b>紅燈</b><span>要給海關看商品</span></span></button>`;f=''}
+  }
+  if(st==='checkin'){
+    h=`${no}<h2>現在可以去託運了</h2><p class="ap-sub">到航空公司櫃台報到、託運行李。</p>
+    <div class="steps"><div class="s"><i>1</i>報到、託運行李</div><div class="s"><i>2</i>過安檢</div><div class="s"><i>3</i>出境審查</div></div>${(()=>{const x=apGet(S.airport);return x?cashHtml(x):''})()}`;
+    f=`<button class="btn pri" data-finish>完成，一路順風</button>`;
+  }
+  B.innerHTML=`<div class="ap-step" ${A._same?'style="animation:none"':''}>${h}</div>`;F.innerHTML=f;F.hidden=!f;if(!A._same){const h2=B.querySelector('h2');if(h2){h2.tabIndex=-1;h2.focus({preventScroll:true})}}A._same=false;B.scrollTop=A._keep||0;A._keep=0;
+}
+$('#ap').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b||!A)return;buzz();const steps=apSteps(),keep=()=>{A._same=true;A._keep=$('#apBody').scrollTop};
+  if(b.id==='apClose')return closeAirport();
+  if(b.id==='apBack'){if(steps[A.i]==='result'&&A.result){A.result=null;A.red={}}else A.i=Math.max(0,A.i-1);return apRender()}
+  if('next' in b.dataset){A.i=Math.min(steps.length-1,A.i+1);return apRender()}
+  if('finish' in b.dataset){closeAirport();toast('辦完了，一路順風');return}
+  if('cv' in b.dataset)return openCv();
+  if(b.dataset.pick){S.airport=b.dataset.pick;save();keep();toast('已選：'+apName(apGet(S.airport)));return apRender()}
+  if('more' in b.dataset){A.more=true;keep();return apRender()}
+  if('apchg' in b.dataset){return openApk('list')}
+  if(b.dataset.bag){A.bag=b.dataset.bag;keep();return apRender()}
+  if(b.dataset.conf){A.conf[b.dataset.conf]=!A.conf[b.dataset.conf];keep();return apRender()}
+  if(b.dataset.exp){A.open[b.dataset.exp]=!A.open[b.dataset.exp];keep();return apRender()}
+  if(b.dataset.m){A.method=b.dataset.m;keep();return apRender()}
+  if(b.dataset.res){A.result=b.dataset.res;apRender();if(A.result==='green')confetti();return}
+  if(b.dataset.red!==undefined){A.red[b.dataset.red]=!A.red[b.dataset.red];keep();return apRender()}
+  if('reset' in b.dataset){A.result=null;A.red={};return apRender()}
+});
+window.addEventListener('popstate',()=>{if(skipPop){skipPop--;return}if(CV){closeCv(true);return}if(K){closeApk(true);return}if(T){closeTool(true);return}if(E)closeEditor(true);if(K){closeApk(true);return}if(A)closeAirport(true)});
+
+function confetti(){
+  if(reduce)return;const c=$('#conf');c.hidden=false;const x=c.getContext('2d'),dpr=devicePixelRatio||1;c.width=innerWidth*dpr;c.height=innerHeight*dpr;x.scale(dpr,dpr);
+  const cols=['#7D8DA0','#B08F5E','#E2B9B5'];
+  const P=Array.from({length:40},()=>({x:innerWidth/2+(Math.random()-.5)*80,y:innerHeight*.35,vx:(Math.random()-.5)*12,vy:-Math.random()*12-4,r:Math.random()*6+4,c:cols[Math.random()*cols.length|0],a:Math.random()*6,va:(Math.random()-.5)*.3}));
+  const t0=performance.now();
+  (function f(t){x.clearRect(0,0,innerWidth,innerHeight);P.forEach(p=>{p.vy+=.35;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.a+=p.va;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore()});
+    if(t-t0<1200)requestAnimationFrame(f);else{x.clearRect(0,0,innerWidth,innerHeight);c.hidden=true}})(t0);
+}
+
+/* ---------- v5: shared helpers ---------- */
+const mine=r=>!r.owner;
+const ownerName=r=>r.owner||'我';
+const rst=r=>r.st||'none';
+const rExp=r=>r.exp!=null&&r.exp!==''?+r.exp:Math.round(rTax(r));
+const overdue=r=>rst(r)==='conf'&&r.confAt&&dayDiff(r.confAt,today())>30;
+const II={
+ clock:sv('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
+ doc:sv('<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>'),
+ share:sv('<circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.2 11l7.6-4M8.2 13l7.6 4"/>'),
+ bagx:sv('<path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>'),
+ coin:sv('<circle cx="12" cy="12" r="9"/><path d="M9 9l3 4 3-4M12 13v5M9.5 14.5h5"/>')
+};
+async function copyText(t){try{await navigator.clipboard.writeText(t);return true}catch(e){const a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}a.remove();return ok}}
+let T=null;
+function openTool(name,arg){buzz();T={name,arg};$('#tl').classList.add('on');document.body.style.overflow='hidden';history.pushState({ov:'tl'},'');$('#tl').scrollTop=0;tlRender()}
+function closeTool(fromPop){if(!T)return;const n=T.name;$('#tl').classList.remove('on');if(!A)document.body.style.overflow='';mapDestroy();T=null;clearInterval(tickH);if(!fromPop&&history.state&&history.state.ov==='tl'){skipPop++;history.back()}renderHome();calcTargets();if(A&&n!=='import')apRender()}
+const TITLES={prog:'退稅進度',time:'搭機時間倒推',share:'旅伴共用',shop:'藥妝必買與退稅試算',import:'收到旅伴的收據',map:'退稅商店地圖',fx:'匯率走勢',spend:'旅行花費總表'};
+function tlRender(keep){const y=keep?$('#tl').scrollTop:0;$('#tlTitle').textContent=TITLES[T.name];if(T.name==='map'&&M)return;$('#tlBody').innerHTML=({prog:progHtml,time:timeHtml,share:shareHtml,shop:shopHtml,import:importHtml,map:mapHtml,fx:fxHtml,spend:spendHtml})[T.name]();if(T.name==='time')tick();if(T.name==='share')shareBuild();if(T.name==='map')mapInit();if(T.name==='fx'&&!T.started){T.started=1;fxLoad()}if(T.name==='spend')spendAfter();$('#tl').scrollTop=y}
+$('#tlBack').onclick=()=>closeTool();
+
+/* ---------- 1. refund progress ---------- */
+function progSums(){let paid=0,pend=0,todo=0,due=0;S.receipts.filter(mine).forEach(r=>{if(!ok(r))return;const s=rst(r);if(s==='paid')paid+=(r.act!=null&&r.act!==''?+r.act:rExp(r));else if(s==='conf'){pend+=rExp(r);if(overdue(r))due++}else todo++});return{paid,pend,todo,due}}
+function renderProg(){const b=$('#progBtn');if(!b)return;const has=S.receipts.some(mine);b.hidden=!has;if(!has)return;const P=progSums();
+  $('#progT').innerHTML=`已入帳 <b class="num">${yen(P.paid)}</b>／待入帳 <b class="num">${yen(P.pend)}</b>${P.due?`<span>${P.due} 張該去問店家了</span>`:''}`}
+const HOW={card:'卡片',epay:'電子支付',cash:'現金'};
+const HOWJ={card:'クレジットカード',epay:'電子決済',cash:'現金'};
+function jpDate(s){if(!s)return'（日付）';const [y,m,d]=s.split('-');return `${y}年${+m}月${+d}日`}
+function inquiry(r){const how=r.how?HOWJ[r.how]+(r.how==='card'&&r.card4?`（末尾 ${r.card4}）`:''):'（返金方法）';
+  return `お世話になっております。\n${jpDate(r.date)}に貴店（${r.store||'店舗名'}）で免税購入をした者です。\n購入金額：${fmt(rTotal(r))}円（税込）\n旅券氏名：${S.pass||'（パスポートの氏名）'}\n\n${jpDate(r.confAt)}に出国時の税関確認を受けましたが、消費税相当額（約${fmt(rExp(r))}円）の返金がまだ確認できません。\n返金方法：${how}\n\nお手数ですが、返金の状況をご確認いただけますでしょうか。\nよろしくお願いいたします。`}
+function progHtml(){
+  const rs=[...S.receipts].filter(r=>ok(r)||rst(r)!=='none').sort((a,b)=>(b.date||'').localeCompare(a.date||''));const P=progSums();
+  if(!rs.length)return `<div class="empty" style="margin-top:14px">還沒有可以退稅的收據</div>`;
+  return `<div class="summary" style="margin-top:12px"><div class="kv"><span>已入帳</span><b class="num">${yen(P.paid)}</b></div><div class="kv"><span>待入帳（海關確認完）</span><b class="num">${yen(P.pend)}</b></div><div class="kv"><span>還沒去海關確認</span><b class="num">${P.todo} 張</b></div></div>
+  <p class="small muted" style="margin:8px 2px 0">只算「我」的收據。旅伴的收據請旅伴自己追蹤。</p>`+
+  rs.map(r=>{const s=rst(r),od=overdue(r);return `<div class="pc" data-rid="${r.id}"><div class="pc-h"><div class="n"><b>${esc(r.store)}</b><span>${md(r.date)}・${yen(rTotal(r))}${r.owner?'・'+esc(r.owner):''}</span></div>${s==='paid'?`<span class="tag st2">已入帳</span>`:s==='conf'?`<span class="tag st1">已確認</span>`:''}</div>
+   <div class="stseg" role="group" aria-label="狀態">${[['none','未退'],['conf','已確認'],['paid','已入帳']].map(([v,n])=>`<button data-st="${v}" aria-pressed="${s===v}">${n}</button>`).join('')}</div>
+   ${s!=='none'?`<label class="lab">海關確認日</label><input class="inp2" type="date" data-f="confAt" value="${esc(r.confAt||'')}">
+   <label class="lab">退款方式</label><div class="pills">${Object.entries(HOW).map(([k,n])=>`<button class="pill" data-how="${k}" aria-pressed="${r.how===k}">${n}</button>`).join('')}</div>
+   ${r.how==='card'?`<label class="lab">卡片末 4 碼</label><input class="inp2" inputmode="numeric" maxlength="4" data-f="card4" value="${esc(r.card4||'')}" placeholder="例：1234">`:''}
+   <div class="row"><div style="flex:1"><label class="lab">預計金額（¥）</label><input class="inp2 num" inputmode="numeric" data-f="exp" value="${esc(r.exp!=null&&r.exp!==''?r.exp:Math.round(rTax(r)))}"></div>
+   ${s==='paid'?`<div style="flex:1"><label class="lab">實際入帳（¥）</label><input class="inp2 num" inputmode="numeric" data-f="act" value="${esc(r.act??'')}" placeholder="填入帳金額"></div>`:''}</div>`:''}
+   ${od?`<div class="due"><b>該去問店家了</b>：海關確認已經 ${dayDiff(r.confAt,today())} 天，還沒入帳。可以把下面的日文寄給店家或退稅業者。<div class="tpl" id="tpl-${r.id}">${esc(inquiry(r))}</div><button class="btn sec sm" data-copy="${r.id}">複製日文詢問</button></div>`:''}
+  </div>`}).join('');
+}
+$('#tl').addEventListener('click',async e=>{const b=e.target.closest('button');if(!b||!T)return;
+  const card=b.closest('[data-rid]'),r=card&&S.receipts.find(x=>x.id===card.dataset.rid);
+  if(T.name==='prog'&&r){
+    if(b.dataset.st){buzz();r.st=b.dataset.st;if(r.st!=='none'&&!r.confAt)r.confAt=today();if(r.st==='paid'&&!r.paidAt)r.paidAt=today();save();return tlRender(true)}
+    if(b.dataset.how){buzz();r.how=b.dataset.how;save();return tlRender(true)}
+    if(b.dataset.copy){const ok2=await copyText(inquiry(r));toast(ok2?'已複製日文詢問':'複製失敗，請長按文字複製');return}
+  }
+  toolClick(b,e);
+});
+$('#tl').addEventListener('change',e=>{const el=e.target;if(!T)return;
+  const card=el.closest('[data-rid]'),r=card&&S.receipts.find(x=>x.id===card.dataset.rid);
+  if(T.name==='prog'&&r&&el.dataset.f){let v=el.value.trim();if(el.dataset.f==='card4')v=v.replace(/\D/g,'').slice(0,4);if(el.dataset.f==='exp'||el.dataset.f==='act')v=v===''?null:+v.replace(/[^\d]/g,'');r[el.dataset.f]=v;save();renderProg();if(el.dataset.f==='confAt')tlRender(true);return}
+  toolChange(el);
+});
+$('#tl').addEventListener('input',e=>toolInput(e.target));
+$('#tl').addEventListener('submit',e=>{if(e.target.id==='mpForm'){e.preventDefault();const q=$('#mpQ');q.blur();mapSearch(q.value)}});
+
+/* ---------- 2. departure timeline ---------- */
+const bigAp=x=>x&&(x.g==='m'||x.id==='HND-T2');
+const sugEarly=()=>{const x=apGet(S.airport);return x?(bigAp(x)?180:150):180};
+function fl(){S.flt=Object.assign({time:'',travel:60,early:null},S.flt||{});return S.flt}
+const hm=d=>String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+function timeline(){const f=fl();if(!S.dep||!f.time)return null;const T0=new Date(S.dep+'T'+f.time+':00');if(isNaN(T0))return null;
+  const early=f.early??sugEarly(),M=60e3,arrive=new Date(T0-early*M),gate=new Date(T0-40*M);
+  let ck=new Date(+arrive+30*M),sec=new Date(+arrive+60*M);
+  if(sec>gate-10*M){const span=gate-arrive;ck=new Date(+arrive+span*.3);sec=new Date(+arrive+span*.6)}
+  return{T0,early,steps:[['出門',new Date(arrive-f.travel*M),`到機場約 ${f.travel} 分鐘`],['到機場',arrive,''],['海關退稅確認',arrive,'先辦這個，託運之前','hot'],['報到、託運',ck,'確認完才能託運'],['安檢、出境審查',sec,''],['到登機口',gate,'起飛前 40 分鐘（我們的建議）'],['起飛',T0,'']]}}
+let tickH=0;
+function tick(){clearInterval(tickH);const run=()=>{const L=$('#live');if(!L||!T||T.name!=='time'){clearInterval(tickH);return}const tl=timeline();if(!tl){L.hidden=true;return}
+  const now=new Date(),nx=tl.steps.find(s=>s[1]>now);
+  $$('#tline li').forEach((li,i)=>{const t=tl.steps[i][1];li.classList.toggle('past',t<=now&&tl.steps[i]!==nx);li.classList.toggle('now',tl.steps[i]===nx)});
+  if(!nx){L.hidden=false;L.innerHTML='<b>已經起飛了</b>';return}
+  const ms=nx[1]-now;if(ms>24*3600e3){L.hidden=true;return}
+  const s=Math.floor(ms/1e3),p=n=>String(n).padStart(2,'0');L.hidden=false;
+  L.innerHTML=`<div class="small" style="font-weight:700">下一步：${esc(nx[0])}（${hm(nx[1])}）</div><div class="big2">${p(Math.floor(s/3600))}:${p(Math.floor(s/60)%60)}:${p(s%60)}</div><div class="small">當天才會顯示倒數</div>`};
+  run();tickH=setInterval(run,1000)}
+function timeHtml(){const f=fl(),x=apGet(S.airport),tl=timeline(),sug=sugEarly();
+  return `<label class="lab">起飛日期</label><input class="inp2" type="date" data-t="dep" value="${esc(S.dep||'')}">
+  <label class="lab">起飛時間（日本時間）</label><input class="inp2" type="time" data-t="time" value="${esc(f.time)}">
+  <label class="lab">出境機場</label><button class="aprow" data-t="ap" style="margin-top:0"><span class="ico">${PIN}</span><span class="t"><b>${x?esc(apName(x)):'還沒選，點這裡選'}</b><span>${x?(bigAp(x)?'大機場':'地方機場'):''}</span></span><span class="chev">${I.chev}</span></button>
+  <label class="lab">從住處到機場要多久</label><div class="stp"><button data-t="tr-">−</button><output class="num">${f.travel} 分鐘</output><button data-t="tr+">＋</button></div>
+  <label class="lab">提早多久到機場 <span class="ours">我們的建議，不是官方數字</span></label><div class="stp"><button data-t="ea-">−</button><output class="num">${Math.floor((f.early??sug)/60)} 小時${(f.early??sug)%60?` ${(f.early??sug)%60} 分`:''}</output><button data-t="ea+">＋</button></div>
+  <p class="small muted" style="margin:6px 2px 0">建議：大機場 3 小時、地方機場 2.5 小時。官方只說「留充足時間」。${f.early!=null&&f.early!==sug?`<button class="btn text" data-t="ea0">改回建議值</button>`:''}</p>
+  ${tl?`${tl.early<120?`<div class="box-note w" style="margin-top:12px">提早不到 2 小時，退稅可能來不及。</div>`:''}
+  <div class="live" id="live" hidden></div>
+  <ol class="tline" id="tline">${tl.steps.map(([n,t,s,c])=>`<li class="${c||''}"><span class="tm">${hm(t)}</span><span><b>${n}</b>${s?`<span>${s}</span>`:''}</span></li>`).join('')}</ol>
+  <button class="btn sec block" data-t="ics" style="margin-top:14px">${I.cal}加到行事曆（.ics）</button>`:`<div class="box-note" style="margin-top:14px">填好起飛日期和時間，就會算出時間線。</div>`}`}
+function timeICS(){const tl=timeline();if(!tl)return;const z=d=>`${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}T${String(d.getHours()).padStart(2,'0')}${String(d.getMinutes()).padStart(2,'0')}00`;
+  const desc=tl.steps.map(([n,t])=>`${hm(t)} ${n}`).join('\\n')+'\\n（時間是我們的建議，不是官方數字）';
+  const ev=(id,s,e,sum,al)=>['BEGIN:VEVENT',`UID:${id}-${S.dep}@jtf`,`DTSTAMP:${z(new Date())}`,`DTSTART:${z(s)}`,`DTEND:${z(e)}`,`SUMMARY:${sum}`,`DESCRIPTION:${desc}`,'BEGIN:VALARM','ACTION:DISPLAY',`DESCRIPTION:${sum}`,`TRIGGER:-PT${al}M`,'END:VALARM','END:VEVENT'];
+  const st=tl.steps,ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//jtf//timeline//ZH',...ev('leave',st[0][1],st[1][1],'出門去機場（退稅品帶在身上）',15),...ev('customs',st[2][1],st[3][1],'到機場：先辦海關退稅確認，再託運',0),'END:VCALENDAR'].join('\r\n');
+  const u=URL.createObjectURL(new Blob([ics],{type:'text/calendar'})),a=document.createElement('a');a.href=u;a.download='departure-timeline.ics';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);toast('已下載行事曆檔')}
+
+/* ---------- 4. share ---------- */
+const b64u=b=>{let s='';const a=new Uint8Array(b);for(let i=0;i<a.length;i+=0x8000)s+=String.fromCharCode.apply(null,a.subarray(i,i+0x8000));return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')};
+const ub64u=s=>{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const b=atob(s),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a};
+async function pack(obj){const raw=new TextEncoder().encode(JSON.stringify(obj));
+  if(window.CompressionStream){const s=new Blob([raw]).stream().pipeThrough(new CompressionStream('deflate-raw'));return 'z'+b64u(await new Response(s).arrayBuffer())}
+  return 'j'+b64u(raw)}
+async function unpack(str){const k=str[0],a=ub64u(str.slice(1));let bytes=a;
+  if(k==='z'){if(!window.DecompressionStream)throw new Error('nods');const s=new Blob([a]).stream().pipeThrough(new DecompressionStream('deflate-raw'));bytes=new Uint8Array(await new Response(s).arrayBuffer())}
+  return JSON.parse(new TextDecoder().decode(bytes))}
+const shareRs=()=>S.receipts.filter(mine).map(r=>({id:r.id,store:r.store,date:r.date,items:r.items.map(it=>({name:it.name,type:it.type,food:!!it.food,qty:+it.qty||1,price:+it.price||0,gone:!!it.gone}))}));
+function loadQR(){return window.qrcode?Promise.resolve():new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js';s.onload=res;s.onerror=()=>rej(new Error('net'));document.head.appendChild(s)})}
+function shareHtml(){const n=S.receipts.filter(mine).length,ph=S.receipts.filter(r=>mine(r)&&r.photo).length;
+  return `<div class="box-note" style="margin-top:12px">不用伺服器：收據資料直接壓縮在連結裡。<b>照片不會分享出去</b>${ph?`（你有 ${ph} 張收據附照片，只會分享文字）`:''}。</div>
+  <label class="lab">你的名字（旅伴那邊會顯示）</label><input class="inp2" data-s="me" value="${esc(S.me||'')}" placeholder="例：小琪" maxlength="12">
+  <p class="small muted" style="margin:8px 2px">會分享「我」的 ${n} 張收據（不含旅伴的）。</p>
+  ${n?`<div id="shOut"><div class="box-note">產生中…</div></div>`:`<div class="empty">還沒有收據可以分享</div>`}`}
+async function shareBuild(){const O=$('#shOut');if(!O)return;
+  try{const url=location.origin+location.pathname+'#s='+await pack({v:1,from:(S.me||'').trim()||'旅伴',rs:shareRs()});T.url=url;const L=url.length;
+    O.innerHTML=`${L>8000?`<div class="box-note w">資料太大（${fmt(L)} 字元），有些聊天 App 可能會截斷連結。建議分成幾次分享，或少選幾張。</div>`:L>1800?`<div class="box-note w">資料比較大（${fmt(L)} 字元），QR code 可能不好掃，建議直接傳連結。</div>`:''}
+    <div class="qr" id="qr"><span class="small muted">QR code 載入中…</span></div>
+    <label class="lab">分享連結</label><textarea class="lnkbox" readonly id="shLink">${esc(url)}</textarea>
+    <div class="tiles"><button class="btn pri" data-s="copy">複製連結</button>${navigator.share?`<button class="btn sec" data-s="native">用分享選單</button>`:`<button class="btn sec" data-s="copy">再複製一次</button>`}</div>
+    <p class="small muted" style="margin:8px 2px">旅伴用手機打開連結，就能選擇匯入。連結裡有店名和品項，請只傳給旅伴。</p>`;
+    if(L>2900){$('#qr').innerHTML='<span class="small" style="color:var(--warn);font-weight:700">資料太大，做不出 QR code，請用連結</span>';return}
+    try{await loadQR();const q=qrcode(0,'L');q.addData(url);q.make();$('#qr').innerHTML=q.createSvgTag({cellSize:4,margin:2,scalable:true,alt:'分享 QR code'})}catch(e){if($('#qr'))$('#qr').innerHTML='<span class="small muted">沒有網路，QR code 做不出來，請用連結</span>'}
+  }catch(e){O.innerHTML='<div class="box-note w">這支手機的瀏覽器不支援，請更新瀏覽器</div>'}}
+let IMP=null;
+async function checkHash(){const h=location.hash;if(!h.startsWith('#s='))return;
+  try{const d=await unpack(h.slice(3));if(!d||!Array.isArray(d.rs))throw 0;IMP={from:String(d.from||'旅伴').slice(0,12),rs:d.rs.filter(r=>r&&r.id&&Array.isArray(r.items)),name:String(d.from||'旅伴').slice(0,12)}}
+  catch(e){toast('分享連結壞掉了，請對方重傳');history.replaceState(null,'',location.pathname);return}
+  history.replaceState(null,'',location.pathname+location.search);if(T)closeTool(true);openTool('import')}
+function importHtml(){if(!IMP)return '<div class="empty">沒有資料</div>';const have=new Set(S.receipts.map(r=>r.id)),dup=IMP.rs.filter(r=>have.has(r.id)).length;
+  return `<div class="summary" style="margin-top:12px"><div class="lbl">${esc(IMP.from)} 分享了</div><div class="big num" style="font-size:36px">${IMP.rs.length}<small style="font-size:18px"> 張收據</small></div><div class="twd">照片不會跟著分享</div></div>
+  <div class="list" style="margin-top:12px">${IMP.rs.map(r=>`<div class="card"><div class="rc-name">${esc(r.store)}</div><div class="rc-meta">${md(r.date)}・${r.items.reduce((s,i)=>s+(+i.qty||1),0)} 件・${yen(r.items.reduce((s,i)=>s+(+i.price||0)*(+i.qty||1),0))}${have.has(r.id)?'・已經有了':''}</div></div>`).join('')}</div>
+  ${dup?`<p class="small muted" style="margin:8px 2px">${dup} 張已經在你手機裡，匯入時會更新成最新內容。</p>`:''}
+  <label class="lab">旅伴的名字</label><input class="inp2" data-i="name" value="${esc(IMP.name)}" maxlength="12">
+  <div style="display:grid;gap:10px;margin-top:14px"><button class="btn pri block" data-i="mate">匯入成旅伴的收據</button><button class="btn sec block" data-i="merge">合併成我的收據</button><button class="btn text" data-i="cancel">不要匯入</button></div>
+  <p class="small muted" style="margin:8px 2px">「旅伴」：分開標示，不算進你的退稅金額，機場模式可以分別確認在誰身上。<br>「合併」：當成你自己的收據。</p>`}
+function doImport(asMate){const nm=(IMP.name||'旅伴').trim()||'旅伴';let add=0,upd=0;
+  IMP.rs.forEach(x=>{const r={id:x.id,store:String(x.store||'').slice(0,60),date:String(x.date||''),photo:null,owner:asMate?nm:'',items:x.items.slice(0,60).map(it=>({name:String(it.name||'').slice(0,80),type:it.type==='c'?'c':'g',food:!!it.food,qty:Math.max(1,+it.qty||1),price:Math.max(0,+it.price||0),gone:!!it.gone}))};
+    const i=S.receipts.findIndex(y=>y.id===r.id);if(i>=0){r.st=S.receipts[i].st;r.confAt=S.receipts[i].confAt;r.how=S.receipts[i].how;r.photo=S.receipts[i].photo;S.receipts[i]=r;upd++}else{S.receipts.push(r);add++}});
+  if(!save())return;IMP=null;closeTool();toast(`已匯入 ${add} 張${upd?`、更新 ${upd} 張`:''}`)}
+
+/* ---------- 5. shopping list ---------- */
+const CAT=[
+ // [id, 中文名, 日文名, 規格, 稅込參考價|null, 食品, 來源網址, 來源說明]
+ ['salonpas','撒隆巴斯 Ae','サロンパスAe','140 枚',2068,0,'https://www.hisamitsu.co.jp/healthcare/products/001.html','久光製藥 希望小売價（含稅）'],
+ ['roihi','ROIHI 溫感穴位貼','ロイヒつぼ膏','156 枚',1452,0,'https://www.nichiban.co.jp/general/health/stiff_shoulder/roihi/','米其邦 希望小売價 未稅 1,320 換算'],
+ ['ryukaku','龍角散 直接含 薄荷','龍角散ダイレクト スティック ミント','16 包',770,0,'https://faq.ryukakusan.co.jp/%E3%80%90%E9%BE%8D%E8%A7%92%E6%95%A3%E3%83%BB%E9%BE%8D%E8%A7%92%E6%95%A3%E3%83%80%E3%82%A4%E3%83%AC%E3%82%AF%E3%83%88%E3%80%91%E4%BE%A1%E6%A0%BC%E3%81%AF%E3%81%84%E3%81%8F%E3%82%89%E3%81%A7%E3%81%99%E3%81%8B%EF%BC%9F-680762c239cf563a56fd6eed','龍角散 官方 FAQ 希望小売價 未稅 700 換算'],
+ ['eveqdx','EVE QUICK 頭痛藥 DX','イブクイック頭痛薬DX','40 錠',2079,0,'https://www.ssp.co.jp/product/detail/eveqdx/','SS 製藥 希望小売價（含稅）'],
+ ['alinamin','合利他命 EX Plus','アリナミンEXプラス','270 錠',8778,0,'https://alinamin.jp/lineup/alinaminexplus.html','Alinamin 製藥 希望小売價（含稅）'],
+ ['pabron','百保能 黃金 A 微粒','パブロンゴールドA〈微粒〉','44 包',3177,0,'https://www.catalog-taisho.com/category/02/001/04515/','大正製藥 希望小売價（含稅）'],
+ ['muhi','液體無比 S2a','液体ムヒS2a','50 mL',858,0,'https://www.ikedamohando.co.jp/products/l-muhi-s.html','池田模範堂 希望小売價（含稅）'],
+ ['hythiol','Hythiol-C Plus 2','ハイチオールCプラス2','270 錠',3718,0,'https://www.ssp.co.jp/product/detail/hcp2/','SS 製藥 希望小売價（含稅）'],
+ ['lycee','樂敦 Lycée 眼藥水','ロートリセb','8 mL',770,0,'https://jp.rohto.com/rohto-lycee/eyedrop/','樂敦製藥 希望小売價（含稅）'],
+ ['vactive','樂敦 V Active 眼藥水','ロートVアクティブ','13 mL',1430,0,'https://jp.rohto.com/v-active/eyedrop/','樂敦製藥 希望小売價（含稅）'],
+ ['santefx','參天 FX Neo 眼藥水','サンテFXネオ','12 mL',null,0,'',''],
+ ['eyebon','小林 洗眼液 Eyebon','アイボン','500 mL',1320,0,'https://www.kobayashi.co.jp/seihin/abn/','小林製藥 希望小売價 未稅 1,200 換算'],
+ ['netsusama','小林 退熱貼（大人）','熱さまシート','16 枚',847,0,'https://www.kobayashi.co.jp/seihin/nss/','小林製藥 希望小売價 未稅 770 換算'],
+ ['dhclip','DHC 護唇膏','DHC薬用リップクリーム','1.5 g',770,0,'https://www.dhc.co.jp/goods/13.html','DHC 官方商店（含稅）'],
+ ['melano','Melano CC 美容液','メラノCC 薬用しみ集中対策 プレミアム美容液','20 mL',1628,0,'https://www.shop.rohto.co.jp/category/skincare/melanocc/168583.html','樂敦官方商店（含稅；廠商標「開放價格」）'],
+ ['biore','Biore 水感防曬','ビオレUV アクアリッチ ウォータリーエッセンス','70 g',null,0,'',''],
+ ['hadalabo','肌研 極潤化妝水','肌ラボ 極潤ヒアルロン液','170 mL',null,0,'',''],
+ ['curel','Curél 潤浸保濕面霜','キュレル 潤浸保湿フェイスクリーム','40 g',null,0,'',''],
+ ['shiroi','白色戀人','白い恋人','24 枚',2289,1,'https://shop.ishiya.co.jp/products/shiroi-koibito_24','石屋製菓 官方商店（含稅）'],
+ ['banana','東京芭娜娜','東京ばな奈「見ぃつけたっ」','8 個',1296,1,'https://www.tokyobanana.jp/products/banana.html','東京ばな奈 官網參考價（含稅）'],
+ ['royce','ROYCE 生巧克力 牛奶','ロイズ 生チョコレート［オーレ］','20 粒',1215,1,'https://www.royce.com/goods/detail/?o_no=2054','ROYCE 官方商店（含稅）'],
+ ['pokkuru','薯條三兄弟','じゃがポックル','18 g×10 袋',1211,1,'https://shop.calbee.jp/marche/shop/g/gMR21001/','Calbee 官方商店（含稅）'],
+ ['cigare','YOKU MOKU 雪茄蛋捲','ヨックモック シガール','20 本',1998,1,'https://yokumoku.co.jp/products/1010011201030','YOKU MOKU 官網（含稅）'],
+ ['marusei','六花亭 葡萄奶油夾心餅','六花亭 マルセイバターサンド','10 個',1720,1,'https://www.anafesta.com/airports/cts/23_0217/','ANA FESTA 機場店（含稅）'],
+ ['milkcheese','東京牛奶起司工場 鹽味卡門貝爾餅乾','東京ミルクチーズ工場 ソルト＆カマンベールクッキー','9 枚',1458,1,'https://sucreyshopping.jp/shop/e/ecategory-tmcf-sccookie/','官方商店（含稅）'],
+ ['kitkat','KitKat 抹茶','キットカット 抹茶','',null,1,'','']
+];
+const CAT_DATE='2026/11/19';
+const catGet=id=>CAT.find(c=>c[0]===id);
+function shopCalc(){const L=S.shop||[];let inc=0,tax=0,miss=0;L.forEach(it=>{if(it.price===''||it.price==null){miss++;return}const p=(+it.price||0)*(+it.qty||1),r=it.food?8:10;inc+=p;tax+=p*r/(100+r)});return{inc,tax,ex:inc-tax,miss}}
+function shopSum(){const c=shopCalc(),gap=Math.max(0,5000-c.ex),pct=Math.min(100,c.ex/50);
+  return `<div class="kv"><span>合計（含稅）</span><b class="num">${yen(c.inc)}</b></div><div class="kv"><span>可退（約）</span><b class="num" style="color:var(--blue)">${yen(c.tax)}</b></div>
+  <div class="kv"><span>未稅合計</span><b class="num">${yen(c.ex)}</b></div><div class="bar"><i style="width:${pct}%"></i></div>
+  <div class="small" style="font-weight:700;color:${gap?'var(--warn)':'var(--ok)'}">${gap?`離同店同日 ¥5,000（未稅）還差 ${yen(gap)}`:'已達同店同日 ¥5,000 門檻'}</div>${c.miss?`<div class="small muted">${c.miss} 樣還沒填價格，沒算進去</div>`:''}`}
+function shopHtml(){S.shop=S.shop||[];const inL=new Set(S.shop.map(x=>x.pid).filter(Boolean));
+  const row=c=>`<div class="ci"><div class="n"><b>${esc(c[1])} <span style="display:inline;font-weight:500">${esc(c[3])}</span></b><span lang="ja">${esc(c[2])}</span><span>${c[4]!=null?`參考價：<a href="${c[6]}" target="_blank" rel="noopener">${esc(c[7])} ↗</a>（${CAT_DATE} 查）`:'參考價：查不到，加入後自己填'}</span></div><span class="pr num">${c[4]!=null?yen(c[4]):'—'}</span><button class="add1" data-add="${c[0]}" aria-pressed="${inL.has(c[0])}">${inL.has(c[0])?'＋1':'加入'}</button></div>`;
+  return `<div class="disc">價格僅供參考，以店內為準。參考價是廠商建議售價或官方商店價，店裡通常更便宜。</div>
+  <div class="sl" id="slBox"><h2 style="margin:0 0 6px">購物清單 <span class="small muted" style="font-weight:500">${S.shop.length} 樣</span></h2>
+   ${S.shop.length?S.shop.map((it,i)=>`<div class="sli"><span class="nm">${esc(it.name)}</span><div class="stp"><button data-q="${i}" data-d="-1" aria-label="減少">−</button><output class="num">${it.qty}</output><button data-q="${i}" data-d="1" aria-label="增加">＋</button></div><input class="num" inputmode="numeric" data-pr="${i}" value="${it.price??''}" placeholder="填價格" aria-label="含稅單價"><button class="rmx" data-rm="${i}" aria-label="移除">✕</button></div>`).join(''):'<div class="small muted">從下面點「加入」</div>'}
+   <div id="slSum" style="margin-top:8px">${shopSum()}</div>
+   <p class="small muted" style="margin:6px 0">價格欄是含稅單價。同一家店、同一天買的才能合起來算門檻。</p>
+   ${S.shop.length?`<label class="lab">店名（轉成收據用）</label><input class="inp2" data-sh="store" value="${esc(T.store||'')}" placeholder="例：松本清 心齋橋店">
+   <div class="tiles"><button class="btn pri" data-sh="toR">轉成收據</button><button class="btn sec" data-sh="clear">清空清單</button></div>`:''}
+  </div>
+  <div class="row" style="margin-top:14px"><input class="inp2" data-sh="cname" placeholder="自己加一樣（名稱）" style="flex:1"><button class="btn sec sm" data-sh="cadd">加入</button></div>
+  <h2>藥妝</h2><div class="cat">${CAT.filter(c=>!c[5]).map(row).join('')}</div>
+  <h2>伴手禮（食品，稅率 8%）</h2><div class="cat">${CAT.filter(c=>c[5]).map(row).join('')}</div>`}
+
+/* ---------- tool dispatch ---------- */
+function toolClick(b){const d=b.dataset;
+  if(T.name==='map')return mapClick(b);if(T.name==='fx')return fxClick(b);if(T.name==='spend')return spendClick(b);
+  if(T.name==='time'){const f=fl();
+    if(d.t==='ap')return openApk(S.airport?'list':undefined);
+    if(d.t==='tr-'||d.t==='tr+'){buzz();f.travel=Math.max(10,Math.min(300,f.travel+(d.t==='tr+'?10:-10)));save();return tlRender(true)}
+    if(d.t==='ea-'||d.t==='ea+'){buzz();f.early=Math.max(60,Math.min(300,(f.early??sugEarly())+(d.t==='ea+'?15:-15)));save();return tlRender(true)}
+    if(d.t==='ea0'){f.early=null;save();return tlRender(true)}
+    if(d.t==='ics')return timeICS();}
+  if(T.name==='share'){if(d.s==='copy')copyText(T.url).then(o=>toast(o?'已複製連結':'複製失敗，請長按連結'));if(d.s==='native')navigator.share({title:'退稅收據',url:T.url}).catch(()=>{});return}
+  if(T.name==='import'){if(d.i==='mate')return doImport(true);if(d.i==='merge')return doImport(false);if(d.i==='cancel'){IMP=null;return closeTool()}}
+  if(T.name==='shop'){const L=S.shop;
+    if(d.add){buzz();const c=catGet(d.add),ex=L.find(x=>x.pid===c[0]);if(ex)ex.qty++;else L.push({pid:c[0],name:c[1]+(c[3]?' '+c[3]:''),price:c[4],qty:1,food:!!c[5]});save();toast('已加入：'+c[1]);return tlRender(true)}
+    if(d.q!==undefined){buzz();const it=L[+d.q];it.qty=Math.max(1,it.qty+(+d.d));save();return tlRender(true)}
+    if(d.rm!==undefined){L.splice(+d.rm,1);save();return tlRender(true)}
+    if(d.sh==='cadd'){const el=$('[data-sh="cname"]'),n=el.value.trim();if(!n){toast('先填名稱');return}L.push({pid:'',name:n.slice(0,40),price:null,qty:1,food:false});save();return tlRender(true)}
+    if(d.sh==='clear'){if(!confirm('清空購物清單？'))return;S.shop=[];save();return tlRender(true)}
+    if(d.sh==='toR'){const st=(T.store||'').trim();if(!st){toast('先填店名');$('[data-sh="store"]').focus();return}
+      const items=L.filter(it=>it.price!==''&&it.price!=null);if(!items.length){toast('先填價格');return}
+      S.receipts.push({id:uid(),store:st,date:today(),photo:null,items:items.map(it=>({name:it.name,type:'c',food:!!it.food,qty:it.qty,price:+it.price}))});
+      if(!save())return;const left=L.length-items.length;S.shop=L.filter(it=>!(it.price!==''&&it.price!=null));save();toast(`已轉成收據${left?`（${left} 樣沒價格，留在清單）`:''}`);return tlRender(true)}
+  }}
+function toolChange(el){const d=el.dataset;
+  if(T.name==='spend')return spendInput(el);
+  if(T.name==='time'){if(d.t==='dep'){S.dep=el.value;save();syncSW()}if(d.t==='time'){fl().time=el.value;save()}return tlRender(true)}
+  if(T.name==='share'&&d.s==='me'){S.me=el.value.trim().slice(0,12);save();shareBuild();return}
+  if(T.name==='shop'&&d.pr!==undefined){const v=el.value.replace(/[^\d]/g,'');S.shop[+d.pr].price=v===''?null:+v;save();$('#slSum').innerHTML=shopSum();return}}
+function toolInput(el){if(!T)return;const d=el.dataset;
+  if(T.name==='spend')return spendInput(el);
+  if(T.name==='import'&&d.i==='name')IMP.name=el.value;
+  if(T.name==='shop'&&d.sh==='store')T.store=el.value;
+  if(T.name==='shop'&&d.pr!==undefined){const v=el.value.replace(/[^\d]/g,'');S.shop[+d.pr].price=v===''?null:+v;$('#slSum').innerHTML=shopSum()}}
+
+/* ---------- 3. customs view ---------- */
+let CV=null,wake=null;
+async function wakeOn(){try{if('wakeLock' in navigator){wake=await navigator.wakeLock.request('screen');return true}}catch(e){}return false}
+function wakeOff(){try{wake&&wake.release()}catch(e){}wake=null}
+document.addEventListener('visibilitychange',()=>{if(CV&&document.visibilityState==='visible')wakeOn().then(o=>{CV.wl=o;const w=$('#cvWl');if(w)w.textContent=o?'螢幕會保持常亮':'這支手機不支援保持常亮，請手動調整'})});
+const owners=()=>{const s=new Set(S.receipts.map(r=>r.owner||''));return [...s].sort((a,b)=>a===''?-1:b===''?1:a.localeCompare(b))};
+function openCv(){buzz();const os=owners();CV={who:os.includes('')?'':os[0],wl:false};$('#cv').classList.add('on');document.body.style.overflow='hidden';history.pushState({ov:'cv'},'');cvRender();wakeOn().then(o=>{if(!CV)return;CV.wl=o;const w=$('#cvWl');if(w)w.textContent=o?'螢幕會保持常亮':'這支手機不支援保持常亮，請手動調整'})}
+function closeCv(fromPop){if(!CV)return;$('#cv').classList.remove('on');wakeOff();CV=null;if(!A&&!T)document.body.style.overflow='';if(!fromPop&&history.state&&history.state.ov==='cv'){skipPop++;history.back()}}
+function cvRender(){const os=owners(),rs=S.receipts.filter(r=>(r.owner||'')===CV.who).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+  $('#cvBody').innerHTML=`
+  ${os.length>1?`<div class="who">${os.map(o=>`<button data-who="${esc(o)}" aria-pressed="${o===CV.who}">${o?esc(o):'本人'}</button>`).join('')}</div>`:''}
+  <div class="cv-pass"><label for="cvPass">旅券氏名 Passport Name <span class="zh">（護照姓名，只存在這支手機）</span></label><input id="cvPass" autocomplete="off" autocapitalize="characters" spellcheck="false" value="${esc(CV.who?'':(S.pass||''))}" placeholder="${CV.who?'旅伴請用自己的手機':'例：WANG XIAOQI'}" ${CV.who?'disabled':''}></div>
+  ${rs.length?rs.map(r=>`<div class="cv-r"><div class="cv-rh"><b>${esc(r.store)||'（店名）'}</b><span>購入日 ${esc(jpDate(r.date))}</span></div>
+   <table><thead><tr><th>品名 <span class="zh">品項</span></th><th class="q">数量</th><th class="p">金額(税込)</th></tr></thead><tbody>
+   ${r.items.map(it=>`<tr class="${it.gone?'gone':''}"><td>${esc(it.name)||'—'}${it.gone?`<br><span class="gtag">使用済み／手元にない</span>`:''}</td><td class="q num">${+it.qty||1}</td><td class="p num">${fmt((+it.price||0)*(+it.qty||1))}円</td></tr>`).join('')}
+   <tr class="tot"><td><b>合計</b> <span class="zh">${rCount(r)} 点</span></td><td></td><td class="p num"><b>${fmt(rTotal(r))}円</b></td></tr></tbody></table></div>`).join(''):`<div class="note">レシートがありません <span class="zh">（沒有收據）</span></div>`}
+  <div class="note">「使用済み／手元にない」以外の免税品は、すべて手元にあります。<br><span class="zh">除了標示「用掉／不在身上」的商品，其他免稅品都在身上。</span></div>
+  <div class="wl" id="cvWl">${CV.wl?'螢幕會保持常亮':'正在嘗試讓螢幕保持常亮…'}</div>`}
+$('#cv').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||!CV)return;if(b.id==='cvX')return closeCv();if(b.dataset.who!==undefined){buzz();CV.who=b.dataset.who;cvRender()}});
+$('#cv').addEventListener('input',e=>{if(e.target.id==='cvPass'&&!CV.who){S.pass=e.target.value.toUpperCase().slice(0,60);save()}});
+
+/* ---------- home wiring ---------- */
+$('#progBtn').onclick=()=>openTool('prog');
+$$('[data-tool]').forEach(b=>b.onclick=()=>{const t=b.dataset.tool;if(t==='cv')return openCv();openTool(t)});
+window.addEventListener('hashchange',checkHash);
+
+/* ================= v6 ================= */
+const II6={
+ map:sv('<path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/>'),
+ fx:sv('<path d="M4 18l5-6 4 3 7-9"/><path d="M15 6h5v5"/>'),
+ wallet:sv('<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 15h2"/>'),
+ pin:sv('<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>'),
+ nav:sv('<path d="M3 11l18-8-8 18-2-8z"/>'),
+ loc:sv('<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>'),
+ dl:sv('<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>')
+};
+Object.assign(I,II6);
+function fetchT(u,ms,opt){const c=new AbortController(),h=setTimeout(()=>c.abort(),ms);return fetch(u,Object.assign({signal:c.signal},opt||{})).finally(()=>clearTimeout(h))}
+const offlineNow=()=>navigator.onLine===false;
+const fx1=()=>S.fx&&S.fx.rate?S.fx.rate:null;
+const ntd=n=>'NT$'+Math.round(n).toLocaleString('zh-TW');
+
+/* ---------- 6. 退稅商店地圖 ---------- */
+const DEF_AT={lat:34.6727,lon:135.5017,name:'心齋橋（預設地點）'};
+const LEAF='https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/';
+const OVP=[['https://overpass-api.de/api/interpreter',30000],['https://maps.mail.ru/osm/tools/overpass/api/interpreter',60000],['https://overpass.kumi.systems/api/interpreter',30000]];
+const MCAT={don:['唐吉訶德','#C4A27A'],chemist:['藥妝店','#B88A8A'],department_store:['百貨公司','#7E8FA8'],electronics:['電器行','#9C8AAB'],mall:['購物中心','#A88B78'],other:['其他商店','#9A9590']};
+const OFFI=[
+  ['觀光廳：旅行者退稅說明（官方）','https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00021.html'],
+  ['JNTO 日本免稅制度（官方繁中）','https://www.japan.travel/tw/plan/japans-tax-exemption/'],
+  ['Taxfree.jp 免稅店地圖（協會網站，非政府）','https://taxfree.jp/ja/shop-map/']
+];
+let M=null,leafP=null,lastGeo=0;
+function loadLeaflet(){if(window.L&&window.L.map)return Promise.resolve();if(leafP)return leafP;
+  leafP=new Promise((res,rej)=>{const l=document.createElement('link');l.rel='stylesheet';l.href=LEAF+'leaflet.css';l.integrity='sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';l.crossOrigin='';document.head.appendChild(l);
+    const s=document.createElement('script');s.src=LEAF+'leaflet.js';s.integrity='sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';s.crossOrigin='';s.onload=()=>res();s.onerror=()=>{leafP=null;s.remove();rej(new Error('leaflet'))};document.head.appendChild(s)});
+  return leafP}
+const hav=(a,b,c,d)=>{const R=6371e3,r=Math.PI/180,x=Math.sin((c-a)*r/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin((d-b)*r/2)**2;return 2*R*Math.asin(Math.sqrt(x))};
+const dist=m=>m<1000?Math.round(m/10)*10+' 公尺':(m/1000).toFixed(1)+' 公里';
+const taxTagged=t=>t.tax_free==='consumption_tax'||t.tax_free==='yes'||t['tax_free:consumption_tax']==='yes'||t.duty_free==='yes'||t.duty_free==='refund';
+const isDon=t=>/ドン・?キホーテ|ドンキ|Don ?Quijote|MEGAドン/i.test((t.name||'')+'|'+(t.brand||'')+'|'+(t['name:en']||''));
+function mcat(t){if(isDon(t))return'don';if(MCAT[t.shop]&&t.shop!=='other')return t.shop;return'other'}
+function ovQ(lat,lon,r){const a=`(around:${r},${lat},${lon})`;return `[out:json][timeout:25];(nwr["shop"~"^(chemist|department_store|electronics|mall)$"]${a};nwr["shop"]["name"~"ドン・キホーテ|ドンキ|Don Quijote|MEGAドン"]${a};nwr["shop"]["brand"~"ドン・キホーテ|Don Quijote"]${a};nwr["tax_free"]${a};nwr["tax_free:consumption_tax"]${a};nwr["duty_free"~"^(yes|refund)$"]${a};);out tags center 300;`}
+async function overpass(lat,lon,r,onTry){
+  const k='jtf_ov_'+lat.toFixed(3)+'_'+lon.toFixed(3)+'_'+r;
+  try{const c=JSON.parse(localStorage.getItem(k)||'null');if(c&&Date.now()-c.t<6*3600e3)return c.d}catch(e){}
+  let last=null,n=0;
+  for(let round=0;round<2;round++)for(const [ep,ms] of OVP){n++;if(onTry)onTry(n);if(offlineNow())throw new Error('offline');
+    try{const res=await fetchT(ep,ms,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'data='+encodeURIComponent(ovQ(lat,lon,r))});
+      if(!res.ok){last=new Error('http '+res.status);await new Promise(z=>setTimeout(z,1500));continue}const j=await res.json();if(!j||!Array.isArray(j.elements)){last=new Error('bad');continue}
+      const d=j.elements.map(e=>{const t=e.tags||{},la=e.lat??e.center?.lat,lo=e.lon??e.center?.lon;if(la==null)return null;
+        return{id:e.type[0]+e.id,type:e.type,oid:e.id,lat:la,lon:lo,t:{name:t.name||'',zh:t['name:zh-Hant']||t['name:zh_TW']||t['name:zh']||'',en:t['name:en']||'',branch:t.branch||'',shop:t.shop||'',brand:t.brand||'',tax:taxTagged(t)},cat:mcat(t)}}).filter(Boolean);
+      const seen=new Set(),out=d.filter(x=>{const kk=x.t.name+'@'+x.lat.toFixed(4)+x.lon.toFixed(4);if(seen.has(kk))return false;seen.add(kk);return true});
+      try{Object.keys(localStorage).filter(x=>x.startsWith('jtf_ov_')).sort().slice(0,-8).forEach(x=>localStorage.removeItem(x));localStorage.setItem(k,JSON.stringify({t:Date.now(),d:out}))}catch(e){}
+      return out}catch(e){last=e}}
+  throw last||new Error('overpass')}
+async function geocode(q){
+  const ck='jtf_geo',cache=(()=>{try{return JSON.parse(localStorage.getItem(ck)||'{}')}catch(e){return{}}})();
+  if(cache[q])return cache[q];
+  const wait=1100-(Date.now()-lastGeo);if(wait>0)await new Promise(r=>setTimeout(r,wait));lastGeo=Date.now();
+  const u='https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&countrycodes=jp&accept-language=zh-TW,ja&q='+encodeURIComponent(q);
+  const r=await fetchT(u,15000);if(!r.ok)throw new Error('nominatim '+r.status);
+  const j=(await r.json()).map(x=>({lat:+x.lat,lon:+x.lon,name:x.name||x.display_name.split(',')[0],full:x.display_name}));
+  const ks=Object.keys(cache);if(ks.length>40)delete cache[ks[0]];cache[q]=j;try{localStorage.setItem(ck,JSON.stringify(cache))}catch(e){}
+  return j}
+function shopName(s){return s.t.name||s.t.zh||s.t.en||`（OSM 沒有店名的${MCAT[s.cat][0]}）`}
+function mapHtml(){const at=S.mapAt||DEF_AT;
+  return `<div class="disc">地圖上的店來自 OpenStreetMap 志工資料，<b>不保證一定能退稅</b>。結帳前請看店門口或收銀台的「Tax-Free」標誌，或問店員。</div>
+  <form class="row" id="mpForm" style="margin-top:12px" autocomplete="off"><input class="inp2" id="mpQ" type="search" enterkeyhint="search" placeholder="輸入飯店或地點，例：心齋橋 飯店名" style="flex:1" maxlength="80"><button class="btn pri sm" type="submit">搜尋</button></form>
+  <div id="mpRes"></div>
+  <div class="row" style="margin-top:10px;flex-wrap:wrap"><button class="pill" data-m="geo">${I.loc}用我的位置</button><button class="pill" data-m="def">心齋橋</button></div>
+  <div class="mp-at" id="mpAt">${I.pin}<span>中心：<b>${esc(at.name)}</b></span></div>
+  <div class="mp-wrap"><div id="mpMap" class="mp-map" role="region" aria-label="退稅商店地圖"></div><div class="mp-st" id="mpSt" hidden></div></div>
+  <div class="lab">範圍</div><div class="pills" id="mpR">${[500,1000,1500].map(r=>`<button class="pill" data-r="${r}" aria-pressed="${(T.r||1000)===r}">${r<1000?r+' 公尺':r/1000+' 公里'}</button>`).join('')}</div>
+  <div class="lab">分類</div><div class="pills" id="mpF"></div>
+  <div id="mpCard"></div>
+  <div id="mpList"></div>
+  <h2>官方資訊和免稅店查詢</h2>
+  <div class="mp-off">${OFFI.map(o=>`<a class="btn sec block" href="${o[1]}" target="_blank" rel="noopener">${esc(o[0])} ↗</a>`).join('')}</div>
+  <p class="mp-src">地圖圖資 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> 貢獻者。店家資料：Overpass API（OSM）。地點搜尋：Nominatim（OSM）。日本官方的 JNTO 免稅店搜尋已停用，上方 Taxfree.jp 地圖由日本購物觀光協會提供。</p>`}
+function mapSt(kind,msg){const el=$('#mpSt');if(!el)return;if(!kind){el.hidden=true;return}el.hidden=false;el.className='mp-st '+kind;
+  el.innerHTML=kind==='load'?`<span class="spin" aria-hidden="true"></span><b>${msg||'正在找附近的店…'}</b><span>OSM 免費伺服器有時要 10–30 秒</span>`:
+  `<b>${msg}</b>${kind==='off'||kind==='err'?'<button class="btn sec sm" data-m="retry">再試一次</button>':''}${kind==='none'?'<button class="btn sec sm" data-m="wider">擴大到 1.5 公里</button>':''}`}
+async function mapInit(){
+  if(offlineNow()){mapSt('off','沒有網路，地圖和店家都讀不到。連上網路後再試一次。');return}
+  mapSt('load','正在載入地圖…');
+  try{await loadLeaflet()}catch(e){mapSt('off','地圖元件載入失敗，可能沒有網路。');return}
+  if(!T||T.name!=='map'||!$('#mpMap'))return;
+  const at=S.mapAt||DEF_AT;
+  if(M&&M.map){try{M.map.remove()}catch(e){}}
+  const map=L.map('mpMap',{zoomControl:true,attributionControl:true,tap:true}).setView([at.lat,at.lon],16);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> 貢獻者'}).addTo(map);
+  map.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
+  M={map,layer:L.layerGroup().addTo(map),me:null,data:[],sel:null,f:'all'};
+  setTimeout(()=>map.invalidateSize(),350);
+  mapCenter(at,false);
+  if(!S.mapAt&&navigator.permissions){try{const p=await navigator.permissions.query({name:'geolocation'});if(p.state==='granted')return mapGeo(true)}catch(e){}}
+  mapLoad()}
+function mapCenter(at,fly){if(!M)return;const ll=[at.lat,at.lon];
+  if(M.me)M.me.remove();M.me=L.marker(ll,{icon:L.divIcon({className:'mp-me',html:'<span></span>',iconSize:[24,24]}),keyboard:false,interactive:false}).addTo(M.map);
+  fly?M.map.setView(ll,16):null;const a=$('#mpAt');if(a)a.innerHTML=`${I.pin}<span>中心：<b>${esc(at.name)}</b></span>`}
+async function mapLoad(){if(!M)return;const at=S.mapAt||DEF_AT,r=T.r||1000;
+  if(offlineNow()){mapSt('off','沒有網路，查不到附近店家。');return}
+  mapSt('load');const my=M.tok=(M.tok||0)+1;
+  try{const d=await overpass(at.lat,at.lon,r,n=>{if(M&&M.tok===my&&n>1)mapSt('load',`伺服器比較忙，換一台再試（第 ${n} 次）…`)});if(!M||M.tok!==my)return;
+    d.forEach(s=>s.d=hav(at.lat,at.lon,s.lat,s.lon));d.sort((a,b)=>(b.t.tax-a.t.tax)||a.d-b.d);M.data=d;M.sel=null;
+    if(!d.length){mapSt('none',`${r<1000?r+' 公尺':r/1000+' 公里'}內沒找到藥妝、百貨、電器行或唐吉訶德。`)}else mapSt();
+    mapDraw()}
+  catch(e){if(!M||M.tok!==my)return;mapSt(offlineNow()?'off':'err',offlineNow()?'網路斷了，查不到附近店家。':'店家資料伺服器沒有回應（可能太忙或沒網路）。');M.data=[];mapDraw()}}
+function mapDraw(){if(!M)return;M.layer.clearLayers();const f=M.f,ds=M.data.filter(s=>f==='all'||(f==='tax'?s.t.tax:s.cat===f));
+  ds.forEach(s=>{const c=MCAT[s.cat][1],m=L.marker([s.lat,s.lon],{icon:L.divIcon({className:'mp-pin'+(s.t.tax?' tax':'')+(M.sel===s.id?' sel':''),html:`<span style="background:${c}"></span>`,iconSize:[44,44]}),title:shopName(s),alt:shopName(s)});m.on('click',()=>mapSel(s.id,false));m.addTo(M.layer)});
+  const cnt={};M.data.forEach(s=>{cnt[s.cat]=(cnt[s.cat]||0)+1});const nt=M.data.filter(s=>s.t.tax).length;
+  const F=$('#mpF');if(F)F.innerHTML=`<button class="pill" data-f="all" aria-pressed="${f==='all'}">全部 ${M.data.length}</button>`+(nt?`<button class="pill" data-f="tax" aria-pressed="${f==='tax'}">OSM 標示可退稅 ${nt}</button>`:'')+Object.keys(MCAT).filter(k=>cnt[k]).map(k=>`<button class="pill" data-f="${k}" aria-pressed="${f===k}"><i class="dot" style="background:${MCAT[k][1]}"></i>${MCAT[k][0]} ${cnt[k]}</button>`).join('');
+  const Ls=$('#mpList');if(Ls)Ls.innerHTML=ds.length?`<div class="lab">附近店家（${ds.length}，依距離）</div>`+ds.slice(0,60).map(s=>`<button class="mp-row" data-s="${s.id}"><i class="dot" style="background:${MCAT[s.cat][1]}"></i><span class="n"><b>${esc(shopName(s))}${s.t.branch?' '+esc(s.t.branch):''}</b><span>${MCAT[s.cat][0]}・${dist(s.d)}・${s.t.tax?'<em class="ok">OSM 標示可退稅</em>':'通常有退稅，看店門口標誌'}</span></span><span class="chev">${I.chev}</span></button>`).join('')+(ds.length>60?`<p class="mp-src">只列最近的 60 家，放大地圖看更多。</p>`:''):'';
+  mapCard()}
+function mapSel(id,fly){if(!M)return;M.sel=id;const s=M.data.find(x=>x.id===id);if(s&&fly!==false)M.map.setView([s.lat,s.lon],Math.max(M.map.getZoom(),17));mapDraw();const c=$('#mpCard');if(c)c.scrollIntoView({block:'nearest'})}
+function mapCard(){const el=$('#mpCard');if(!el||!M)return;const s=M.data.find(x=>x.id===M.sel);if(!s){el.innerHTML='';return}
+  const nav=`https://www.google.com/maps/dir/?api=1&destination=${s.lat.toFixed(6)},${s.lon.toFixed(6)}&travelmode=walking`;
+  el.innerHTML=`<div class="pc mp-card"><div class="pc-h"><i class="dot big" style="background:${MCAT[s.cat][1]}"></i><div class="n"><b>${esc(shopName(s))}${s.t.branch?' '+esc(s.t.branch):''}</b><span>${MCAT[s.cat][0]}・離中心 ${dist(s.d)}（走路約 ${Math.max(1,Math.round(s.d/75))} 分）</span>${s.t.zh&&s.t.zh!==s.t.name?`<span>${esc(s.t.zh)}</span>`:''}</div></div>
+    <div class="${s.t.tax?'mp-ok':'mp-maybe'}">${s.t.tax?'OSM 標示可退稅（志工標註，仍以店家公告為準）':'通常有退稅，請看店門口 Tax-Free 標誌'}</div>
+    <div class="row" style="margin-top:10px"><a class="btn pri sm" style="flex:1" href="${nav}" target="_blank" rel="noopener">${I.nav}導航</a><button class="btn sec sm" style="flex:1" data-m="store">設為收據店名</button></div>
+    <a class="mp-osm" href="https://www.openstreetmap.org/${s.type}/${s.oid}" target="_blank" rel="noopener">在 OpenStreetMap 看這家店 ↗</a></div>`}
+function mapGeo(silent){
+  if(!('geolocation' in navigator)){toast('這支手機不能定位，先用心齋橋');return mapUse(DEF_AT)}
+  mapSt('load','正在定位…');
+  navigator.geolocation.getCurrentPosition(p=>{mapUse({lat:p.coords.latitude,lon:p.coords.longitude,name:'我的位置'})},
+    ()=>{if(!silent)toast('沒辦法定位，先用心齋橋的預設地點');mapUse(S.mapAt||DEF_AT)},{enableHighAccuracy:true,timeout:9000,maximumAge:120000})}
+function mapUse(at){S.mapAt=at.name===DEF_AT.name?null:{lat:at.lat,lon:at.lon,name:at.name.slice(0,40)};save();mapCenter(at,true);const r=$('#mpRes');if(r)r.innerHTML='';mapLoad()}
+async function mapSearch(q){q=q.trim();const box=$('#mpRes');if(!q){toast('先輸入地點');return}
+  if(offlineNow()){box.innerHTML='<div class="box-note">沒有網路，沒辦法搜尋地點。</div>';return}
+  box.innerHTML='<div class="mp-st load inline"><span class="spin" aria-hidden="true"></span><b>搜尋中…</b></div>';
+  try{const j=await geocode(q);if(!j.length){box.innerHTML='<div class="box-note">找不到這個地點，換個寫法試試（例如加上「大阪」或用日文）。</div>';return}
+    T.geo=j;box.innerHTML=`<div class="lab">選一個地點</div>`+j.map((x,i)=>`<button class="mp-row" data-g="${i}"><span class="n"><b>${esc(x.name)}</b><span>${esc(x.full)}</span></span></button>`).join('')+'<p class="mp-src">地點搜尋：Nominatim / © OpenStreetMap 貢獻者</p>'}
+  catch(e){box.innerHTML=`<div class="box-note">地點搜尋沒有回應${offlineNow()?'（沒有網路）':''}，等一下再試。</div>`}}
+function mapClick(b){const d=b.dataset;
+  if(d.m==='geo')return mapGeo(false);
+  if(d.m==='def')return mapUse(DEF_AT);
+  if(d.m==='retry'){if(!M)return mapInit();return mapLoad()}
+  if(d.m==='wider'){T.r=1500;$$('#mpR [data-r]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.r==='1500'));return mapLoad()}
+  if(d.r){T.r=+d.r;$$('#mpR [data-r]').forEach(x=>x.setAttribute('aria-pressed',x===b));return mapLoad()}
+  if(d.f){M.f=d.f;return mapDraw()}
+  if(d.s)return mapSel(d.s,true);
+  if(d.g!==undefined){const x=T.geo[+d.g];return mapUse({lat:x.lat,lon:x.lon,name:x.name})}
+  if(d.m==='store'){const s=M.data.find(x=>x.id===M.sel);if(!s)return;const n=(s.t.name||s.t.zh||s.t.en||MCAT[s.cat][0])+(s.t.branch?' '+s.t.branch:'');closeTool();setTimeout(()=>{openEditor(null,{store:n.slice(0,40)});toast('已帶入店名，記得填品項')},380);return}
+}
+function mapDestroy(){if(M&&M.map){try{M.map.remove()}catch(e){}}M=null}
+
+/* ---------- 7. 匯率走勢 ---------- */
+const FXH='jtf_fxh';
+const fxHist=()=>{try{return JSON.parse(localStorage.getItem(FXH)||'{}')}catch(e){return{}}};
+const fxSaveH=h=>{try{localStorage.setItem(FXH,JSON.stringify(h))}catch(e){}};
+async function fxDay(d){for(const u of[`https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@${d}/v1/currencies/jpy.min.json`,`https://${d}.currency-api.pages.dev/v1/currencies/jpy.min.json`]){
+    try{const r=await fetchT(u,12000);if(r.status===404)continue;if(!r.ok)continue;const j=await r.json();if(j&&j.jpy&&j.jpy.twd)return{date:j.date,rate:+j.jpy.twd}}catch(e){}}
+  return null}
+function fxLogPush(date,rate,src){if(!(rate>0))return;S.fxLog=S.fxLog||[];if(S.fxLog.some(x=>x.d===date&&x.s===src))return;S.fxLog.push({d:date,r:+rate.toFixed(6),s:src,t:Date.now()});if(S.fxLog.length>400)S.fxLog=S.fxLog.slice(-400);save()}
+let FXL=null;
+async function fxLatest(){const v=await fxDay('latest');if(v){FXL=Object.assign(v,{at:Date.now()});const h=fxHist();h[v.date]=v.rate;fxSaveH(h);fxLogPush(v.date,v.rate,'cur');fxCheck(v.rate,v.date)}return v}
+async function fxLoad(){const box=T;if(!T||T.name!=='fx')return;
+  if(offlineNow()&&!Object.keys(fxHist()).length){T.err='沒有網路，讀不到匯率。';return tlRender(true)}
+  T.loading='讀取最新匯率…';tlRender(true);
+  const L0=FXL&&Date.now()-FXL.at<3600e3?FXL:await fxLatest();
+  if(T!==box)return;
+  if(!L0){T.loading=null;T.err='匯率伺服器沒有回應，等一下再試。';return tlRender(true)}
+  const h=fxHist(),need=[];
+  for(let i=0;i<90;i++){if(i>=30&&i%3)continue;const d=addDays(L0.date,-i);if(!(d in h))need.push(d)}
+  let done=0;const tot=need.length;
+  const work=async()=>{while(need.length){const d=need.shift();const v=await fxDay(d);if(v&&v.date===d)h[d]=v.rate;else if(dayDiff(d,today())>2)h[d]=0;done++;if(T===box&&done%5===0){T.loading=`讀取歷史匯率 ${done}/${tot}…`;const s=$('#fxLd');if(s)s.textContent=T.loading}}};
+  if(tot){T.loading=`讀取歷史匯率 0/${tot}…`;tlRender(true);await Promise.all([work(),work(),work(),work(),work()]);fxSaveH(h)}
+  if(T!==box)return;T.loading=null;T.err=null;tlRender(true)}
+function fxSeries(days){const h=fxHist(),L0=FXL||{date:Object.keys(h).filter(k=>h[k]>0).sort().pop()};if(!L0.date)return[];
+  const from=addDays(L0.date,-(days-1));return Object.keys(h).filter(d=>h[d]>0&&d>=from&&d<=L0.date).sort().map(d=>({d,r:h[d]}))}
+function fxStats(s){const rs=s.map(x=>x.r),avg=rs.reduce((a,b)=>a+b,0)/rs.length,mx=Math.max(...rs),mn=Math.min(...rs);return{avg,mx,mn,mxd:s[rs.indexOf(mx)].d,mnd:s[rs.indexOf(mn)].d}}
+function fxSvg(s,st,target){const W=340,H=170,pl=44,pr=10,pt=12,pb=26;let lo=Math.min(st.mn,target||9),hi=Math.max(st.mx,target||0);if(!(target>0)){lo=st.mn;hi=st.mx}const pad=(hi-lo)*.12||.001;lo-=pad;hi+=pad;
+  const t0=new Date(s[0].d+'T00:00:00')-0,t1=new Date(s[s.length-1].d+'T00:00:00')-0||t0+1;
+  const X=d=>pl+(W-pl-pr)*((new Date(d+'T00:00:00')-t0)/((t1-t0)||1)),Y=r=>pt+(H-pt-pb)*(1-(r-lo)/(hi-lo));
+  const p=s.map((x,i)=>(i?'L':'M')+X(x.d).toFixed(1)+' '+Y(x.r).toFixed(1)).join(' ');const last=s[s.length-1];
+  const ga=Y(st.avg);const lab=(v)=>v.toFixed(4);
+  return `<svg class="fx-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="日圓兌台幣走勢圖">
+   <rect x="${pl}" y="${pt}" width="${W-pl-pr}" height="${H-pt-pb}" fill="#FAF8F6"/>
+   <path d="${p} L${X(last.d).toFixed(1)} ${H-pb} L${pl} ${H-pb} Z" fill="#E4E9EF" opacity=".7"/>
+   <line x1="${pl}" x2="${W-pr}" y1="${ga}" y2="${ga}" stroke="#A493A8" stroke-dasharray="4 4" stroke-width="1.5"/>
+   ${target>0?`<line x1="${pl}" x2="${W-pr}" y1="${Y(target)}" y2="${Y(target)}" stroke="#B5866C" stroke-dasharray="2 3" stroke-width="1.5"/><text x="${W-pr-2}" y="${Y(target)-4}" text-anchor="end" font-size="10" fill="#8A5F48">目標 ${lab(target)}</text>`:''}
+   <path d="${p}" fill="none" stroke="#5C6F86" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+   <circle cx="${X(st.mxd)}" cy="${Y(st.mx)}" r="4" fill="#B88A8A"/><circle cx="${X(st.mnd)}" cy="${Y(st.mn)}" r="4" fill="#C4A27A"/>
+   <circle cx="${X(last.d)}" cy="${Y(last.r)}" r="5.5" fill="#2E2A27" stroke="#fff" stroke-width="2"/>
+   <text x="${pl-6}" y="${Y(st.mx)+4}" text-anchor="end" font-size="10" fill="#6B635C">${lab(st.mx)}</text>
+   <text x="${pl-6}" y="${Y(st.mn)+4}" text-anchor="end" font-size="10" fill="#6B635C">${lab(st.mn)}</text>
+   <text x="${pl}" y="${H-8}" font-size="10" fill="#6B635C">${md(s[0].d)}</text><text x="${W-pr}" y="${H-8}" text-anchor="end" font-size="10" fill="#6B635C">${md(last.d)}</text>
+  </svg>`}
+function fxHtml(){if(!T.days)T.days=30;
+  const dis=`<div class="disc">歷史走勢不代表未來，不構成投資建議。這裡不做任何預測。<br>圖上是市場中間價，銀行或換匯所實際賣給你的日圓價格會比較差。</div>`;
+  if(T.err)return dis+`<div class="mp-st err" style="position:static;margin-top:12px"><b>${T.err}</b><button class="btn sec sm" data-x="retry">再試一次</button></div>`;
+  const s30=fxSeries(30),s=fxSeries(T.days);
+  if(T.loading&&s30.length<5)return dis+`<div class="mp-st load" style="position:static;margin-top:12px"><span class="spin" aria-hidden="true"></span><b id="fxLd">${T.loading}</b><span>資料來源：fawazahmed0 currency-api（每日快照）</span></div>`;
+  if(s30.length<2)return dis+`<div class="box-note">歷史資料不夠，畫不出走勢。</div><button class="btn sec block" data-x="retry">重新讀取</button>`;
+  const st=fxStats(s30),cur=s30[s30.length-1],pct=(st.avg-cur.r)/st.avg*100,tg=S.fxT&&S.fxT.rate,stv=fxStats(s);
+  const good=pct>=0.05,bad=pct<=-0.05,pa=Math.abs(pct).toFixed(pct&&Math.abs(pct)<0.1?2:1);
+  return dis+`<div class="fx-now"><span>最新匯率（${md(cur.d)} 資料）</span><b class="num">1 日圓 = ${cur.r.toFixed(4)} 台幣</b><span>1 台幣 ≈ ${(1/cur.r).toFixed(3)} 日圓</span>
+    <div class="fx-verdict ${good?'good':bad?'bad':''}">${good?`今天比 30 天平均划算 ${pa}%`:bad?`今天比 30 天平均貴 ${pa}%，比較不划算`:(Math.abs(pct)<0.005?'今天和 30 天平均幾乎一樣':`今天和 30 天平均差不多（${pct>=0?'便宜':'貴'} ${pa}%）`)}</div></div>
+   <div class="stseg" style="grid-template-columns:1fr 1fr">${[30,90].map(d=>`<button data-x="d${d}" aria-pressed="${T.days===d}">最近 ${d} 天</button>`).join('')}</div>
+   <div class="fx-chart">${fxSvg(s,stv,tg)}</div>
+   <div class="fx-leg"><span><i style="background:#5C6F86"></i>匯率</span><span><i class="dash" style="border-color:#A493A8"></i>平均</span><span><i class="c" style="background:#B88A8A"></i>最高</span><span><i class="c" style="background:#C4A27A"></i>最低</span><span><i class="c" style="background:#2E2A27"></i>最新</span></div>
+   ${T.days===90?'<p class="mp-src">90 天圖：最近 30 天每天一點，更早的每 3 天一點。虛線是這 90 天的平均，下方數字仍是 30 天。</p>':'<p class="mp-src">虛線是 30 天平均。</p>'}
+   <div class="pc"><div class="kv"><span>30 天平均</span><b class="num">${st.avg.toFixed(4)}</b></div><div class="kv"><span>30 天最高（${md(st.mxd)}）</span><b class="num">${st.mx.toFixed(4)}</b></div><div class="kv"><span>30 天最低（${md(st.mnd)}）</span><b class="num">${st.mn.toFixed(4)}</b></div>
+   <p class="mp-src" style="margin:6px 0 0">數字越低，日圓越便宜。換 ¥100,000 約 ${ntd(100000*cur.r)}（平均價約 ${ntd(100000*st.avg)}）。</p></div>
+   <h2>目標匯率提醒</h2>
+   <div class="pc"><label class="lab" for="fxTg" style="margin-top:0">1 日圓低於多少台幣時提醒我</label>
+    <div class="row"><input class="inp2" id="fxTg" type="number" inputmode="decimal" step="0.0001" min="0.05" max="1" placeholder="例 ${(st.mn).toFixed(4)}" value="${tg||''}" style="flex:1"><button class="btn pri sm" data-x="tset">設定</button>${tg?'<button class="btn text" data-x="toff">取消</button>':''}</div>
+    <p class="mp-src" style="margin:8px 0 0">${tg?`目前目標：1 日圓 ≤ ${(+tg).toFixed(4)} 台幣（1 台幣 ≥ ${(1/tg).toFixed(3)} 日圓）。${cur.r<=tg?'<b>已經到了！</b>':''}`:'還沒設定。'}App 開著的時候每 30 分鐘檢查一次，到了會跳通知${'Notification' in window?(Notification.permission==='granted'?'':'（要允許通知）'):'（這支手機不支援通知，會在畫面上提示）'}。關掉 App 就不會檢查。</p></div>
+   <h2>累積的匯率紀錄</h2>
+   <div class="pc">${(S.fxLog||[]).length?`<p class="mp-src" style="margin:0 0 6px">每次打開 App 讀到的匯率會存在這支手機，目前 ${S.fxLog.length} 筆。</p>`+S.fxLog.slice(-6).reverse().map(x=>`<div class="kv"><span>${md(x.d)}・${x.s==='cur'?'currency-api':'open.er-api'}</span><b class="num">${x.r.toFixed(4)}</b></div>`).join(''):'<p class="mp-src" style="margin:0">還沒有紀錄。</p>'}</div>
+   <p class="mp-src">資料來源：<a href="https://github.com/fawazahmed0/exchange-api" target="_blank" rel="noopener">fawazahmed0 currency-api</a>（免費、每日快照，經 jsDelivr）。App 內的換算匯率另用 open.er-api.com。</p>`}
+async function fxCheck(rate,date){const t=S.fxT;if(!t||!(t.rate>0)||!(rate>0))return;if(rate>t.rate){return}if(t.hit===date)return;
+  t.hit=date;save();const msg=`1 日圓 = ${rate.toFixed(4)} 台幣，已低於你設的 ${(+t.rate).toFixed(4)}`;
+  let sent=false;if('Notification' in window&&Notification.permission==='granted')sent=await notify('匯率到目標了',msg+'。歷史走勢不代表未來。');
+  toast('匯率到目標了：'+msg)}
+async function fxTSet(){const v=parseFloat($('#fxTg').value);if(!(v>0.05&&v<1)){toast('格式不對，例 0.2000');return}
+  S.fxT={rate:v,hit:null};save();
+  if('Notification' in window&&Notification.permission==='default'){try{await Notification.requestPermission()}catch(e){}}
+  toast('已設定目標匯率');tlRender(true);const c=FXL||null;if(c)fxCheck(c.rate,c.date)}
+function fxClick(b){const d=b.dataset;
+  if(d.x==='d30'||d.x==='d90'){T.days=+d.x.slice(1);return tlRender(true)}
+  if(d.x==='retry'){T.err=null;return fxLoad()}
+  if(d.x==='tset')return fxTSet();
+  if(d.x==='toff'){S.fxT=null;save();toast('已取消提醒');return tlRender(true)}}
+setInterval(()=>{if(S.fxT&&!document.hidden)fxLatest()},30*60e3);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&S.fxT&&(!FXL||Date.now()-FXL.at>30*60e3))fxLatest()});
+
+/* ---------- 8. 旅行花費總表 ---------- */
+const ECAT={buy:['購物（退稅收據）','#7E8FA8'],traffic:['交通','#B88A8A'],food:['餐飲','#C4A27A'],hotel:['住宿','#9C8AAB'],ticket:['門票','#A88B78'],other:['其他','#9A9590']};
+const eTwd=e=>e.cur==='TWD'?+e.amt:(+e.amt)*(+e.rate||fx1()||0);
+function spendData(){const fx=fx1()||0,rows=[];
+  S.receipts.filter(mine).forEach(r=>{const jpy=rTotal(r);rows.push({kind:'r',date:r.date,cat:'buy',note:r.store,amt:jpy,cur:'JPY',rate:fx,twd:jpy*fx,r})});
+  (S.exp||[]).forEach(e=>rows.push({kind:'e',id:e.id,date:e.date,cat:e.cat,note:e.note||'',amt:+e.amt,cur:e.cur,rate:e.cur==='TWD'?null:(+e.rate||fx),twd:eTwd(e)}));
+  rows.sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:0);
+  const tot=rows.reduce((a,b)=>a+b.twd,0),bycat={},byday={};rows.forEach(x=>{bycat[x.cat]=(bycat[x.cat]||0)+x.twd;byday[x.date]=(byday[x.date]||0)+x.twd});
+  const P=progSums();let est=0;S.receipts.filter(mine).forEach(r=>{if(ok(r)&&rst(r)!=='paid')est+=rExp(r)});
+  return{rows,tot,bycat,byday,paidJ:P.paid,estJ:est,paid:P.paid*fx,est:est*fx,fx}}
+function spendHtml(){const D=spendData(),f=T.f||(T.f={date:today(),cat:'food',amt:'',cur:'JPY',rate:fx1()?+fx1().toFixed(4):'',note:''});
+  const cats=Object.keys(ECAT).filter(k=>D.bycat[k]>0).sort((a,b)=>D.bycat[b]-D.bycat[a]),days=Object.keys(D.byday).sort(),dmax=Math.max(1,...days.map(d=>D.byday[d]));
+  return `<div class="sp-hero"><span>總花費（台幣）</span><b class="num" id="spTot">NT$0</b><span>${D.fx?`日圓用 1 日圓 = ${D.fx.toFixed(4)} 台幣換算（收據用目前匯率；其他花費用記錄當時的匯率）`:'還沒有匯率，日圓花費請自己填匯率'}</span></div>
+  <div class="pc"><div class="kv"><span>總花費</span><b class="num">${ntd(D.tot)}</b></div>
+   <div class="kv"><span>退稅已入帳</span><b class="num">− ${ntd(D.paid)}</b></div>
+   <div class="kv sp-real"><span>實際花費＝總花費－已退稅</span><b class="num">${ntd(D.tot-D.paid)}</b></div>
+   <div class="kv"><span>預計還可退（還沒入帳）</span><b class="num">${ntd(D.est)}</b></div>
+   <p class="mp-src" style="margin:4px 0 0">已退 ${yen(D.paidJ)}・預計可退 ${yen(D.estJ)}，數字來自「退稅進度」。旅伴的收據不算。</p></div>
+  ${D.tot>0?`<h2>各分類比例</h2><div class="sp-stack" role="img" aria-label="各分類比例">${cats.map(k=>`<i style="width:${(D.bycat[k]/D.tot*100).toFixed(2)}%;background:${ECAT[k][1]}"></i>`).join('')}</div>
+   <div class="sp-leg">${cats.map(k=>`<div><i style="background:${ECAT[k][1]}"></i><span>${ECAT[k][0]}</span><b class="num">${ntd(D.bycat[k])}</b><em>${(D.bycat[k]/D.tot*100).toFixed(0)}%</em></div>`).join('')}</div>
+   <h2>每天花多少</h2><div class="sp-days">${days.map(d=>`<div class="sp-day"><span class="num">${+d.slice(5,7)}/${+d.slice(8)}</span><div class="sp-b"><i style="width:${(D.byday[d]/dmax*100).toFixed(1)}%"></i></div><b class="num">${ntd(D.byday[d])}</b></div>`).join('')}</div>`:''}
+  <h2>記一筆花費</h2>
+  <div class="pc"><div class="pills">${Object.keys(ECAT).filter(k=>k!=='buy').map(k=>`<button class="pill" data-e="cat" data-v="${k}" aria-pressed="${f.cat===k}">${ECAT[k][0]}</button>`).join('')}</div>
+   <div class="row" style="margin-top:10px"><input class="inp2" data-ef="amt" type="number" inputmode="decimal" min="0" placeholder="金額" value="${esc(f.amt)}" style="flex:1"><div class="stseg sp-cur" style="margin:0;grid-template-columns:1fr 1fr;width:140px">${['JPY','TWD'].map(c=>`<button data-e="cur" data-v="${c}" aria-pressed="${f.cur===c}">${c==='JPY'?'日圓':'台幣'}</button>`).join('')}</div></div>
+   ${f.cur==='JPY'?`<label class="lab">匯率（1 日圓＝? 台幣，可自己改）</label><input class="inp2" data-ef="rate" type="number" inputmode="decimal" step="0.0001" value="${esc(f.rate)}" placeholder="例 0.2070">`:''}
+   <div class="row" style="margin-top:10px"><input class="inp2" data-ef="date" type="date" value="${f.date}" style="flex:1"><input class="inp2" data-ef="note" placeholder="說明（可不填）" value="${esc(f.note)}" maxlength="40" style="flex:1.3"></div>
+   <button class="btn pri block" data-e="add" style="margin-top:12px">加入</button></div>
+  <h2>明細</h2>
+  ${D.rows.length?`<div class="sp-list">${D.rows.slice().reverse().map(x=>`<div class="sp-li"><i style="background:${ECAT[x.cat][1]}"></i><span class="n"><b>${esc(x.note||ECAT[x.cat][0])}</b><span>${md(x.date)}・${ECAT[x.cat][0]}・${x.cur==='TWD'?ntd(x.amt):yen(x.amt)}</span></span><b class="num">${ntd(x.twd)}</b>${x.kind==='e'?`<button class="rmx" data-e="rm" data-v="${x.id}" aria-label="刪除這筆">×</button>`:'<span class="rmx" aria-hidden="true"></span>'}</div>`).join('')}</div>`:'<div class="box-note">還沒有花費。退稅收據會自動算進來。</div>'}
+  <button class="btn sec block" data-e="csv" style="margin-top:14px" ${D.rows.length?'':'disabled'}>${I.dl}匯出 CSV</button>
+  <p class="mp-src">CSV 可以用 Excel、Numbers 或 Google 試算表打開。</p>`}
+function spendAfter(){const D=spendData(),el=$('#spTot');if(!el)return;el.dataset.v=T.lastTot||0;countUp(el,D.tot,'NT$');T.lastTot=D.tot}
+function spendCSV(){const D=spendData(),q=v=>{v=String(v??'');return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+  const L=[['日期','分類','說明','金額','幣別','匯率(1日圓=台幣)','台幣金額','退稅狀態']];
+  D.rows.forEach(x=>L.push([x.date,ECAT[x.cat][0],x.note,Math.round(x.amt*100)/100,x.cur,x.rate?x.rate.toFixed(4):'',Math.round(x.twd),x.kind==='r'?({none:'未退',conf:'已確認',paid:'已入帳'})[rst(x.r)]:'']));
+  L.push([]);L.push(['總花費','','','','','',Math.round(D.tot),'']);L.push(['退稅已入帳','','','','','',Math.round(D.paid),'']);L.push(['實際花費','','','','','',Math.round(D.tot-D.paid),'']);L.push(['預計還可退','','','','','',Math.round(D.est),'']);
+  const csv='\ufeff'+L.map(r=>r.map(q).join(',')).join('\r\n');const b=new Blob([csv],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');
+  a.href=URL.createObjectURL(b);a.download='trip-spending-'+today().replace(/-/g,'')+'.csv';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);toast('已匯出 CSV')}
+function spendClick(b){const d=b.dataset,f=T.f;
+  if(d.e==='cat'){f.cat=d.v;$$('[data-e="cat"]').forEach(x=>x.setAttribute('aria-pressed',x===b));return}
+  if(d.e==='cur'){f.cur=d.v;return tlRender(true)}
+  if(d.e==='add'){const a=parseFloat(f.amt);if(!(a>0)){toast('先填金額');return}
+    const rate=f.cur==='JPY'?parseFloat(f.rate):null;if(f.cur==='JPY'&&!(rate>0&&rate<10)){toast('先填匯率，例 0.2070');return}
+    S.exp=S.exp||[];S.exp.push({id:uid(),date:f.date||today(),cat:f.cat,amt:a,cur:f.cur,rate,note:(f.note||'').trim().slice(0,40)});if(!save())return;
+    buzz();toast('已記一筆 '+ECAT[f.cat][0]);T.f=Object.assign({},f,{amt:'',note:''});return tlRender(true)}
+  if(d.e==='rm'){S.exp=(S.exp||[]).filter(x=>x.id!==d.v);save();toast('已刪除');return tlRender(true)}
+  if(d.e==='csv')return spendCSV()}
+function spendInput(el){const k=el.dataset.ef;if(k&&T.f)T.f[k]=el.value}
+
+/* ---------- guide ---------- */
+const CU='https://www.customs.go.jp/kaigairyoko/taxrefund.htm',J='https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00028.html',JQ='https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00054.html',JC='https://www.mlit.go.jp/kankocho/tax-free/content/001990246.pdf',PDF='https://www.customs.go.jp/kaigairyoko/taxrefund/refund_hantai.pdf',NTA='https://www.nta.go.jp/taxes/shiraberu/taxanswer/shohi/6303.htm',JR='https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00056.html';
+const RULES=[
+ [1,'託運前先過海關確認','掃護照時退稅品要在身邊',[[J,'觀光廳'],[PDF,'海關繁中']]],
+ [1,'少一件，整張收據不退','以一張收據為單位確認',[[JQ,'觀光廳 Q&A']]],
+ [1,'食品、化妝品在日本用掉就不退','用掉了找海關櫃台說明',[[J,'觀光廳']]],
+ [0,'先付含稅價，出境後才退','由店家或退稅服務商退款',[[CU,'日本海關'],[JR,'退款 Q&A']]],
+ [0,'同店同日未稅 ¥5,000 以上','不分一般品、消耗品，合併算',[[JC,'觀光廳變更一覽']]],
+ [0,'購買後 90 天內出境確認','KIOSK 掃護照或 Visit Japan Web',[[CU,'日本海關']]],
+ [0,'綠燈完成，紅燈給海關看','',[[CU,'日本海關']]],
+ [0,'稅率 10%，食品飲料 8%','退款手續費請問店家',[[NTA,'國稅廳']]]
+];
+$('#rules').innerHTML=RULES.map(([hot,t,p,ls],i)=>`<div class="rule ${hot?'hot':''}"><span class="n">${i+1}</span><div><b>${t}</b>${p?`<p>${p}</p>`:''}<div class="lnks">${ls.map(([u,n])=>`<a class="lnk" href="${u}" target="_blank" rel="noopener">${n} ↗</a>`).join('')}</div></div></div>`).join('');
+
+/* ---------- tabs ---------- */
+function go(v){$$('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));$$('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.v===v));scrollTo(0,0);
+  if(v==='home')renderHome();if(v==='calc'){calcTargets();calcRender()}if(v==='pack')renderPack()}
+$$('.tab').forEach(t=>t.onclick=()=>{buzz();go(t.dataset.v)});
+
+Object.assign(I,II);paintIcons();segSet($('#segTax'),'in');segSet($('#segRate'),'10');
+renderHome();calcTargets();calcRender();renderFx();loadFx();checkHash();if(S.fxT)fxLatest();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').then(()=>{syncSW();checkRemind()}).catch(()=>{});
+window.__go=go;window.__open=openEditor;window.__S=()=>S;window.__parse=parseReceipt;window.__ics=buildICS;window.__check=checkRemind;
+})();
+</script>
+</body>
+</html>
