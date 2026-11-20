@@ -1,4 +1,4 @@
-const CACHE = 'jtf-v8';
+const CACHE = 'jtf-v8.1';
 const ASSETS = ['./', './index.html', './manifest.json', './icon.svg', './icon-192.png', './icon-512.png'];
 // 版本固定的 CDN 檔（地圖、QR）也先用快取
 const CDN_OK = /^https:\/\/cdn\.jsdelivr\.net\/npm\/(leaflet@1\.9\.4|qrcode-generator@1\.4\.4)\//;

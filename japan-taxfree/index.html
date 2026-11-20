@@ -46,6 +46,8 @@
 html,body{margin:0;background:var(--bg);color:var(--ink)}
 body{font-family:-apple-system,"PingFang TC","Noto Sans TC","Noto Sans CJK TC","Microsoft JhengHei",sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
 button,input,select{font:inherit;color:inherit}
+html,body,button,a,input,select,textarea,label{touch-action:manipulation}
+input,select,textarea{font-size:max(16px,1em)}
 button{cursor:pointer}
 .app{max-width:480px;margin:0 auto;min-height:100vh;padding:0 16px calc(100px + env(safe-area-inset-bottom))}
 header.top{padding:calc(14px + env(safe-area-inset-top)) 2px 8px;display:flex;align-items:center;gap:8px;color:var(--blue)}
