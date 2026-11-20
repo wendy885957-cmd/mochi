@@ -1,7 +1,7 @@
 {
   "name": "日本退稅小幫手",
   "short_name": "退稅小幫手",
-  "description": "日本 2026/11/1 退稅新制：收據整理、別拆提醒、機場檢查清單",
+  "description": "日本 2026/11/1 退稅新制：收據整理、預估實拿、退稅平台登錄提醒、機場步驟",
   "lang": "zh-Hant-TW",
   "start_url": "./index.html",
   "scope": "./",

@@ -1,20 +1,27 @@
-const CACHE = 'jtf-v6';
+const CACHE = 'jtf-v8';
 const ASSETS = ['./', './index.html', './manifest.json', './icon.svg', './icon-192.png', './icon-512.png'];
+// 版本固定的 CDN 檔（地圖、QR）也先用快取
+const CDN_OK = /^https:\/\/cdn\.jsdelivr\.net\/npm\/(leaflet@1\.9\.4|qrcode-generator@1\.4\.4)\//;
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k.startsWith('jtf-v') && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
 });
+/* 離線優先（機場常沒訊號）：先回快取，背景再抓新版更新快取；沒有快取才走網路 */
 self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET' || new URL(e.request.url).origin !== location.origin) return;
-  e.respondWith(
-    fetch(e.request).then(res => {
-      const copy = res.clone();
-      caches.open(CACHE).then(c => c.put(e.request, copy));
-      return res;
-    }).catch(() => caches.match(e.request).then(hit => hit || caches.match('./index.html')))
-  );
+  const req = e.request; if (req.method !== 'GET') return;
+  const u = new URL(req.url), same = u.origin === location.origin;
+  if (!same && !CDN_OK.test(req.url)) return;
+  if (same && u.pathname.includes('__jtf_')) return;
+  const isApp = same && (u.pathname.endsWith('/') || u.pathname.endsWith('/index.html'));
+  const key = req.mode === 'navigate' && isApp ? './index.html' : req;
+  e.respondWith(caches.open(CACHE).then(async c => {
+    const hit = await c.match(key, { ignoreSearch: req.mode === 'navigate' });
+    const net = fetch(req).then(res => { if (res && (res.ok || res.type === 'opaque')) c.put(key, res.clone()); return res; });
+    if (hit) { e.waitUntil(net.catch(() => {})); return hit; }
+    return net.catch(() => c.match('./index.html'));
+  }));
 });
 
 /* Background reminder: only fires where the browser supports Periodic Background Sync
